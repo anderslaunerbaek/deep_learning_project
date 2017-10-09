@@ -4,3 +4,12 @@
 *.log
 *.gz
 Synopsis/synopsis.pdf
+
+
+Data_1/*
+Data/*
+*/.texpadtmp/*
+
+Report/.texpadtmp/*
+Report/.*
+Report/.texpadtmp/report.synctex.gz
