@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{amsmath, amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+\newcommand*{\Ph}{\hphantom{{}+{}}}%
+
+
+
+%%%%%%% Litterature list %%%%%%%
+\usepackage[%
+ backend=bibtex      % biber or bibtex
+%,style=authoryear    % Alphabeticalsch
+ ,style=numeric  % numerical-compressed
+ ,sorting=none        % no sorting
+ ,sortcites=true      % some other example options ...
+ ,block=none
+ ,indexing=false
+ ,citereset=none
+ ,isbn=true
+ ,url=true
+ ,doi=true            % prints doi
+ ,natbib=true         % if you need natbib functions
+]{biblatex}
+\addbibresource{./../Report/content/litteraturliste.bib}  % better than \bibliography
+
+
+
+
+
+
+
+\begin{document}
+\begin{center}
+{{\Large \sc Deep Learning}}
+\end{center}
+\rule{\textwidth}{1pt}
+\begin{description}
+\item[Student] Anders Launer Bæk (s160159)
+\item[Supervisors:] Sirin W. Gangstad and Albert Vilamala
+\item[Project:] Deep Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring
+\end{description}
+\rule{\textwidth}{1pt}
+
+
+\section{Motivation}
+
+
+\section{Hypothesis/Problem Statement}
+\section{Method}
+\section{(Expected) Analyses and Results}
+\section{Related Work}
+\section{Conclusion}
+
+\citep{Nobody06}
+
+\printbibliography
+\end{document}
