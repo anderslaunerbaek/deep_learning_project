@@ -84,7 +84,7 @@
       <file>synopsis-blx.bib</file>
     </requires>
     <requires type="editable">
-      <file>./../Report/content/litteraturliste.bib</file>
+      <file>./../Article/refs.bib</file>
     </requires>
     <requires type="static">
       <file>biblatex.bst</file>
