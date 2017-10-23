@@ -6,8 +6,6 @@ Created on Tue Mar  8 16:27:26 2016
 """
 
 import numpy as np
-import nibabel
-import nilearn.plotting
 #from sklearn.utils import shuffle
 #from sklearn.preprocessing import minmax_scale
 
