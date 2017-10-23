@@ -12,6 +12,7 @@ from scipy.misc import imread, imresize
 
 # eeg_vgg_sleep_age_5classes.py
 def load_spectrograms(data_path, subject_id, night_id):
+    NUM_CLASSES = 6
     sensors='fpz'
     labels = np.loadtxt(data_path+'/sub'+str(subject_id)+'_n'+str(night_id)+'_img_'+sensors+'/labels.txt', dtype='str')
 
@@ -29,8 +30,13 @@ def load_spectrograms(data_path, subject_id, night_id):
     targets = targets[targets!=-1]
     num_images = np.size(targets)
 
-    #
-    #inputs = np.zeros((num_images,3,224,224),dtype='uint8')
+    # one hot
+    # if greater then zero
+    targets[targets > NUM_CLASSES - 1] = 0
+    targets_one_hot = np.zeros((len(targets), NUM_CLASSES))
+    targets_one_hot[np.arange(len(targets)), targets] = 1
+
+    # init 
     inputs = np.zeros((num_images,224,224,3),dtype='uint8')
 
     for idx in range(1,num_images+1):    
@@ -40,16 +46,7 @@ def load_spectrograms(data_path, subject_id, night_id):
         h, w, _ = rawim.shape
         if not (h==224 and w==224):
         	rawim = skimage.transform.resize(rawim, (224, 224), preserve_range=True)
-
-        # Shuffle axes to c01
-        #im = np.transpose(rawim,(2,0,1))
-        im = np.transpose(rawim,(0,1,2))
-        im = im[np.newaxis]
-        # img1 = imread(data_path+'/sub'+str(subject_id)+'_n'+str(night_id)+'_img_'+sensors+'/img_'+ np.str(idx) +'.png', mode='RGB')
-        # img1 = imresize(img1, (224, 224))
-
-        inputs[idx-1,:,:,:]=im
-        # inputs[idx-1,:,:,:]=img1
-
+        #
+        inputs[idx-1,:,:,:]=rawim
     #
-    return inputs, targets
+    return inputs, targets_one_hot, targets

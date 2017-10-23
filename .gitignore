@@ -13,3 +13,10 @@ Data/*
 Report/.texpadtmp/*
 Report/.*
 Report/.texpadtmp/report.synctex.gz
+Code/__pycache__/*
+Code/__pycache__/*
+Code/__pycache__/utils*
+Code/.*
+Code/.ipynb_checkpoints/*
+Code/__pycache__/utils_s160159*
+Code/logs/*

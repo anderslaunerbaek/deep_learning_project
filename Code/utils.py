@@ -22,7 +22,8 @@ import nilearn.plotting
 
 def iterate_minibatches(inputs, targets, batchsize, shuffle=False):
     assert len(inputs) == len(targets)
-    last_idx = batchsize*(len(inputs)/batchsize)
+    batchsize = int(batchsize)
+    last_idx = int(batchsize*(len(inputs)/batchsize))
     if shuffle:
         indices = np.arange(len(inputs))
         np.random.shuffle(indices)
@@ -38,6 +39,6 @@ def iterate_minibatches(inputs, targets, batchsize, shuffle=False):
                 excerpt = slice(start_idx, start_idx + batchsize)
             else:
                 excerpt = slice(start_idx, len(inputs))
+
+        # return as generator
         yield inputs[excerpt], targets[excerpt]
-  
-    
