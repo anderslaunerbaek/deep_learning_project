@@ -5,9 +5,9 @@
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{booktabs}
-
+\usepackage{multicol}
 \newcommand*{\Ph}{\hphantom{{}+{}}}%
-
+\usepackage{titlesec}
 
 
 %%%%%%% Litterature list %%%%%%%
@@ -28,87 +28,120 @@
 \addbibresource{./../Article/refs.bib}  % better than \bibliography
 
 
-
+\titleformat*{\section}{\normalsize\bfseries}
 
 
 
 
 \begin{document}
 \begin{center}
-{{\Large \sc Deep Learning}}
+{{\Large \sc Deep Learning}} 
+
+{{\large \sc Deep Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring}}
+
+\textbf{Student:} Anders Bæk (s160159). \textbf{Supervisors:} Sirin W. Gangstad and Albert Vilamala
 \end{center}
-\rule{\textwidth}{1pt}
-\begin{description}
-\item[Student] Anders Launer Bæk (s160159)
-\item[Supervisors:] Sirin W. Gangstad and Albert Vilamala
-\item[Project:] Deep Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring
-\end{description}
-\rule{\textwidth}{1pt}
-
-
-
-\begin{abstract}
-   abstract-text
-\end{abstract}
+%%\rule{\textwidth}{1pt}
+%\begin{description}
+%%\item[Project:] Deep Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring
+%\item[Student]: Anders Launer Bæk (s160159)
+%\item[Supervisors:] Sirin W. Gangstad and Albert Vilamala
+%\end{description}
+%%\rule{\textwidth}{1pt}
 
 
 
 
-\section{Motivation}
 
-150-175 words
-
-background information
-what work already  exists in this areas.. strenghs and defiencies?
-
-How would further work adcance our kjnowlegde of weder areas of study
-
-is an entirely new areas of study or is it being oped up?
-why is it important?
-
-Where should i start from?
+%Short 0.5 page plan with motivation, background, milestones and references.
+%
+%The synopsis should be approximately half a page and maximum one page with a project title, motivation, background, milestones and references. It is important that the plan is realistic.
 
 
 
-\section{Objectives}
-
-why is this worthy of further exploration
-
-demo my appreciate the main areas of debate around the topic and show your propused research how to contribute to the further debate.
-
-The aims are ? WHY  in precise fashion.
+%\begin{abstract}
+%abstract-text
+%\end{abstract}
 
 
+\section*{Motivation}
 
-\section{Methodology}
+An automation of sleep stage annotations is possible by feeding transformed EEG signals as multitaper spectrogram images to a pre-trained CNN. An investigating of the time dependence in the transitions between the sleep stages can be obtained by adding a RNN on top of the pre-trained CNN. The stacked neural network will learn the time dependence and purportedly improve the automated annotations of sleep stages.
 
-The how??
-- state the main planks og my thinking - how will i put them together
+The hypothesis is that it will be possible to learn the transitions rules in the time domain and create an improved classifier.
 
 
 
+%background information
+%what work already  exists in this areas.. strenghs and defiencies?
+%
+%How would further work adcance our kjnowlegde of weder areas of study
+%
+%is an entirely new areas of study or is it being oped up?
+%why is it important?
+%
+%Where should i start from?
 
-The Actual procedure of study and 
+\section*{Background}
+Developing an automated sleep stage classifier, which is able to learn the transition rules between the five stages of sleep, is profitable for patients and doctors around the world. 
+The current approach of annotating sleep stages is done manually by highly trained professionals and based upon complex transition rules with high probability can be interpreted subjectively.
+The project is based upon the article \citetitle{main_ar} by \citeauthor{main_ar} where the pre-trained CNN has been implemented. The scope of the project is to expand the pre-trained CNN with a RNN on top. 
 
 
 
-Any declarations?
-
-inclusion criteria
-exclusion criteria
 
 
-Materials required? 
-- data and weigths
+%\section{Objectives}
+%
+%why is this worthy of further exploration
+%
+%demo my appreciate the main areas of debate around the topic and show your propused research how to contribute to the further debate.
+%
+%The aims are ? WHY  in precise fashion.
 
 
-\section{Milestones}
 
-\section{(Expected) Analyses and Results}
-\section{Related Work}
-\section{Conclusion}
+%\section{Methodology}
+%
+%The how??
+%- state the main planks og my thinking - how will i put them together
+%
+%
+%
+%
+%The Actual procedure of study and 
+%
+%
+%
+%Any declarations?
+%
+%inclusion criteria
+%exclusion criteria
+%
+%
+%Materials required? 
+%- data and weigths
 
-\citep{Nobody06}
 
-\printbibliography
+\section*{Milestones}
+The development of the project is considered as an iterative process and the milestones are dynamic and are influenced by the iterative processes of research, implementation as well as other courses.
+
+\begin{multicols}{2}
+\begin{itemize}
+\item 1/11-2017: Understand the main article. Setting up the proper AWS infrastructure.
+\item 10/11-2017: Finish the implementation of the CNN baseline.
+\item 20/11-2017:  Finish the research of CNN and RNN implementations.
+\item 5/12-2017: Development process of the CNN and RNN is done.
+\item 10/12-2017: Final performance measures of the CNN and RNN is done and compared with the CNN baseline. Then turn full focus on to the presentation and the develop the article simultaneously.
+\item 18/12-2017: Presentation of the project. 3/1-2018: Hand in final article.
+\end{itemize}
+\end{multicols}
+
+
+
+%\section{(Expected) Analyses and Results}
+%\section{Related Work}
+%\section{Conclusion}
+{\footnotesize \printbibliography}
+
 \end{document}
