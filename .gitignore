@@ -20,3 +20,4 @@ Code/.*
 Code/.ipynb_checkpoints/*
 Code/__pycache__/utils_s160159*
 Code/logs/*
+*.pyc
