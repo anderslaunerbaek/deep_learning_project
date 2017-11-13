@@ -10,6 +10,8 @@ from skimage import io
 from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
 
+def safe_div(x,y):
+    return np.divide(x,y,where=y != 0)
 
 def cal_sen_map(grad_accum, sen_map_class, IMAGE_SHAPE, save_dir = './pics/'):
     ## Calcualte Sensitivity maps       
