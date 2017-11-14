@@ -11,6 +11,36 @@ from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
 
 
+def down_sample(inputs_, targets_, no_class, verbose = False):
+    class_balance = np.sum(targets_,0)
+    n = targets_.shape[0]
+    if verbose: print('distribution\n' + str(u_s.safe_div(class_balance, n)))
+
+    min_class = np.argmin(class_balance)
+    min_samples = np.min(class_balance)
+    if verbose: print("Keeps %f pct. of the samples" %((1 - (n - min_samples) / n) * 100))
+    
+    tmp_train = np.empty((0,224,224,3),dtype='uint8')
+    tmp_target = np.empty((0,6),dtype='uint8')
+    # loop
+    for ii in range(no_class):
+        idx = np.argmax(targets_,1) == ii
+        if not ii == min_class:
+            # down sample
+            idx_sample = np.random.choice(range(targets_[idx].shape[0]), 
+                                          int(min_samples), 
+                                          replace=False)
+            #
+            tmp_train = np.concatenate((tmp_train,inputs_[idx][idx_sample]),axis=0)
+            tmp_target = np.concatenate((tmp_target,targets_[idx][idx_sample]),axis=0)
+        else:
+            # minority class
+            tmp_train = np.concatenate((tmp_train,inputs_[idx]),axis=0)
+            tmp_target = np.concatenate((tmp_target,targets_[idx]),axis=0)
+        # end loop
+    #
+    return tmp_train, tmp_target
+
 def save_weights(graph , fpath):
     sess = tf.get_default_session()
     variables = graph.get_collection("variables")
