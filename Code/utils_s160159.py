@@ -17,7 +17,7 @@ def cal_sen_map(grad_accum, sen_map_class, IMAGE_SHAPE, save_dir = './pics/'):
     ## Calcualte Sensitivity maps       
     sm = np.mean(np.abs(grad_accum), axis=0)
     ## Scale between 0 and 1
-    sensitivity_map = (sm-np.min(sm))/(np.max(sm)-np.min(sm))
+    sensitivity_map = safe_div((sm-np.min(sm)), (np.max(sm)-np.min(sm)))
     f = plt.figure()
     plt.imshow(sensitivity_map, interpolation=None)
     plt.yticks(np.linspace(start=0, stop=IMAGE_SHAPE[1]-1, num=7), 
