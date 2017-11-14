@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 def down_sample(inputs_, targets_, no_class, verbose = False):
     class_balance = np.sum(targets_,0)
     n = targets_.shape[0]
-    if verbose: print('distribution\n' + str(u_s.safe_div(class_balance, n)))
+    if verbose: print('distribution\n' + str(safe_div(class_balance, n)))
         
     #
     if any(class_balance == 0): return inputs_, targets_
@@ -85,8 +85,7 @@ def cal_sen_map(grad_accum, sen_map_class, IMAGE_SHAPE, save_dir = './pics/'):
 
 
 # eeg_vgg_sleep_age_5classes.py
-def load_spectrograms(data_path, subject_id, night_id):
-    NUM_CLASSES = 6
+def load_spectrograms(data_path, subject_id, night_id, no_class):
     sensors='fpz'
     labels = np.loadtxt(data_path+'/sub'+str(subject_id)+'_n'+str(night_id)+'_img_'+sensors+'/labels.txt', dtype='str')
 
@@ -106,8 +105,8 @@ def load_spectrograms(data_path, subject_id, night_id):
 
     # one hot
     # if greater then zero
-    targets[targets > NUM_CLASSES - 1] = 0
-    targets_one_hot = np.zeros((len(targets), NUM_CLASSES))
+    targets[targets > no_class - 1] = 0
+    targets_one_hot = np.zeros((len(targets), no_class))
     targets_one_hot[np.arange(len(targets)), targets] = 1
 
     # init 
