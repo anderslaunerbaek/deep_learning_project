@@ -15,6 +15,9 @@ def down_sample(inputs_, targets_, no_class, verbose = False):
     class_balance = np.sum(targets_,0)
     n = targets_.shape[0]
     if verbose: print('distribution\n' + str(u_s.safe_div(class_balance, n)))
+        
+    #
+    if any(class_balance == 0): return inputs_, targets_
 
     min_class = np.argmin(class_balance)
     min_samples = np.min(class_balance)
