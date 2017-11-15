@@ -9,7 +9,7 @@ import numpy as np
 from skimage import io
 from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
-
+import tensorflow as tf
 
 def down_sample(inputs_, targets_, no_class, verbose = False):
     class_balance = np.sum(targets_,0)
