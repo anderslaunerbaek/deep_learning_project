@@ -49,12 +49,12 @@ def save_weights(graph , fpath):
     variables = graph.get_collection("trainable_variables")
     variable_names = [v.name for v in variables]
     kwargs = dict(zip(variable_names, sess.run(variables)))
-    np.savez(fpath, **kwargs)
+    np.savez_compressed(fpath, **kwargs)
 
 
 def load_weights(graph, fpath):
     sess = tf.get_default_session()
-    variables = graph.get_collection("variables")
+    variables = graph.get_collection("trainable_variables")
     data = np.load(fpath)
     for v in variables:
         if v.name not in data:
