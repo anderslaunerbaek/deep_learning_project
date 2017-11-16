@@ -46,7 +46,7 @@ def down_sample(inputs_, targets_, no_class, verbose = False):
 
 def save_weights(graph , fpath):
     sess = tf.get_default_session()
-    variables = graph.get_collection("variables")
+    variables = graph.get_collection("trainable_variables")
     variable_names = [v.name for v in variables]
     kwargs = dict(zip(variable_names, sess.run(variables)))
     np.savez(fpath, **kwargs)
