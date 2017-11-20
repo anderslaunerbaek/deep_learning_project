@@ -16,8 +16,8 @@
 #import utils_s160159 as u_s
 
 #import matplotlib.pyplot as plt
-#import numpy as np
-#import tensorflow as tf
+import numpy as np
+import tensorflow as tf
 
 #from sklearn.model_selection import LeaveOneOut, KFold
 #from sklearn.metrics import confusion_matrix
@@ -25,7 +25,7 @@
 
 # In[ ]:
 
-#VERSION = '1.1'
+VERSION = '1.1'
 #FILENAME = 'master'
 
 print(VERSION)
