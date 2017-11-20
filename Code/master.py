@@ -26,7 +26,7 @@ from sklearn.metrics import confusion_matrix
 
 # In[ ]:
 
-VERSION = '1.0'
+VERSION = '1.1'
 FILENAME = 'master'
 
 
@@ -43,7 +43,7 @@ VAL_TRAIN_ID = NUM_SUBJECTS - 4
 
 # In[ ]:
 
-#Load all subjects into memory
+# Load all subjects into memory
 subjects_list = []
 for i in range(1,NUM_SUBJECTS+1):
     print("Loading subject %d of %d..." %(i, NUM_SUBJECTS), end='\r')
@@ -61,10 +61,8 @@ for i in range(1,NUM_SUBJECTS+1):
         targets_night2 = np.empty((0,NUM_CLASSES),dtype='uint8')           
 
     current_inputs = np.concatenate((inputs_night1,inputs_night2),axis=0)
-    current_targets = np.concatenate((targets_night1, targets_night2),axis=0)
-    
-    subjects_list.append([current_inputs, current_targets])
-        
+    current_targets = np.concatenate((targets_night1, targets_night2),axis=0)    
+    subjects_list.append([current_inputs, current_targets])       
 # extract image shapes
 IMAGE_SHAPE = subjects_list[0][0].shape
 
@@ -79,12 +77,18 @@ L_RATE = 10e-5
 L_RATE_MO_1 = 0.9
 L_RATE_MO_2 = 0.999
 EPS = 1e-8
+# Training Loop
+MAX_EPOCHS = 5 # 50
+BATCH_SIZE = 75 # 30 works on AWS 
+
+config = tf.ConfigProto(allow_soft_placement=True)
+config.gpu_options.allow_growth = False
+config.gpu_options.per_process_gpu_memory_fraction = 0.95
 
 
 # In[ ]:
 
 # https://www.cs.toronto.edu/~frossard/vgg16/vgg16.py
-
 # Load the weights into memory
 weights_dict = np.load(data_dir + '/' + 'vgg16_weights.npz', encoding='bytes')
 
@@ -108,21 +112,37 @@ def tf_max_pooling2d(inputs, name, kh = 2, kw = 2, dh = 2, dw = 2):
                               padding='VALID',
                               name=scope))        
 
-def tf_fully_con(inputs, name, n_out=4096):
+def tf_fully_con(inputs, name, n_out=4096, train_able = True):
     n_in = n_in = inputs.get_shape()[-1].value
-    with tf.name_scope(name) as scope:    
-        weights = tf.get_variable(shape=[n_in, n_out],
-                                  dtype=tf.float32,
-                                  initializer=tf.contrib.layers.xavier_initializer(),
-                                  name=scope + 'weights', 
-                                  trainable=True)
+    with tf.name_scope(name) as scope:
+        if train_able:
+            weights = tf.get_variable(shape=[n_in, n_out],
+                                      dtype=tf.float32,
+                                      initializer=tf.contrib.layers.xavier_initializer(),
+                                      name=scope + 'weights', 
+                                      trainable=True)
 
-        biases = tf.get_variable(shape=n_out,
-                                 dtype=tf.float32,
-                                 initializer=tf.constant_initializer(0.0),
-                                 trainable=True, 
-                                 name=scope + 'biases')
+            biases = tf.get_variable(shape=n_out,
+                                     dtype=tf.float32,
+                                     initializer=tf.constant_initializer(0.0),
+                                     trainable=True, 
+                                     name=scope + 'biases')
+        else:
+            weights = tf.get_variable(shape=[n_in, n_out],
+                                      dtype=tf.float32,
+                                      initializer=tf.constant_initializer(weights_dict[name + '_W']), 
+                                      name=scope + 'weights', 
+                                      trainable=False)
+
+            biases = tf.get_variable(shape=n_out,
+                                     dtype=tf.float32,
+                                     initializer=tf.constant_initializer(weights_dict[name + '_b']), 
+                                     trainable=False, 
+                                     name=scope + 'biases')
+        
+        #
         return(tf.nn.relu(tf.nn.bias_add(tf.matmul(inputs, weights), biases)))
+        
 
 
 # In[ ]:
@@ -131,19 +151,13 @@ def tf_fully_con(inputs, name, n_out=4096):
 
 # init model
 tf.reset_default_graph()
-
 keep_prob = 0.5
-
 # init placeholders
 x_pl = tf.placeholder(tf.float32, [None, HEIGTH, WIDTH, NCHANNELS], name='input_placeholder')
 y_pl = tf.placeholder(tf.float32, [None, NUM_CLASSES], name='target_placeholder')
-tf.add_to_collection('x_pl', x_pl)
-tf.add_to_collection('y_pl', y_pl)
-
 print('Trace of the tensors shape as it is propagated through the network.')
 print('Layer name \t Output size')
 print('--------------------------------------------')
-
 with tf.variable_scope('VVG16_layer'):
     # subtract image mean
     mu = tf.constant(np.array([115.79640507,127.70359263,119.96839583], dtype=np.float32), 
@@ -207,17 +221,17 @@ with tf.variable_scope('VVG16_layer'):
     net = tf.reshape(net, [-1, flattened_shape], name="flatten")
     print('flatten \t', net.get_shape())
     # level six
-    net = tf_fully_con(inputs=net, name='fc6', n_out=4096)
+    net = tf_fully_con(inputs=net, name='fc6', n_out=4096, train_able=False)
     print('fc6 \t\t', net.get_shape())
     net = tf.layers.dropout(inputs=net, name='fc6_dropout', rate=keep_prob)
 
     # level seven
-    net = tf_fully_con(inputs=net, name='fc7', n_out=4096)
+    net = tf_fully_con(inputs=net, name='fc7', n_out=4096, train_able=False)
     print('fc7 \t\t', net.get_shape())
     net = tf.layers.dropout(inputs=net, name='fc7_dropout', rate=keep_prob)
 
     # level eigth
-    logits = tf_fully_con(inputs=net, name='fc7', n_out=NUM_CLASSES)
+    logits = tf_fully_con(inputs=net, name='fc8', n_out=NUM_CLASSES)
     print('fc8 \t\t', logits.get_shape()) 
     print('--------------------------------------------')
     
@@ -242,13 +256,9 @@ with tf.variable_scope('performance'):
     prediction = tf.one_hot(tf.argmax(probs, axis=1), depth=NUM_CLASSES)
     prediction_bool = tf.equal(tf.argmax(probs, axis=1), tf.argmax(y_pl, axis=1))
     accuracy = tf.reduce_mean(tf.cast(prediction_bool, tf.float32))
-
-    tf.add_to_collection('probs', probs)
-    tf.add_to_collection('prediction', prediction)
-    tf.add_to_collection('prediction_bool', prediction_bool)
-    tf.add_to_collection('accuracy', accuracy)
     
-with tf.variable_scope('loss_function'):   
+with tf.variable_scope('loss_function'):
+    # computing cross entropy
     cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits,
                                                             labels=y_pl,
                                                             name='cross_entropy')
@@ -258,15 +268,8 @@ with tf.variable_scope('loss_function'):
                                        beta1=L_RATE_MO_1, 
                                        beta2=L_RATE_MO_2, 
                                        epsilon = EPS)
-    grads = optimizer.compute_gradients(loss)
-    train_model = optimizer.apply_gradients(grads)
     # applying the gradients
-    #train_model = optimizer.minimize(loss)
-    
-    
-    tf.add_to_collection('cross_entropy', cross_entropy)
-    tf.add_to_collection('loss', loss)
-    tf.add_to_collection('train_model', train_model)
+    train_model = optimizer.minimize(loss)
 
 #with tf.variable_scope('sensitivity_map'):
 #    # https://stackoverflow.com/questions/35226428/how-do-i-get-the-gradient-of-the-loss-at-a-tensorflow-variable
@@ -294,72 +297,65 @@ with tf.variable_scope('loss_function'):
 
 # In[ ]:
 
-# Test the forward pass    
-x_batch = subjects_list[0][0][0:4]
-y_batch = subjects_list[0][1][0:4]
-
-#config = tf.ConfigProto()
-#config.gpu_options.per_process_gpu_memory_fraction = 0.4
-
-
-#gpu_opts = tf.GPUOptions(per_process_gpu_memory_fraction=0.90)
-#sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_opts))
-#config_proto = tf.ConfigProto(allow_soft_placement=True)
-config = tf.ConfigProto(allow_soft_placement=True)
-#config.gpu_options.per_process_gpu_memory_fraction = 0.9
-#config.ALLOW_SOFT_PLACEMENT_FIELD_NUMBER = True
+# flow test
 if False:
-    sess_test = tf.Session(config=config)
+    # Test the forward pass    
+    x_batch = subjects_list[0][0][0:40]
+    y_batch = subjects_list[0][1][0:40]
+
+    sess = tf.Session(config=config)
     #tf.train.start_queue_runners(sess=sess_test)
-    with sess_test.as_default():
+    with sess.as_default():
         #
-        sess_test.run(tf.global_variables_initializer())
+        sess.run(tf.global_variables_initializer())
         #
-        tmp_net = sess_test.run(fetches=net, 
+        tmp_net = sess.run(fetches=net, 
                        feed_dict={x_pl: x_batch,
                                   y_pl: y_batch})
 
-        tmp_pred = sess_test.run(fetches=prediction, 
+        tmp_pred = sess.run(fetches=prediction, 
                    feed_dict={x_pl: x_batch})
 
-        tmp_pred_cor = sess_test.run(fetches=prediction_bool, 
+        tmp_pred_cor = sess.run(fetches=prediction_bool, 
                    feed_dict={x_pl: x_batch,
                              y_pl: y_batch})
 
-        tmp_accuracy = sess_test.run(fetches=accuracy, 
+        tmp_accuracy = sess.run(fetches=accuracy, 
                    feed_dict={x_pl: x_batch,
                              y_pl: y_batch})
 
-        tmp_cross_entropy = sess_test.run(fetches=cross_entropy, 
+        tmp_cross_entropy = sess.run(fetches=cross_entropy, 
                    feed_dict={x_pl: x_batch,
                              y_pl: y_batch})
 
-        tmp_loss = sess_test.run(fetches=loss, 
+        tmp_loss = sess.run(fetches=loss, 
                             feed_dict={x_pl: x_batch,
                                       y_pl: y_batch})
 
-        #tmp_grad_output_wrt_input = sess_test.run(fetches=grad_output_wrt_input, 
+        #tmp_grad_output_wrt_input = sess.run(fetches=grad_output_wrt_input, 
         #                    feed_dict={x_pl: x_batch, y_pl: y_batch})
 
-        _loss,_acc,_pred = sess_test.run(fetches=[loss, accuracy, prediction],
+        _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                             feed_dict={x_pl: x_batch, y_pl: y_batch})
+        
+        
 
         #u_s.cal_sen_map(grad_accum=x_batch, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
         #u_s.cal_sen_map(grad_accum=tmp_grad_output_wrt_input, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
         #x_batch = subjects_list[0][0][0:100]
         #y_batch = subjects_list[0][1][0:100]
         #print(time.ctime())
-        #_,tm2,tm3 = sess_test.run(fetches=[train_model, loss, accuracy],
+        #_,tm2,tm3 = sess.run(fetches=[train_model, loss, accuracy],
         #             feed_dict={x_pl: x_batch, y_pl: y_batch})
         #print(time.ctime())
         #x_batch = subjects_list[0][0][0:1]
         #y_batch = subjects_list[0][1][0:1]
-        #tmp_grad_output_wrt_input = sess_test.run(fetches=grad_output_wrt_input, 
+        #tmp_grad_output_wrt_input = sess.run(fetches=grad_output_wrt_input, 
         #                    feed_dict={x_pl: x_batch, y_pl: y_batch})
         #u_s.cal_sen_map(grad_accum=tmp_grad_output_wrt_input, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
-
+        #u_s.save_weights(graph= tf.get_default_graph(), fpath=data_dir + '/weigths.npz')
         # close session
-        sess_test.close()
+        sess.close()
 
     #assert y_pred.shape == np.zeros((len(x_batch),NUM_CLASSES)).shape, "ERROR the output shape is not as expected!" \
     #        + " Output shape should be " + str(l_out.shape) + ' but was ' + str(y_pred.shape)
@@ -371,22 +367,13 @@ if False:
 
 # In[ ]:
 
-# Training Loop
-MAX_EPOCHS = 5 # 50
-BATCH_SIZE = 75 # 30 works on AWS 
-
 capture_dict = {}
 sess = tf.Session(config=config)
-#tf.train.start_queue_runners(sess=sess)
 with sess.as_default():
     try:
         START_TIME = time.ctime()
-        # Creates a saver.
-        saver = tf.train.Saver()
         MODEL_PATH = "./models/"+ FILENAME + "/Version_" + VERSION + "_" + START_TIME
         if not os.path.exists(MODEL_PATH): os.makedirs(MODEL_PATH)
-        # initlize variables    
-        sess.run(tf.global_variables_initializer())
         print('Begin training loop... \n')
         
         # INTO VALIDATION
@@ -403,6 +390,10 @@ with sess.as_default():
         loo = LeaveOneOut()
         fold = 1   
         for idx_train, idx_test in loo.split(list(range(VAL_TRAIN_ID))):
+            
+            # initlize variables    
+            sess.run(tf.global_variables_initializer())
+            
             print("Fold %d of %d" %(fold, loo.get_n_splits(list(range(VAL_TRAIN_ID)))))
             capture_dict[fold] = {}
             #
@@ -427,6 +418,7 @@ with sess.as_default():
                 targets_test = np.concatenate((targets_test, test_data[ii][1]),axis=0)
                         
             # LOOP EPOCHS
+            print('\tTrain model')
             for epoch in range(MAX_EPOCHS):
                 print('\tEpoch: ' + str(epoch + 1) + ' of ' + str(MAX_EPOCHS))
                 # TRAIN
@@ -435,7 +427,6 @@ with sess.as_default():
                                                               targets_=targets_train_ep, 
                                                               no_class=NUM_CLASSES) 
 
-                print('\tTrain model')
                 _train_loss, _train_accuracy = [], []
                 _iter = 1
                 for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
@@ -462,8 +453,7 @@ with sess.as_default():
 
             # COMPUTE VALIDATION LOSS AND ACCURACY
             print('\tEvaluate validation performance')
-            pred = np.empty((BATCH_SIZE,),dtype='uint8')
-            pred_y_batch = np.empty((BATCH_SIZE,),dtype='uint8')
+            pred, pred_y_batch = [], []
             _iter = 1
             #
             for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
@@ -473,8 +463,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                pred = np.concatenate((pred, np.argmax(_pred,1)),axis=0)
-                pred_y_batch = np.concatenate((pred_y_batch, np.argmax(y_batch,1)),axis=0)
+                pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
+                pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
                 # append mean
                 valid_loss.append(_loss)
                 valid_accuracy.append(_acc)
@@ -484,16 +474,12 @@ with sess.as_default():
                 _iter += 1
                 # end loop
             # calculate performance
-            pred = pred[BATCH_SIZE:]
-            pred_y_batch = pred_y_batch[BATCH_SIZE:]
             cm_val = confusion_matrix(y_pred=pred, 
                                       y_true=pred_y_batch, 
                                       labels=list(range(NUM_CLASSES)))
-            
             # COMPUTE TEST LOSS AND ACCURACY
             print('\tEvaluate test performance')
-            pred = np.empty((BATCH_SIZE,),dtype='uint8')
-            pred_y_batch = np.empty((BATCH_SIZE,),dtype='uint8')
+            pred, pred_y_batch = [], []
             _iter = 1
             #
             for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
@@ -503,8 +489,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                pred = np.concatenate((pred, np.argmax(_pred,1)),axis=0)
-                pred_y_batch = np.concatenate((pred_y_batch, np.argmax(y_batch,1)),axis=0)
+                pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
+                pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
                 # append mean
                 test_loss.append(_loss)
                 test_accuracy.append(_acc)
@@ -514,8 +500,6 @@ with sess.as_default():
                 _iter += 1
                 # end loop
             # calculate performance
-            pred = pred[BATCH_SIZE:]
-            pred_y_batch = pred_y_batch[BATCH_SIZE:]
             cm_test = confusion_matrix(y_pred=pred, 
                                        y_true=pred_y_batch, 
                                        labels=list(range(NUM_CLASSES)))
@@ -532,11 +516,11 @@ with sess.as_default():
             
                 
             # SAVE STATS FOR CURRENT FOLD
-            np.savez(MODEL_PATH + "/capture_dict.npz", capture_dict)
+            np.savez_compressed(MODEL_PATH + "/capture_dict", capture_dict)
             # tf model
-            tf_save_path = MODEL_PATH + '/fold_' + str(fold)
-            if not os.path.exists(tf_save_path): os.makedirs(tf_save_path)
-            u_s.save_weights(graph= tf.get_default_graph(), fpath=tf_save_path + '/weigths.npz')
+            tf_save_path = MODEL_PATH + '/fold_' + str(fold) + '_weigths'
+            
+            u_s.save_weights(graph= tf.get_default_graph(), fpath=tf_save_path )
             print("Model and parameters saved...")
 
             # increase fold
