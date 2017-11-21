@@ -3,7 +3,7 @@
 ### -- specify queue --
 #BSUB -q hpc
 ### -- set the job Name --
-#BSUB -J master
+#BSUB -J RNN
 ### -- ask for number of cores (default: 1) --
 #BSUB -n 24
 ### -- set walltime limit: hh:mm --  maximum 24 hours for GPU-queues right now
@@ -20,7 +20,7 @@
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
 #BSUB -o tensorflow-cpu-%J.out
-##BSUB -e tensorflow-cpu-%J.err
+#BSUB -e tensorflow-cpu-%J.err
 # -- end of LSF options --
 
 # Load
@@ -28,7 +28,7 @@ module load python3/3.6.2
 module load scipy/0.19.1-python-3.6.2
 source /appl/tensorflow/1.4cpu-python362/bin/activate
 
-cd ~/Documents/Deep_Learning_Project/Code/ 
+cd ~/Documents/deep/Code/ 
 
 python3 rnn.py
 
