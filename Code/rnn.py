@@ -26,12 +26,13 @@ from sklearn.metrics import confusion_matrix
 
 ## load data ----
 VERSION = '1.1'
-FILENAME = 'master'
+FILENAME = 'rnn'
 data_dir = './../Data'
 logs_path = './logs'
 NUM_SUBJECTS = 20
 NUM_CLASSES = 6
 VAL_TRAIN_ID = NUM_SUBJECTS - 4
+HIDDEN_NUM = 5000
 
 # load all subjects into memory
 subjects_list = []
@@ -126,6 +127,35 @@ def tf_fully_con(inputs, name, n_out=4096, train_able = True):
         
         #
         return(tf.nn.relu(tf.nn.bias_add(tf.matmul(inputs, weights), biases)))
+
+def GRU_RNN(inputs, name, hidden_num, time_step_axis=2, num_classes=NUM_CLASSES):
+    #https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/3_NeuralNetworks/recurrent_network.py
+    with tf.name_scope(name) as scope:
+        
+        time_steps = inputs.shape[time_step_axis].value
+        
+
+        # variables
+        weights = tf.get_variable(shape=[hidden_num, num_classes],
+                                  dtype=tf.float32,
+                                  initializer=tf.random_normal_initializer(),
+                                  name=scope + 'weights', 
+                                  trainable=True)
+
+        biases = tf.get_variable(shape=num_classes,
+                                 dtype=tf.float32,
+                                 initializer=tf.random_normal_initializer(),
+                                 trainable=True, 
+                                 name=scope + 'biases')
+
+        # unstack
+        x = tf.unstack(value=inputs, num=time_steps, axis=time_step_axis)
+        # create Cell
+        
+        gru_cell = tf.nn.rnn_cell.GRUCell(num_units=hidden_num)
+        outputs, _ = tf.nn.static_rnn(cell=gru_cell, inputs=x, dtype=tf.float32, scope=name)
+        # return
+        return(tf.nn.relu(tf.nn.bias_add(tf.matmul(outputs[-1], weights), biases)))
         
 # https://github.com/huyng/tensorflow-vgg/blob/master/layers.py
 # init model
@@ -136,6 +166,7 @@ y_pl = tf.placeholder(tf.float32, [None, NUM_CLASSES], name='target_placeholder'
 print('Trace of the tensors shape as it is propagated through the network.')
 print('Layer name \t Output size')
 print('--------------------------------------------')
+
 with tf.variable_scope('VVG16_layer'):
     # subtract image mean
     mu = tf.constant(np.array([115.79640507,127.70359263,119.96839583], dtype=np.float32), 
@@ -193,25 +224,15 @@ with tf.variable_scope('VVG16_layer'):
     print('pool5 \t\t', net.get_shape())
     print('--------------------------------------------')
     
+    ## reshape
+    net = tf.reshape(net, [-1, 
+                           net.shape[1].value * net.shape[2].value, 
+                           net.shape[3].value])
+    print('reshape \t', net.get_shape())
     
-    # flatten
-    flattened_shape = np.prod([s.value for s in net.get_shape()[1:]])
-    net = tf.reshape(net, [-1, flattened_shape], name="flatten")
-    print('flatten \t', net.get_shape())
-    # level six
-    net = tf_fully_con(inputs=net, name='fc6', n_out=4096)
-    print('fc6 \t\t', net.get_shape())
-    net = tf.layers.dropout(inputs=net, name='fc6_dropout', rate=KEEP_PROB)
-
-    # level seven
-    net = tf_fully_con(inputs=net, name='fc7', n_out=4096)
-    print('fc7 \t\t', net.get_shape())
-    net = tf.layers.dropout(inputs=net, name='fc7_dropout', rate=KEEP_PROB)
-
-    # level eigth
-    logits = tf_fully_con(inputs=net, name='fc8', n_out=NUM_CLASSES)
-    print('fc8 \t\t', logits.get_shape()) 
-    print('--------------------------------------------')
+    ## rnn
+    logits = GRU_RNN(inputs=net, name='RNN', hidden_num=HIDDEN_NUM)
+    print('RNN \t', logits.get_shape())
         
 # print trainable 
 no_train_able = []

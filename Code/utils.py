@@ -6,8 +6,6 @@ Created on Tue Mar  8 16:27:26 2016
 """
 
 import numpy as np
-#from sklearn.utils import shuffle
-#from sklearn.preprocessing import minmax_scale
 
 # ############################# Batch iterator ###############################
 # This is just a simple helper function iterating over training data in
