@@ -1,0 +1,18 @@
+Loaded module: python3/3.6.2
+Loaded module: scipy/0.19.1-python-3.6.2
+2017-11-21 15:10:14.506430: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2017-11-21 15:10:14.550106: I tensorflow/core/common_runtime/direct_session.cc:299] Device mapping:
+
+2017-11-21 15:10:14.554603: I tensorflow/core/common_runtime/placer.cc:874] MatMul: (MatMul)/job:localhost/replica:0/task:0/device:CPU:0
+2017-11-21 15:10:14.554641: I tensorflow/core/common_runtime/placer.cc:874] b: (Const)/job:localhost/replica:0/task:0/device:CPU:0
+2017-11-21 15:10:14.554655: I tensorflow/core/common_runtime/placer.cc:874] a: (Const)/job:localhost/replica:0/task:0/device:CPU:0
+/appl/tensorflow/1.4cpu-python362/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+1.1
+[[ 22.  28.]
+ [ 49.  64.]]
+1.1
+Device mapping: no known devices.
+MatMul: (MatMul): /job:localhost/replica:0/task:0/device:CPU:0
+b: (Const): /job:localhost/replica:0/task:0/device:CPU:0
+a: (Const): /job:localhost/replica:0/task:0/device:CPU:0

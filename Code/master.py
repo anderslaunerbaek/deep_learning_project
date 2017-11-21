@@ -1,11 +1,6 @@
 
 # coding: utf-8
 
-# # Master notebook
-
-# In[ ]:
-
-from __future__ import absolute_import, division, print_function 
 import os
 import re
 import sys
@@ -21,7 +16,6 @@ import tensorflow as tf
 
 from sklearn.model_selection import LeaveOneOut, KFold
 from sklearn.metrics import confusion_matrix
-
 
 # In[ ]:
 

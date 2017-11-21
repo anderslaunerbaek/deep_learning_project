@@ -1,0 +1,16 @@
+Loaded module: python3/3.6.2
+Loaded module: scipy/0.19.1-python-3.6.2
+/appl/tensorflow/1.4cpu-python362/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+Traceback (most recent call last):
+  File "/zhome/d4/8/112215/Documents/Deep_Learning_Project/Code/master.py", line 58, in <module>
+    no_class=NUM_CLASSES)
+  File "/zhome/d4/8/112215/Documents/Deep_Learning_Project/Code/utils_s160159.py", line 116, in load_spectrograms
+    rawim = io.imread(data_path+'/sub'+str(subject_id)+'_n'+str(night_id)+'_img_'+sensors+'/img_'+ np.str(idx) +'.png')
+  File "/zhome/d4/8/112215/.local/lib/python3.6/site-packages/skimage/io/_io.py", line 61, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "/zhome/d4/8/112215/.local/lib/python3.6/site-packages/skimage/io/manage_plugins.py", line 211, in call_plugin
+    return func(*args, **kwargs)
+  File "/zhome/d4/8/112215/.local/lib/python3.6/site-packages/skimage/io/_plugins/pil_plugin.py", line 35, in imread
+    with open(fname, 'rb') as f:
+KeyboardInterrupt

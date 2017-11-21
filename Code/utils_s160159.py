@@ -6,8 +6,8 @@ Created on 09 10 2017
 """
 
 import numpy as np
-
-from scipy import misc
+from skimage import io
+from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
@@ -111,13 +111,10 @@ def load_spectrograms(data_path, subject_id, night_id, no_class):
 
     # init 
     inputs = np.zeros((num_images,224,224,3),dtype='uint8')
-
+    2
     for idx in range(1,num_images+1):    
-        rawim = misc.imread(data_path+'/sub'+str(subject_id)+'_n'+str(night_id)+'_img_'+sensors+'/img_'+ np.str(idx) +'.png')
-        h, w, _ = rawim.shape
-        if not (h==224 and w==224):
-        	rawim = misc.imresize(arr=rawim, size=(224, 224))
-        #
+        rawim = io.imread(data_path+'/sub'+str(subject_id)+'_n'+str(night_id)+'_img_'+sensors+'/img_'+ np.str(idx) +'.png')
+        if not (rawim.shape[0]==224 and rawim.shape[1]==224): rawim = skimage.transform.resize(rawim, (224, 224), preserve_range=True)
         inputs[idx-1,:,:,:]=rawim
     #
     return inputs, targets_one_hot, targets
