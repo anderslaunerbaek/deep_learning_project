@@ -4,18 +4,17 @@
 
 # In[ ]:
 
-#from __future__ import absolute_import, division, print_function 
-#import os
-#import re
-#import sys
-#import time
+from __future__ import absolute_import, division, print_function 
+import os
+import re
+import sys
+import time
 
-#sys.path.append(os.path.join('.', '..')) 
-#import utils
-#import utils_DL
-#import utils_s160159 as u_s
+sys.path.append(os.path.join('.', '..')) 
+import utils
+import utils_s160159 as u_s
 
-
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
