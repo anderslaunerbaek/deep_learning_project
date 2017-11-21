@@ -32,7 +32,7 @@ logs_path = './logs'
 NUM_SUBJECTS = 20
 NUM_CLASSES = 6
 VAL_TRAIN_ID = NUM_SUBJECTS - 4
-HIDDEN_NUM = 5000
+HIDDEN_NUM = 128
 
 # load all subjects into memory
 subjects_list = []
@@ -427,7 +427,7 @@ with sess.as_default():
 
             # COMPUTE VALIDATION LOSS AND ACCURACY
             print('\tEvaluate validation performance')
-            pred, pred_y_batch = [], []
+            val_pred, val_pred_y_batch = [], []
             _iter = 1
             #
             for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
@@ -437,8 +437,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
-                pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
+                val_pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
+                val_pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
                 # append mean
                 valid_loss.append(_loss)
                 valid_accuracy.append(_acc)
@@ -448,12 +448,12 @@ with sess.as_default():
                 _iter += 1
                 # end loop
             # calculate performance
-            cm_val = confusion_matrix(y_pred=pred, 
-                                      y_true=pred_y_batch, 
+            cm_val = confusion_matrix(y_pred=val_pred, 
+                                      y_true=val_pred_y_batch, 
                                       labels=list(range(NUM_CLASSES)))
             # COMPUTE TEST LOSS AND ACCURACY
             print('\tEvaluate test performance')
-            pred, pred_y_batch = [], []
+            test_pred, test_pred_y_batch = [], []
             _iter = 1
             #
             for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
@@ -463,8 +463,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
-                pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
+                test_pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
+                test_pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
                 # append mean
                 test_loss.append(_loss)
                 test_accuracy.append(_acc)
@@ -474,13 +474,17 @@ with sess.as_default():
                 _iter += 1
                 # end loop
             # calculate performance
-            cm_test = confusion_matrix(y_pred=pred, 
-                                       y_true=pred_y_batch, 
+            cm_test = confusion_matrix(y_pred=test_pred, 
+                                       y_true=test_pred_y_batch, 
                                        labels=list(range(NUM_CLASSES)))
 
             # CAPTURE STATS FOR CURRENT FOLD
             capture_dict[fold] = {'cm_test': cm_test,
+            					  'val_pred': val_pred, 
+            					  'val_pred_y_batch': val_pred_y_batch,
                                   'cm_val': cm_val,
+            					  'test_pred': test_pred, 
+            					  'test_pred_y_batch': test_pred_y_batch,
                                   'train_loss': np.nanmean(train_loss),
                                   'train_accuracy': np.nanmean(train_accuracy),
                                   'test_loss': np.nanmean(test_loss),
