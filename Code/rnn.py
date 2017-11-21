@@ -32,7 +32,7 @@ logs_path = './logs'
 NUM_SUBJECTS = 20
 NUM_CLASSES = 6
 VAL_TRAIN_ID = NUM_SUBJECTS - 4
-HIDDEN_NUM = 128
+HIDDEN_NUM = 512
 
 # load all subjects into memory
 subjects_list = []
@@ -480,11 +480,11 @@ with sess.as_default():
 
             # CAPTURE STATS FOR CURRENT FOLD
             capture_dict[fold] = {'cm_test': cm_test,
-            					  'val_pred': val_pred, 
-            					  'val_pred_y_batch': val_pred_y_batch,
+                                  'val_pred': val_pred, 
+                                  'val_pred_y_batch': val_pred_y_batch,
                                   'cm_val': cm_val,
-            					  'test_pred': test_pred, 
-            					  'test_pred_y_batch': test_pred_y_batch,
+                                  'test_pred': test_pred,
+                                  'test_pred_y_batch': test_pred_y_batch,
                                   'train_loss': np.nanmean(train_loss),
                                   'train_accuracy': np.nanmean(train_accuracy),
                                   'test_loss': np.nanmean(test_loss),
