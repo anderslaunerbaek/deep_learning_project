@@ -1,4 +1,0 @@
-Loaded module: python3/3.6.2
-Loaded module: scipy/0.19.1-python-3.6.2
-2017-11-21 16:50:50.843130: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
-Terminated
