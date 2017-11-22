@@ -399,7 +399,6 @@ with sess.as_default():
                                                             np.nanmean(_train_accuracy)),end='\r')
                     _iter += 1
                     # end loop
-                break
                 # append mean loss and accuracy
                 train_loss.append(np.nanmean(_train_loss))
                 train_accuracy.append(np.nanmean(_train_accuracy))
@@ -490,7 +489,6 @@ with sess.as_default():
 
             # increase fold
             fold += 1
-            break
         # end loop and traning    
         print('\n... end training loop')
         print('started at: ' + START_TIME)
