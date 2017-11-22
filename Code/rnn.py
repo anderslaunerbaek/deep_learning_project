@@ -479,7 +479,10 @@ with sess.as_default():
                                        labels=list(range(NUM_CLASSES)))
 
             # CAPTURE STATS FOR CURRENT FOLD
-            capture_dict[fold] = {'cm_test': cm_test,
+            capture_dict[fold] = {'idx_train': idx_train,
+                                  'idx_test': idx_test,
+                                  'idx_val': idx_val,
+                                  'cm_test': cm_test,
                                   'val_pred': val_pred, 
                                   'val_pred_y_batch': val_pred_y_batch,
                                   'cm_val': cm_val,

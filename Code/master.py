@@ -399,6 +399,7 @@ with sess.as_default():
                                                             np.nanmean(_train_accuracy)),end='\r')
                     _iter += 1
                     # end loop
+                break
                 # append mean loss and accuracy
                 train_loss.append(np.nanmean(_train_loss))
                 train_accuracy.append(np.nanmean(_train_accuracy))
@@ -452,13 +453,20 @@ with sess.as_default():
                                                         np.nanmean(test_accuracy)),end='\r')
                 _iter += 1
                 # end loop
+            print("test_pred")
+            print(test_pred)
+            print("test_pred_y_batch")
+            print(test_pred_y_batch)
             # calculate performance
             cm_test = confusion_matrix(y_pred=test_pred, 
                                        y_true=test_pred_y_batch, 
                                        labels=list(range(NUM_CLASSES)))
 
             # CAPTURE STATS FOR CURRENT FOLD
-            capture_dict[fold] = {'cm_test': cm_test,
+            capture_dict[fold] = {'idx_train': idx_train,
+                                  'idx_test': idx_test,
+                                  'idx_val': idx_val,
+                                  'cm_test': cm_test,
                                   'val_pred': val_pred, 
                                   'val_pred_y_batch': val_pred_y_batch,
                                   'cm_val': cm_val,
@@ -482,6 +490,7 @@ with sess.as_default():
 
             # increase fold
             fold += 1
+            break
         # end loop and traning    
         print('\n... end training loop')
         print('started at: ' + START_TIME)
