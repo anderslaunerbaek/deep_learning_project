@@ -3,7 +3,7 @@
 ### -- specify queue --
 #BSUB -q hpc
 ### -- set the job Name --
-#BSUB -J RNN
+#BSUB -J RNN_v2
 ### -- ask for number of cores (default: 1) --
 #BSUB -n 24
 ### -- set walltime limit: hh:mm --  maximum 24 hours for GPU-queues right now
@@ -19,8 +19,8 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o tensorflow-cpu-%J.out
-#BSUB -e tensorflow-cpu-%J.err
+#BSUB -o tensorflow_v2-cpu-%J.out
+##BSUB -e tensorflow_v2-cpu-%J.err
 # -- end of LSF options --
 
 # Load

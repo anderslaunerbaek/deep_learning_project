@@ -25,7 +25,7 @@ from sklearn.metrics import confusion_matrix
 
 
 ## load data ----
-VERSION = '1.1'
+VERSION = '2.0'
 FILENAME = 'rnn'
 data_dir = './../Data'
 logs_path = './logs'
@@ -437,8 +437,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                val_pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
-                val_pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
+                val_pred += [np.argmax(_pred[ii],1) for ii in range(len(_pred))]
+                val_pred_y_batch += [np.argmax(y_batch[ii],1) for ii in range(len(y_batch))]
                 # append mean
                 valid_loss.append(_loss)
                 valid_accuracy.append(_acc)
@@ -463,8 +463,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                test_pred += [np.argmax(_pred,1)[ii] for ii in range(len(_pred))]
-                test_pred_y_batch += [np.argmax(y_batch,1)[ii] for ii in range(len(y_batch))]
+                test_pred += [np.argmax(_pred[ii],1) for ii in range(len(_pred))]
+                test_pred_y_batch += [np.argmax(y_batch[ii],1) for ii in range(len(y_batch))]
                 # append mean
                 test_loss.append(_loss)
                 test_accuracy.append(_acc)
@@ -473,6 +473,7 @@ with sess.as_default():
                                                         np.nanmean(test_accuracy)),end='\r')
                 _iter += 1
                 # end loop
+                
             # calculate performance
             cm_test = confusion_matrix(y_pred=test_pred, 
                                        y_true=test_pred_y_batch, 
