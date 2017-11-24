@@ -437,8 +437,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                val_pred += [np.argmax(_pred[ii],1) for ii in range(len(_pred))]
-                val_pred_y_batch += [np.argmax(y_batch[ii],1) for ii in range(len(y_batch))]
+                val_pred += [np.argmax(_pred[ii]) for ii in range(len(_pred))]
+                val_pred_y_batch += [np.argmax(y_batch[ii]) for ii in range(len(y_batch))]
                 # append mean
                 valid_loss.append(_loss)
                 valid_accuracy.append(_acc)
@@ -463,8 +463,8 @@ with sess.as_default():
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
-                test_pred += [np.argmax(_pred[ii],1) for ii in range(len(_pred))]
-                test_pred_y_batch += [np.argmax(y_batch[ii],1) for ii in range(len(y_batch))]
+                test_pred += [np.argmax(_pred[ii]) for ii in range(len(_pred))]
+                test_pred_y_batch += [np.argmax(y_batch[ii]) for ii in range(len(y_batch))]
                 # append mean
                 test_loss.append(_loss)
                 test_accuracy.append(_acc)

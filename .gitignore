@@ -5,7 +5,7 @@
 *.gz
 Synopsis/synopsis.pdf
 
-
+Data_dicts/*
 Data_1/*
 Data/*
 */.texpadtmp/*
@@ -24,3 +24,4 @@ Code/logs/*
 Code/models/*
 Code/pics/*
 tensorflow-cpu*
+
