@@ -366,7 +366,6 @@ with sess.as_default():
             # LOOP EPOCHS
             print('\tTrain model')
             for epoch in range(MAX_EPOCHS):
-                break
                 print('\tEpoch: ' + str(epoch + 1) + ' of ' + str(MAX_EPOCHS))
                 # TRAIN
                 # down sample
@@ -419,14 +418,11 @@ with sess.as_default():
                                                         np.nanmean(valid_loss),
                                                         np.nanmean(valid_accuracy)),end='\r')
                 _iter += 1
-                break
                 # end loop
             # calculate performance
             cm_val = confusion_matrix(y_pred=val_pred, 
                                       y_true=val_pred_y_batch, 
                                       labels=list(range(NUM_CLASSES)))
-            print(cm_val)
-            break 
             # COMPUTE TEST LOSS AND ACCURACY
             print('\tEvaluate test performance')
             test_pred, test_pred_y_batch = [], []
@@ -436,7 +432,6 @@ with sess.as_default():
                                                               inputs=inputs_test, 
                                                               targets=targets_test, 
                                                               shuffle=False):
-                break
                 _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
@@ -455,7 +450,7 @@ with sess.as_default():
             cm_test = confusion_matrix(y_pred=test_pred, 
                                        y_true=test_pred_y_batch, 
                                        labels=list(range(NUM_CLASSES)))
-
+            print(cm_test)
             # CAPTURE STATS FOR CURRENT FOLD
             capture_dict[fold] = {'idx_train': idx_train,
                                   'idx_test': idx_test,
@@ -484,7 +479,6 @@ with sess.as_default():
 
             # increase fold
             fold += 1
-            break
         # end loop and traning    
         print('\n... end training loop')
         print('started at: ' + START_TIME)
@@ -494,3 +488,4 @@ with sess.as_default():
 
     except KeyboardInterrupt:
         pass
+
