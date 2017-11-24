@@ -19,8 +19,8 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o tensorflow_v2-cpu-%J.out
-##BSUB -e tensorflow_v2-cpu-%J.err
+#BSUB -o tensorflow-v2-cpu-%J.out
+##BSUB -e tensorflow-v2-cpu-%J.err
 # -- end of LSF options --
 
 # Load
