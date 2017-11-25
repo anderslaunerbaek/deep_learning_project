@@ -3,7 +3,7 @@
 ### -- specify queue --
 #BSUB -q hpc
 ### -- set the job Name --
-#BSUB -J RNN_v2
+#BSUB -J RNN_v3
 ### -- ask for number of cores (default: 1) --
 #BSUB -n 24
 ### -- set walltime limit: hh:mm --  maximum 24 hours for GPU-queues right now
@@ -19,8 +19,8 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o tensorflow-v2-cpu-%J.out
-##BSUB -e tensorflow-v2-cpu-%J.err
+#BSUB -o tensorflow_v3_rnn-cpu-%J.out
+##BSUB -e tensorflow_v3_rnn-cpu-%J.err
 # -- end of LSF options --
 
 # Load
@@ -31,6 +31,3 @@ source /appl/tensorflow/1.4cpu-python362/bin/activate
 cd ~/Documents/deep/Code/ 
 
 python3 rnn.py
-
-
-

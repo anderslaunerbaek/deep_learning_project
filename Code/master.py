@@ -25,7 +25,7 @@ from sklearn.metrics import confusion_matrix
 
 
 ## load data ----
-VERSION = '2.0'
+VERSION = '3.0'
 FILENAME = 'master'
 data_dir = './../Data'
 logs_path = './logs'
@@ -58,7 +58,7 @@ L_RATE_MO_2 = 0.999
 EPS = 1e-8
 KEEP_PROB = 0.5
 # Training Loop
-MAX_EPOCHS = 5 # 50
+MAX_EPOCHS = 10
 BATCH_SIZE = 250 #
 
 config = tf.ConfigProto(allow_soft_placement=True)
@@ -131,12 +131,13 @@ print('Layer name \t Output size')
 print('--------------------------------------------')
 with tf.variable_scope('VVG16_layer'):
     # subtract image mean
-    mu = tf.constant(np.array([115.79640507,127.70359263,119.96839583], dtype=np.float32), 
-                     name="rgb_mean")
-    net = tf.subtract(x_pl, mu, name="input_mean_centered")
+    #mu = tf.constant(np.array([115.79640507,127.70359263,119.96839583], dtype=np.float32), 
+    #                 name="rgb_mean")
+    #net = tf.subtract(x_pl, mu, name="input_mean_centered")
     
     # level one
-    net = tf_conv2d(inputs=net, name='conv1_1')
+    net = tf_conv2d(inputs=x_pl, name='conv1_1')
+    #net = tf_conv2d(inputs=net, name='conv1_1')
     print('conv1_1 \t', net.get_shape())
     net = tf_conv2d(inputs=net, name='conv1_2')
     print('conv1_2 \t', net.get_shape())
@@ -214,7 +215,6 @@ print('Model consits of ', np.sum(no_train_able), 'trainable parameters.')
 
 
 ## OPTIMISATION ----
-
 with tf.variable_scope('performance'):
     probs = tf.nn.softmax(logits)
     prediction = tf.one_hot(tf.argmax(probs, axis=1), depth=NUM_CLASSES)
@@ -223,17 +223,17 @@ with tf.variable_scope('performance'):
     
 with tf.variable_scope('loss_function'):
     # computing cross entropy
-    cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits,
-                                                            labels=y_pl,
-                                                            name='cross_entropy')
-    loss = tf.reduce_mean(cross_entropy)
+    cross_entropy = -tf.reduce_sum(y_pl * tf.log(probs+EPS), reduction_indices=[1])
+    # averaging over samples
+    cross_entropy = tf.reduce_mean(cross_entropy)
+    
     # defining our optimizer
     optimizer = tf.train.AdamOptimizer(learning_rate=L_RATE,  
                                        beta1=L_RATE_MO_1, 
                                        beta2=L_RATE_MO_2, 
                                        epsilon = EPS)
     # applying the gradients
-    train_model = optimizer.minimize(loss)
+    train_model = optimizer.minimize(cross_entropy)
 
 
 ## Test flow for model ----
@@ -279,14 +279,14 @@ if False:
                    feed_dict={x_pl: x_batch,
                              y_pl: y_batch})
 
-        tmp_loss = sess.run(fetches=loss, 
+        tmp_loss = sess.run(fetches=cross_entropy, 
                             feed_dict={x_pl: x_batch,
                                       y_pl: y_batch})
 
         #tmp_grad_output_wrt_input = sess.run(fetches=grad_output_wrt_input, 
         #                    feed_dict={x_pl: x_batch, y_pl: y_batch})
 
-        _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
+        _loss,_acc,_pred = sess.run(fetches=[cross_entropy, accuracy, prediction],
                             feed_dict={x_pl: x_batch, y_pl: y_batch})
         
         #u_s.cal_sen_map(grad_accum=x_batch, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
@@ -294,7 +294,7 @@ if False:
         #x_batch = subjects_list[0][0][0:100]
         #y_batch = subjects_list[0][1][0:100]
         #print(time.ctime())
-        #_,tm2,tm3 = sess.run(fetches=[train_model, loss, accuracy],
+        #_,tm2,tm3 = sess.run(fetches=[train_model, cross_entropy, accuracy],
         #             feed_dict={x_pl: x_batch, y_pl: y_batch})
         #print(time.ctime())
         #x_batch = subjects_list[0][0][0:1]
@@ -380,7 +380,7 @@ with sess.as_default():
                                                                   targets=targets_train, 
                                                                   shuffle=False):
                     #
-                    _,_loss,_acc = sess.run(fetches=[train_model, loss, accuracy],
+                    _,_loss,_acc = sess.run(fetches=[train_model, cross_entropy, accuracy],
                                              feed_dict={x_pl: x_batch, y_pl: y_batch})
                     
                     # append to mini batch
@@ -488,4 +488,5 @@ with sess.as_default():
 
     except KeyboardInterrupt:
         pass
+
 
