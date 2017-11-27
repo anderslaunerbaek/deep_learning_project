@@ -406,7 +406,7 @@ with sess.as_default():
                                                               inputs=inputs_val, 
                                                               targets=targets_val, 
                                                               shuffle=False):
-                _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
+                _loss,_acc,_pred = sess.run(fetches=[cross_entropy, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
                 val_pred += [np.argmax(_pred[ii]) for ii in range(len(_pred))]
@@ -432,7 +432,7 @@ with sess.as_default():
                                                               inputs=inputs_test, 
                                                               targets=targets_test, 
                                                               shuffle=False):
-                _loss,_acc,_pred = sess.run(fetches=[loss, accuracy, prediction],
+                _loss,_acc,_pred = sess.run(fetches=[cross_entropy, accuracy, prediction],
                                             feed_dict={x_pl: x_batch, y_pl: y_batch})
                 # append prediction
                 test_pred += [np.argmax(_pred[ii]) for ii in range(len(_pred))]
@@ -488,5 +488,6 @@ with sess.as_default():
 
     except KeyboardInterrupt:
         pass
+
 
 
