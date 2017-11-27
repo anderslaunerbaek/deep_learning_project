@@ -3,7 +3,7 @@
 ### -- specify queue --
 #BSUB -q hpc
 ### -- set the job Name --
-#BSUB -J master_v3
+#BSUB -J master_v4
 ### -- ask for number of cores (default: 1) --
 #BSUB -n 24
 ### -- set walltime limit: hh:mm --  maximum 24 hours for GPU-queues right now
@@ -19,8 +19,8 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o tensorflow_v3_master-cpu-%J.out
-##BSUB -e tensorflow_v3_master-cpu-%J.err
+#BSUB -o tensorflow_v4_master-cpu-%J.out
+##BSUB -e tensorflow_v4_master-cpu-%J.err
 # -- end of LSF options --
 
 # Load

@@ -5,7 +5,10 @@ Created on Tue Nov 21 16:24:01 2017
 @author: s160159
 """
 
-## import ----
+"""
+IMPORT LIBRARIES
+- 
+"""
 
 import os
 import re
@@ -15,23 +18,31 @@ import time
 sys.path.append(os.path.join('.', '..')) 
 import utils
 import utils_s160159 as u_s
+import vgg
 
-import matplotlib.pyplot as plt
+
 import numpy as np
 import tensorflow as tf
+slim = tf.contrib.slim
 
 from sklearn.model_selection import LeaveOneOut, KFold
 from sklearn.metrics import confusion_matrix
 
-
-## load data ----
-VERSION = '3.0'
+"""
+LOAD DATA
+- 
+"""
+VERSION = '4.0'
 FILENAME = 'master'
+TRAIN_MODEL = True
+TRAIN_MODEL_PATH ='...'
+INITIAL_MODEL_PATH ='./../Data/vgg_16.ckpt'
+
 data_dir = './../Data'
 logs_path = './logs'
 NUM_SUBJECTS = 20
 NUM_CLASSES = 6
-VAL_TRAIN_ID = NUM_SUBJECTS - 4
+VAL_TRAIN_ID = NUM_SUBJECTS - 2
 
 # load all subjects into memory
 subjects_list = []
@@ -49,269 +60,128 @@ for ii in range(1,NUM_SUBJECTS+1):
 # extract image shapes
 IMAGE_SHAPE = subjects_list[0][0].shape
 
-## Building the model ----
-# hyper parameters
+"""
+HYPERPARAMETERS:
+- 
+"""
+
+# hyperameters
 HEIGTH, WIDTH, NCHANNELS = IMAGE_SHAPE[1], IMAGE_SHAPE[2], IMAGE_SHAPE[3]
 L_RATE = 10e-5
 L_RATE_MO_1 = 0.9
 L_RATE_MO_2 = 0.999
 EPS = 1e-8
-KEEP_PROB = 0.5
+DO_KEEP_PROB = 0.5
+
 # Training Loop
-MAX_EPOCHS = 10
-BATCH_SIZE = 250 #
+MAX_EPOCHS = 50
+BATCH_SIZE = 32
 
 config = tf.ConfigProto(allow_soft_placement=True)
 config.gpu_options.allow_growth = False
 config.gpu_options.per_process_gpu_memory_fraction = 0.95
 
-# https://www.cs.toronto.edu/~frossard/vgg16/vgg16.py
-# Load the weights into memory
-weights_dict = np.load(data_dir + '/' + 'vgg16_weights.npz', encoding='bytes')
 
-def tf_conv2d(inputs, name):
-    with tf.name_scope(name) as scope:
-        weights = tf.get_variable(shape=weights_dict[name + '_W'].shape, 
-                                  initializer=tf.constant_initializer(weights_dict[name + '_W']),
-                                  name=scope + 'weights', 
-                                  trainable=False)
-        conv = tf.nn.conv2d(inputs, weights, strides=[1, 1, 1, 1], padding='SAME')
-        biases = tf.get_variable(shape=weights_dict[name + '_b'].shape,
-                                 initializer=tf.constant_initializer(weights_dict[name + '_b']), 
-                                 trainable=False, name=scope + 'biases')
-        return(tf.nn.relu(tf.nn.bias_add(conv, biases), name=scope))
-        
-def tf_max_pooling2d(inputs, name, kh = 2, kw = 2, dh = 2, dw = 2):
-    with tf.name_scope(name) as scope:
-        return(tf.nn.max_pool(inputs,
-                              ksize=[1, kh, kw, 1],
-                              strides=[1, dh, dw, 1],
-                              padding='VALID',
-                              name=scope))        
-
-def tf_fully_con(inputs, name, n_out=4096, train_able = True):
-    n_in = n_in = inputs.get_shape()[-1].value
-    with tf.name_scope(name) as scope:
-        if train_able:
-            weights = tf.get_variable(shape=[n_in, n_out],
-                                      dtype=tf.float32,
-                                      initializer=tf.contrib.layers.xavier_initializer(),
-                                      name=scope + 'weights', 
-                                      trainable=True)
-
-            biases = tf.get_variable(shape=n_out,
-                                     dtype=tf.float32,
-                                     initializer=tf.constant_initializer(0.0),
-                                     trainable=True, 
-                                     name=scope + 'biases')
-        else:
-            weights = tf.get_variable(shape=[n_in, n_out],
-                                      dtype=tf.float32,
-                                      initializer=tf.constant_initializer(weights_dict[name + '_W']), 
-                                      name=scope + 'weights', 
-                                      trainable=False)
-
-            biases = tf.get_variable(shape=n_out,
-                                     dtype=tf.float32,
-                                     initializer=tf.constant_initializer(weights_dict[name + '_b']), 
-                                     trainable=False, 
-                                     name=scope + 'biases')
-        
-        #
-        return(tf.nn.relu(tf.nn.bias_add(tf.matmul(inputs, weights), biases)))
-        
-# https://github.com/huyng/tensorflow-vgg/blob/master/layers.py
+"""
+BUILD THE MODEL:
+- https://github.com/huyng/tensorflow-vgg/blob/master/layers.py
+- https://raw.githubusercontent.com/tensorflow/models/master/research/slim/nets/vgg.py
+"""
 # init model
 tf.reset_default_graph()
+
 # init placeholders
 x_pl = tf.placeholder(tf.float32, [None, HEIGTH, WIDTH, NCHANNELS], name='input_placeholder')
 y_pl = tf.placeholder(tf.float32, [None, NUM_CLASSES], name='target_placeholder')
-print('Trace of the tensors shape as it is propagated through the network.')
-print('Layer name \t Output size')
-print('--------------------------------------------')
-with tf.variable_scope('VVG16_layer'):
-    # subtract image mean
-    #mu = tf.constant(np.array([115.79640507,127.70359263,119.96839583], dtype=np.float32), 
-    #                 name="rgb_mean")
-    #net = tf.subtract(x_pl, mu, name="input_mean_centered")
+
+# init pretained TF graph 
+logits, _ = vgg.vgg_16(inputs=x_pl, 
+                       dropout_keep_prob=DO_KEEP_PROB, 
+                       spatial_squeeze=True, 
+                       is_training=True, 
+                       num_classes=NUM_CLASSES)
+
+
+init_fn = slim.assign_from_checkpoint_fn(ignore_missing_vars=True,
+                                         model_path=INITIAL_MODEL_PATH, 
+                                         var_list=slim.get_variables_to_restore(exclude=['vgg_16/fc6','vgg_16/fc7','vgg_16/fc8']))
+
+#init_fn_trained = slim.assign_from_checkpoint_fn(ignore_missing_vars=False, 
+#                                                 var_list=tf.GraphKeys.VARIABLES(),
+#                                                 model_path=TRAIN_MODEL_PATH)
+
+# slim.get_model_variables()
+#no_train_able = []
+#for i in tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='vgg_16'):
+#    no_train_able.append(np.prod(i.shape[:]).value)   # i.name if you want just a name   
+#print('Model consits of ', np.sum(no_train_able), 'trainable parameters.')
+
+"""
+
+"""
+# with tf.variable_scope('performance'):
+probs = tf.nn.softmax(logits)
+prediction = tf.one_hot(tf.argmax(probs, axis=1), depth=NUM_CLASSES)
+prediction_bool = tf.equal(tf.argmax(probs, axis=1), tf.argmax(y_pl, axis=1))
+accuracy = tf.reduce_mean(tf.cast(prediction_bool, tf.float32))
+
+#with tf.variable_scope('loss_function'):
+# computing cross entropy
+cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,
+                                                        labels=y_pl,
+                                                        name='cross_entropy'))
+# defining our optimizer
+optimizer = tf.train.AdamOptimizer(learning_rate=L_RATE,  
+                                   beta1=L_RATE_MO_1, 
+                                   beta2=L_RATE_MO_2, 
+                                   epsilon = EPS)
+# applying the gradients
+train_model = optimizer.minimize(cross_entropy)
     
-    # level one
-    net = tf_conv2d(inputs=x_pl, name='conv1_1')
-    #net = tf_conv2d(inputs=net, name='conv1_1')
-    print('conv1_1 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv1_2')
-    print('conv1_2 \t', net.get_shape())
-    net = tf_max_pooling2d(inputs=net, name='pool1')
-    print('pool1 \t\t', net.get_shape())
-    print('--------------------------------------------')
-    
-    # level two
-    net = tf_conv2d(inputs=net, name='conv2_1')
-    print('conv2_1 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv2_2')
-    print('conv2_2 \t', net.get_shape())
-    net = tf_max_pooling2d(inputs=net, name='pool2')
-    print('pool2 \t\t', net.get_shape())
-    print('--------------------------------------------')
-    
-    # level three
-    net = tf_conv2d(inputs=net, name='conv3_1')
-    print('conv3_1 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv3_2')
-    print('conv3_2 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv3_3')
-    print('conv3_3 \t', net.get_shape())
-    net = tf_max_pooling2d(inputs=net, name='pool_3')
-    print('pool3 \t\t', net.get_shape())
-    print('--------------------------------------------')
-    
-    # level four
-    net = tf_conv2d(inputs=net, name='conv4_1')
-    print('conv4_1 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv4_2')
-    print('conv4_2 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv4_3')
-    print('conv4_3 \t', net.get_shape())
-    net = tf_max_pooling2d(inputs=net, name='pool_4')
-    print('pool4 \t\t', net.get_shape())
-    print('--------------------------------------------')
-
-    # level five
-    net = tf_conv2d(inputs=net, name='conv5_1')
-    print('conv5_1 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv5_2')
-    print('conv5_2 \t', net.get_shape())
-    net = tf_conv2d(inputs=net, name='conv5_3')
-    print('conv5_3 \t', net.get_shape())
-    net = tf_max_pooling2d(inputs=net, name='pool_5')
-    print('pool5 \t\t', net.get_shape())
-    print('--------------------------------------------')
-    
-    
-    # flatten
-    net = tf.contrib.layers.flatten(inputs=net)
-    print('flatten \t', net.get_shape())
-    # level six
-    net = tf_fully_con(inputs=net, name='fc6', n_out=4096)
-    print('fc6 \t\t', net.get_shape())
-    net = tf.layers.dropout(inputs=net, name='fc6_dropout', rate=KEEP_PROB)
-
-    # level seven
-    net = tf_fully_con(inputs=net, name='fc7', n_out=4096)
-    print('fc7 \t\t', net.get_shape())
-    net = tf.layers.dropout(inputs=net, name='fc7_dropout', rate=KEEP_PROB)
-
-    # level eigth
-    logits = tf_fully_con(inputs=net, name='fc8', n_out=NUM_CLASSES)
-    print('fc8 \t\t', logits.get_shape()) 
-    print('--------------------------------------------')
-        
-# print trainable 
-no_train_able = []
-for i in tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='VVG16_layer'):
-    no_train_able.append(np.prod(i.shape[:]).value)   # i.name if you want just a name   
-print('Model consits of ', np.sum(no_train_able), 'trainable parameters.')
+#with tf.variable_scope('sensitivity_map'):   
+# https://stackoverflow.com/questions/35226428/how-do-i-get-the-gradient-of-the-loss-at-a-tensorflow-variable
+# https://www.tensorflow.org/versions/r0.12/api_docs/python/train/gradient_computation
+sensitivity_map = tf.gradients(cross_entropy, [x_pl], name='sensitivity_map')[0]
 
 
-## OPTIMISATION ----
-with tf.variable_scope('performance'):
-    probs = tf.nn.softmax(logits)
-    prediction = tf.one_hot(tf.argmax(probs, axis=1), depth=NUM_CLASSES)
-    prediction_bool = tf.equal(tf.argmax(probs, axis=1), tf.argmax(y_pl, axis=1))
-    accuracy = tf.reduce_mean(tf.cast(prediction_bool, tf.float32))
-    
-with tf.variable_scope('loss_function'):
-    # computing cross entropy
-    cross_entropy = -tf.reduce_sum(y_pl * tf.log(probs+EPS), reduction_indices=[1])
-    # averaging over samples
-    cross_entropy = tf.reduce_mean(cross_entropy)
-    
-    # defining our optimizer
-    optimizer = tf.train.AdamOptimizer(learning_rate=L_RATE,  
-                                       beta1=L_RATE_MO_1, 
-                                       beta2=L_RATE_MO_2, 
-                                       epsilon = EPS)
-    # applying the gradients
-    train_model = optimizer.minimize(cross_entropy)
+"""
+TESTING THE MODEL STRUCTURE 
+"""
+#sess = tf.Session(config=config)
+#with sess.as_default():    
+#x_batch_1 = subjects_list[0][0]
+#y_batch_1 = subjects_list[0][1]
+#x_batch_2 = subjects_list[1][0][41:62]
+#y_batch_2 = subjects_list[1][1][41:62]
+#    if TRAIN_MODEL:
+#        print("Loading Initial model...", end="\r")
+#        sess.run(tf.global_variables_initializer())
+#        init_fn(sess)
+#        print("Initial model loaded...")
+#    else:
+#        print("Loading trained model from path:" + TRAIN_MODEL_PATH + "...", end="\r")
+#        sess.run(tf.global_variables_initializer())
+#        #init_fn(sess)
+#        print("Trained model from path:" + TRAIN_MODEL_PATH + " loaded...")
+#        #
+#    """
+#    Testing
+#    """
+#    print("model trained")
+#    logits, pred, loss, acc = sess.run(fetches=[logits, prediction, cross_entropy, accuracy],
+#                      feed_dict={x_pl: x_batch_2,
+#                                 y_pl: y_batch_2})
+#    print("Logits: " + str(logits))
+#    print("pred: " + str(pred))
+#    print("pred_cor: " + str(y_batch_2))
+#    print("loss: " + str(loss))
+#    print("acc: " + str(acc))
+#    sess.close()
 
 
-## Test flow for model ----
-# # Launch TensorBoard, and visualize the TF graph
-# with tf.Session() as sess:
-    # writer = tf.summary.FileWriter(logs_path, sess.graph)
-    # close session
-    # sess.close()
-# run in terminal
-# """
-# python -m webbrowser "http://localhost:6006/";
-# tensorboard --logdir='./logs'
-# """
-
-# flow test
-if False:
-    # Test the forward pass    
-    x_batch = subjects_list[0][0][0:40]
-    y_batch = subjects_list[0][1][0:40]
-
-    sess = tf.Session(config=config)
-    #tf.train.start_queue_runners(sess=sess_test)
-    with sess.as_default():
-        #
-        sess.run(tf.global_variables_initializer())
-        #
-        tmp_net = sess.run(fetches=net, 
-                       feed_dict={x_pl: x_batch,
-                                  y_pl: y_batch})
-
-        tmp_pred = sess.run(fetches=prediction, 
-                   feed_dict={x_pl: x_batch})
-
-        tmp_pred_cor = sess.run(fetches=prediction_bool, 
-                   feed_dict={x_pl: x_batch,
-                             y_pl: y_batch})
-
-        tmp_accuracy = sess.run(fetches=accuracy, 
-                   feed_dict={x_pl: x_batch,
-                             y_pl: y_batch})
-
-        tmp_cross_entropy = sess.run(fetches=cross_entropy, 
-                   feed_dict={x_pl: x_batch,
-                             y_pl: y_batch})
-
-        tmp_loss = sess.run(fetches=cross_entropy, 
-                            feed_dict={x_pl: x_batch,
-                                      y_pl: y_batch})
-
-        #tmp_grad_output_wrt_input = sess.run(fetches=grad_output_wrt_input, 
-        #                    feed_dict={x_pl: x_batch, y_pl: y_batch})
-
-        _loss,_acc,_pred = sess.run(fetches=[cross_entropy, accuracy, prediction],
-                            feed_dict={x_pl: x_batch, y_pl: y_batch})
-        
-        #u_s.cal_sen_map(grad_accum=x_batch, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
-        #u_s.cal_sen_map(grad_accum=tmp_grad_output_wrt_input, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
-        #x_batch = subjects_list[0][0][0:100]
-        #y_batch = subjects_list[0][1][0:100]
-        #print(time.ctime())
-        #_,tm2,tm3 = sess.run(fetches=[train_model, cross_entropy, accuracy],
-        #             feed_dict={x_pl: x_batch, y_pl: y_batch})
-        #print(time.ctime())
-        #x_batch = subjects_list[0][0][0:1]
-        #y_batch = subjects_list[0][1][0:1]
-        #tmp_grad_output_wrt_input = sess.run(fetches=grad_output_wrt_input, 
-        #                    feed_dict={x_pl: x_batch, y_pl: y_batch})
-        #u_s.cal_sen_map(grad_accum=tmp_grad_output_wrt_input, IMAGE_SHAPE=IMAGE_SHAPE, sen_map_class='2')
-        #u_s.save_weights(graph= tf.get_default_graph(), fpath=data_dir + '/weigths.npz')
-        # close session
-        sess.close()
-
-    #assert y_pred.shape == np.zeros((len(x_batch),NUM_CLASSES)).shape, "ERROR the output shape is not as expected!" \
-    #        + " Output shape should be " + str(l_out.shape) + ' but was ' + str(y_pred.shape)
-
-    print('Forward pass successful!')
-
-
-## Train the model ----
+"""
+TRAIN MODEL
+"""
 capture_dict = {}
 sess = tf.Session(config=config)
 with sess.as_default():
@@ -320,6 +190,17 @@ with sess.as_default():
         MODEL_PATH = "./models/"+ FILENAME + "/Version_" + VERSION + "_" + START_TIME
         if not os.path.exists(MODEL_PATH): os.makedirs(MODEL_PATH)
         print('Begin training loop... \n')
+        
+        if TRAIN_MODEL:
+            print("Loading Initial model...", end="\r")
+            sess.run(tf.global_variables_initializer())
+            init_fn(sess)
+            print("Initial model loaded...")
+        else:
+            print("Loading trained model from path:" + TRAIN_MODEL_PATH + "...", end="\r")
+            sess.run(tf.global_variables_initializer())
+            #init_fn(sess)
+            print("Trained model from path:" + TRAIN_MODEL_PATH + " loaded...")
         
         # INTO VALIDATION
         idx_val = list(range(VAL_TRAIN_ID, NUM_SUBJECTS))
@@ -335,10 +216,6 @@ with sess.as_default():
         loo = LeaveOneOut()
         fold = 1   
         for idx_train, idx_test in loo.split(list(range(VAL_TRAIN_ID))):
-            
-            # initlize variables    
-            sess.run(tf.global_variables_initializer())
-            
             print("Fold %d of %d" %(fold, loo.get_n_splits(list(range(VAL_TRAIN_ID)))))
             capture_dict[fold] = {}
             #
@@ -377,7 +254,7 @@ with sess.as_default():
                 for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
                                                                   inputs=inputs_train, 
                                                                   targets=targets_train, 
-                                                                  shuffle=False):
+                                                                  shuffle=True):
                     #
                     _,_loss,_acc = sess.run(fetches=[train_model, cross_entropy, accuracy],
                                              feed_dict={x_pl: x_batch, y_pl: y_batch})
@@ -386,9 +263,7 @@ with sess.as_default():
                     _train_loss.append(_loss)
                     _train_accuracy.append(_acc)                    
                     #
-                    print("\t\tminibatch: %d\tL: %f\tACCs: %f" %(_iter,
-                                                            np.nanmean(_train_loss),
-                                                            np.nanmean(_train_accuracy)),end='\r')
+                    print("\t\tminibatch: %d\tLOSS: %f\tACCs: %f" %(_iter,_loss,_acc),end='\r')
                     _iter += 1
                     # end loop
                 # append mean loss and accuracy
@@ -397,6 +272,7 @@ with sess.as_default():
                 # end loop
 
             # COMPUTE VALIDATION LOSS AND ACCURACY
+            print('')
             print('\tEvaluate validation performance')
             val_pred, val_pred_y_batch = [], []
             _iter = 1
@@ -413,16 +289,17 @@ with sess.as_default():
                 # append mean
                 valid_loss.append(_loss)
                 valid_accuracy.append(_acc)
-                print("\t\tminibatch: %d\tL: %f\tACCs: %f" %(_iter,
-                                                        np.nanmean(valid_loss),
-                                                        np.nanmean(valid_accuracy)),end='\r')
+                print("\t\tminibatch: %d\tLOSS: %f\tACCs: %f" %(_iter,_loss,_acc),end='\r')
                 _iter += 1
                 # end loop
             # calculate performance
             cm_val = confusion_matrix(y_pred=val_pred, 
                                       y_true=val_pred_y_batch, 
                                       labels=list(range(NUM_CLASSES)))
+            print('')
+            print(cm_val)
             # COMPUTE TEST LOSS AND ACCURACY
+            print('')
             print('\tEvaluate test performance')
             test_pred, test_pred_y_batch = [], []
             _iter = 1
@@ -439,45 +316,37 @@ with sess.as_default():
                 # append mean
                 test_loss.append(_loss)
                 test_accuracy.append(_acc)
-                print("\t\tminibatch: %d\tL: %f\tACCs: %f" %(_iter,
-                                                        np.nanmean(test_loss),
-                                                        np.nanmean(test_accuracy)),end='\r')
+                print("\t\tminibatch: %d\tLOSS: %f\tACCs: %f" %(_iter,_loss,_acc),end='\r')
                 _iter += 1
                 # end loop
-                
             # calculate performance
             cm_test = confusion_matrix(y_pred=test_pred, 
                                        y_true=test_pred_y_batch, 
                                        labels=list(range(NUM_CLASSES)))
+            print('')
             print(cm_test)
             # CAPTURE STATS FOR CURRENT FOLD
             capture_dict[fold] = {'idx_train': idx_train,
                                   'idx_test': idx_test,
                                   'idx_val': idx_val,
                                   'cm_test': cm_test,
-                                  'val_pred': val_pred, 
-                                  'val_pred_y_batch': val_pred_y_batch,
                                   'cm_val': cm_val,
-                                  'test_pred': test_pred,
-                                  'test_pred_y_batch': test_pred_y_batch,
-                                  'train_loss': np.nanmean(train_loss),
-                                  'train_accuracy': np.nanmean(train_accuracy),
-                                  'test_loss': np.nanmean(test_loss),
-                                  'test_accuracy': np.nanmean(test_accuracy),
-                                  'valid_loss': np.nanmean(valid_loss),
-                                  'valid_accuracy': np.nanmean(valid_accuracy)} 
+                                  'train_loss': train_loss,
+                                  'train_accuracy': train_accuracy,
+                                  'test_loss': test_loss,
+                                  'test_accuracy': test_accuracy,
+                                  'valid_loss': valid_loss,
+                                  'valid_accuracy': valid_accuracy}
             
                 
             # SAVE STATS FOR CURRENT FOLD
             np.savez_compressed(MODEL_PATH + "/capture_dict", capture_dict)
             # tf model
-            tf_save_path = MODEL_PATH + '/fold_' + str(fold) + '_weigths'
-            
-            u_s.save_weights(graph= tf.get_default_graph(), fpath=tf_save_path )
-            print("Model and parameters saved...")
-
+            save_path = tf.train.Saver().save(sess, MODEL_PATH + '/fold_' + str(fold) + '.ckpt')
+            print("Model saved in file: %s" % save_path)
             # increase fold
             fold += 1
+            break
         # end loop and traning    
         print('\n... end training loop')
         print('started at: ' + START_TIME)
@@ -487,6 +356,3 @@ with sess.as_default():
 
     except KeyboardInterrupt:
         pass
-
-
-
