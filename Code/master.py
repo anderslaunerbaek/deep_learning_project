@@ -189,8 +189,7 @@ with tf.variable_scope('VVG16_layer'):
     
     
     # flatten
-    flattened_shape = np.prod([s.value for s in net.get_shape()[1:]])
-    net = tf.reshape(net, [-1, flattened_shape], name="flatten")
+    net = tf.contrib.layers.flatten(inputs=net)
     print('flatten \t', net.get_shape())
     # level six
     net = tf_fully_con(inputs=net, name='fc6', n_out=4096)
