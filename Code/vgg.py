@@ -71,7 +71,8 @@ def vgg_16(inputs,
            spatial_squeeze=True,
            scope='vgg_16',
            fc_conv_padding='VALID',
-           global_pool=False):
+           global_pool=False,
+           return_lstm=False):
   """Oxford Net VGG 16-Layers version D Example.
 
   Note: All the fully_connected layers have been transformed to conv2d layers.
@@ -118,6 +119,7 @@ def vgg_16(inputs,
       net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3], scope='conv5')
       net = slim.max_pool2d(net, [2, 2], scope='pool5')
 
+      if return_lstm: return net, slim.utils.convert_collection_to_dict(end_points_collection)
       # Use conv2d instead of fully_connected layers.
       net = slim.conv2d(net, 4096, [7, 7], padding=fc_conv_padding, scope='fc6')
       net = slim.dropout(net, dropout_keep_prob, is_training=is_training,
@@ -125,9 +127,9 @@ def vgg_16(inputs,
       net = slim.conv2d(net, 4096, [1, 1], scope='fc7')
       # Convert end_points_collection into a end_point dict.
       end_points = slim.utils.convert_collection_to_dict(end_points_collection)
-      #if global_pool:
-      #  net = tf.reduce_mean(net, [1, 2], keep_dims=True, name='global_pool')
-      #  end_points['global_pool'] = net
+      if global_pool:
+        net = tf.reduce_mean(net, [1, 2], keep_dims=True, name='global_pool')
+        end_points['global_pool'] = net
       if num_classes:
         net = slim.dropout(net, dropout_keep_prob, is_training=is_training,
                            scope='dropout7')
@@ -140,3 +142,4 @@ def vgg_16(inputs,
         end_points[sc.name + '/fc8'] = net
       return net, end_points
 vgg_16.default_image_size = 224
+
