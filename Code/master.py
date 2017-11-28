@@ -267,6 +267,7 @@ with sess.as_default():
                     _iter += 1
                     # end loop
                 # append mean loss and accuracy
+                print('')
                 train_loss.append(np.nanmean(_train_loss))
                 train_accuracy.append(np.nanmean(_train_accuracy))
                 # end loop
