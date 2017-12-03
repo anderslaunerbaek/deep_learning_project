@@ -74,7 +74,7 @@ EPS = 1e-8
 DO_KEEP_PROB = 0.5
 
 # Training Loop
-MAX_EPOCHS = 50
+MAX_EPOCHS = 15 # 50
 BATCH_SIZE = 32
 
 config = tf.ConfigProto(allow_soft_placement=True)

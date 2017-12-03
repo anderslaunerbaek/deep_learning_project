@@ -41,7 +41,7 @@ INITIAL_MODEL_PATH ='./../Data/vgg_16.ckpt'
 
 data_dir = './../Data'
 logs_path = './logs'
-NUM_SUBJECTS = 4
+NUM_SUBJECTS = 20
 NUM_CLASSES = 6
 VAL_TRAIN_ID = NUM_SUBJECTS - 2
 
@@ -75,7 +75,7 @@ EPS = 1e-8
 DO_KEEP_PROB = 0.5
 
 # Training Loop
-MAX_EPOCHS = 1 #50
+MAX_EPOCHS = 1 # 50
 BATCH_SIZE = 32
 
 config = tf.ConfigProto(allow_soft_placement=True)
@@ -104,7 +104,7 @@ logits, _ = vgg.vgg_16(inputs=x_pl,
                        return_lstm=True)
 
 # LSTM 1
-logits, LSTM_1 = lstm.basic_conv_lstm_cell(inputs=logits,
+logits, _  = lstm.basic_conv_lstm_cell(inputs=logits,
                                            state=None,
                                            forget_bias=1.0, 
                                            filter_size=logits.get_shape()[1].value,
@@ -301,7 +301,7 @@ with sess.as_default():
                 for x_batch, y_batch in utils.iterate_minibatches(batchsize=BATCH_SIZE, 
                                                                   inputs=inputs_train, 
                                                                   targets=targets_train, 
-                                                                  shuffle=False):
+                                                                  shuffle=True):
                     
                     # LSTM has a static structure...
                     if len(y_batch) != BATCH_SIZE: break
