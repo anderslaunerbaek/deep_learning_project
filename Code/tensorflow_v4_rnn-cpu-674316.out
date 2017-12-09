@@ -1,2 +1,375 @@
 Loaded module: python3/3.6.2
 Loaded module: scipy/0.19.1-python-3.6.2
+2017-12-03 12:10:16.766769: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+Loading subject 1 of 20...Loading subject 2 of 20...Loading subject 3 of 20...Loading subject 4 of 20...Loading subject 5 of 20...Loading subject 6 of 20...Loading subject 7 of 20...Loading subject 8 of 20...Loading subject 9 of 20...Loading subject 10 of 20...Loading subject 11 of 20...Loading subject 12 of 20...Loading subject 13 of 20...Loading subject 14 of 20...Loading subject 15 of 20...Loading subject 16 of 20...Loading subject 17 of 20...Loading subject 18 of 20...Loading subject 19 of 20...Loading subject 20 of 20...Begin training loop... 
+
+Loading Initial model...Initial model loaded...
+Fold 1 of 18
+	Train model
+	Epoch: 1 of 1
+		minibatch: 1	LOSS: 2.053798	ACCs: 0.093750
+		minibatch: 2	LOSS: 2.166376	ACCs: 0.062500
+		minibatch: 3	LOSS: 2.467809	ACCs: 0.250000
+		minibatch: 4	LOSS: 1.830593	ACCs: 0.375000
+		minibatch: 5	LOSS: 2.317604	ACCs: 0.218750
+		minibatch: 6	LOSS: 1.647533	ACCs: 0.281250
+		minibatch: 7	LOSS: 1.603829	ACCs: 0.406250
+		minibatch: 8	LOSS: 1.644459	ACCs: 0.312500
+		minibatch: 9	LOSS: 1.650701	ACCs: 0.250000
+		minibatch: 10	LOSS: 1.372929	ACCs: 0.437500
+		minibatch: 11	LOSS: 1.297170	ACCs: 0.468750
+		minibatch: 12	LOSS: 1.777735	ACCs: 0.281250
+		minibatch: 13	LOSS: 1.509262	ACCs: 0.375000
+		minibatch: 14	LOSS: 1.445591	ACCs: 0.406250
+		minibatch: 15	LOSS: 1.768827	ACCs: 0.312500
+		minibatch: 16	LOSS: 1.626403	ACCs: 0.250000
+		minibatch: 17	LOSS: 1.665589	ACCs: 0.468750
+		minibatch: 18	LOSS: 1.508422	ACCs: 0.375000
+		minibatch: 19	LOSS: 1.533151	ACCs: 0.312500
+		minibatch: 20	LOSS: 1.505874	ACCs: 0.375000
+		minibatch: 21	LOSS: 1.372122	ACCs: 0.312500
+		minibatch: 22	LOSS: 1.241760	ACCs: 0.593750
+		minibatch: 23	LOSS: 1.418096	ACCs: 0.406250
+		minibatch: 24	LOSS: 1.447460	ACCs: 0.281250
+		minibatch: 25	LOSS: 1.215147	ACCs: 0.500000
+		minibatch: 26	LOSS: 1.322719	ACCs: 0.500000
+		minibatch: 27	LOSS: 1.180569	ACCs: 0.500000
+		minibatch: 28	LOSS: 1.558998	ACCs: 0.375000
+		minibatch: 29	LOSS: 1.244899	ACCs: 0.437500
+		minibatch: 30	LOSS: 1.188291	ACCs: 0.500000
+		minibatch: 31	LOSS: 1.260635	ACCs: 0.468750
+		minibatch: 32	LOSS: 1.324559	ACCs: 0.468750
+		minibatch: 33	LOSS: 1.285647	ACCs: 0.406250
+		minibatch: 34	LOSS: 1.108045	ACCs: 0.625000
+		minibatch: 35	LOSS: 1.271492	ACCs: 0.375000
+		minibatch: 36	LOSS: 1.155633	ACCs: 0.531250
+		minibatch: 37	LOSS: 1.604531	ACCs: 0.375000
+		minibatch: 38	LOSS: 1.067146	ACCs: 0.500000
+		minibatch: 39	LOSS: 1.290033	ACCs: 0.375000
+		minibatch: 40	LOSS: 1.151270	ACCs: 0.437500
+		minibatch: 41	LOSS: 1.090389	ACCs: 0.593750
+		minibatch: 42	LOSS: 1.294309	ACCs: 0.343750
+		minibatch: 43	LOSS: 1.353956	ACCs: 0.437500
+		minibatch: 44	LOSS: 1.598927	ACCs: 0.250000
+		minibatch: 45	LOSS: 1.384910	ACCs: 0.437500
+		minibatch: 46	LOSS: 1.292341	ACCs: 0.406250
+		minibatch: 47	LOSS: 1.113456	ACCs: 0.562500
+		minibatch: 48	LOSS: 1.062020	ACCs: 0.593750
+		minibatch: 49	LOSS: 1.314292	ACCs: 0.343750
+		minibatch: 50	LOSS: 0.923555	ACCs: 0.562500
+		minibatch: 51	LOSS: 1.315870	ACCs: 0.375000
+		minibatch: 52	LOSS: 1.189483	ACCs: 0.531250
+		minibatch: 53	LOSS: 1.157183	ACCs: 0.468750
+		minibatch: 54	LOSS: 1.263909	ACCs: 0.437500
+		minibatch: 55	LOSS: 1.183303	ACCs: 0.375000
+		minibatch: 56	LOSS: 1.345498	ACCs: 0.500000
+		minibatch: 57	LOSS: 1.166360	ACCs: 0.500000
+		minibatch: 58	LOSS: 1.379514	ACCs: 0.312500
+		minibatch: 59	LOSS: 1.317728	ACCs: 0.375000
+		minibatch: 60	LOSS: 1.037162	ACCs: 0.531250
+		minibatch: 61	LOSS: 1.084153	ACCs: 0.500000
+		minibatch: 62	LOSS: 0.918637	ACCs: 0.625000
+		minibatch: 63	LOSS: 0.865013	ACCs: 0.750000
+		minibatch: 64	LOSS: 1.319698	ACCs: 0.281250
+		minibatch: 65	LOSS: 1.092351	ACCs: 0.625000
+		minibatch: 66	LOSS: 0.911108	ACCs: 0.656250
+		minibatch: 67	LOSS: 0.926656	ACCs: 0.593750
+		minibatch: 68	LOSS: 1.114869	ACCs: 0.468750
+		minibatch: 69	LOSS: 0.933699	ACCs: 0.625000
+		minibatch: 70	LOSS: 0.848143	ACCs: 0.593750
+		minibatch: 71	LOSS: 1.378383	ACCs: 0.406250
+		minibatch: 72	LOSS: 1.197979	ACCs: 0.531250
+		minibatch: 73	LOSS: 1.237397	ACCs: 0.531250
+		minibatch: 74	LOSS: 0.967803	ACCs: 0.468750
+		minibatch: 75	LOSS: 1.197976	ACCs: 0.562500
+		minibatch: 76	LOSS: 1.215000	ACCs: 0.500000
+		minibatch: 77	LOSS: 1.078840	ACCs: 0.437500
+		minibatch: 78	LOSS: 0.876153	ACCs: 0.656250
+		minibatch: 79	LOSS: 1.343920	ACCs: 0.343750
+		minibatch: 80	LOSS: 0.824459	ACCs: 0.625000
+		minibatch: 81	LOSS: 1.122241	ACCs: 0.406250
+		minibatch: 82	LOSS: 1.143785	ACCs: 0.343750
+		minibatch: 83	LOSS: 1.096463	ACCs: 0.500000
+		minibatch: 84	LOSS: 1.054750	ACCs: 0.562500
+		minibatch: 85	LOSS: 1.271698	ACCs: 0.468750
+		minibatch: 86	LOSS: 1.134961	ACCs: 0.562500
+		minibatch: 87	LOSS: 1.125380	ACCs: 0.500000
+		minibatch: 88	LOSS: 0.907845	ACCs: 0.625000
+		minibatch: 89	LOSS: 1.180493	ACCs: 0.437500
+		minibatch: 90	LOSS: 1.104529	ACCs: 0.500000
+		minibatch: 91	LOSS: 1.018212	ACCs: 0.562500
+		minibatch: 92	LOSS: 1.095299	ACCs: 0.468750
+		minibatch: 93	LOSS: 0.971299	ACCs: 0.656250
+		minibatch: 94	LOSS: 1.251241	ACCs: 0.531250
+		minibatch: 95	LOSS: 1.255809	ACCs: 0.468750
+		minibatch: 96	LOSS: 1.326776	ACCs: 0.500000
+		minibatch: 97	LOSS: 1.107209	ACCs: 0.593750
+		minibatch: 98	LOSS: 1.125872	ACCs: 0.562500
+		minibatch: 99	LOSS: 1.461423	ACCs: 0.375000
+		minibatch: 100	LOSS: 1.361194	ACCs: 0.437500
+		minibatch: 101	LOSS: 1.470069	ACCs: 0.218750
+		minibatch: 102	LOSS: 1.294361	ACCs: 0.531250
+		minibatch: 103	LOSS: 1.226284	ACCs: 0.468750
+		minibatch: 104	LOSS: 0.933128	ACCs: 0.593750
+		minibatch: 105	LOSS: 1.113222	ACCs: 0.562500
+		minibatch: 106	LOSS: 1.069215	ACCs: 0.562500
+		minibatch: 107	LOSS: 1.134208	ACCs: 0.562500
+		minibatch: 108	LOSS: 0.802016	ACCs: 0.718750
+		minibatch: 109	LOSS: 1.341426	ACCs: 0.375000
+		minibatch: 110	LOSS: 1.221221	ACCs: 0.500000
+		minibatch: 111	LOSS: 1.126778	ACCs: 0.593750
+		minibatch: 112	LOSS: 0.938168	ACCs: 0.625000
+		minibatch: 113	LOSS: 1.248096	ACCs: 0.468750
+		minibatch: 114	LOSS: 1.069471	ACCs: 0.625000
+		minibatch: 115	LOSS: 1.017636	ACCs: 0.593750
+		minibatch: 116	LOSS: 0.899004	ACCs: 0.656250
+		minibatch: 117	LOSS: 1.055721	ACCs: 0.562500
+		minibatch: 118	LOSS: 1.088444	ACCs: 0.593750
+		minibatch: 119	LOSS: 0.974126	ACCs: 0.625000
+		minibatch: 120	LOSS: 1.048242	ACCs: 0.437500
+		minibatch: 121	LOSS: 1.004903	ACCs: 0.562500
+		minibatch: 122	LOSS: 1.023431	ACCs: 0.500000
+		minibatch: 123	LOSS: 1.070814	ACCs: 0.531250
+		minibatch: 124	LOSS: 0.787505	ACCs: 0.687500
+		minibatch: 125	LOSS: 1.030467	ACCs: 0.625000
+		minibatch: 126	LOSS: 0.867331	ACCs: 0.500000
+		minibatch: 127	LOSS: 0.818044	ACCs: 0.687500
+		minibatch: 128	LOSS: 1.125164	ACCs: 0.562500
+		minibatch: 129	LOSS: 0.779804	ACCs: 0.625000
+		minibatch: 130	LOSS: 1.088451	ACCs: 0.656250
+		minibatch: 131	LOSS: 0.914096	ACCs: 0.531250
+		minibatch: 132	LOSS: 0.991128	ACCs: 0.593750
+		minibatch: 133	LOSS: 0.977976	ACCs: 0.562500
+		minibatch: 134	LOSS: 0.941786	ACCs: 0.656250
+		minibatch: 135	LOSS: 0.726435	ACCs: 0.656250
+		minibatch: 136	LOSS: 0.857743	ACCs: 0.718750
+		minibatch: 137	LOSS: 1.118152	ACCs: 0.531250
+		minibatch: 138	LOSS: 0.885888	ACCs: 0.625000
+		minibatch: 139	LOSS: 0.855147	ACCs: 0.687500
+		minibatch: 140	LOSS: 1.012600	ACCs: 0.437500
+		minibatch: 141	LOSS: 1.409524	ACCs: 0.500000
+		minibatch: 142	LOSS: 1.013397	ACCs: 0.468750
+		minibatch: 143	LOSS: 0.885476	ACCs: 0.625000
+		minibatch: 144	LOSS: 0.832634	ACCs: 0.531250
+		minibatch: 145	LOSS: 1.028408	ACCs: 0.375000
+		minibatch: 146	LOSS: 1.008141	ACCs: 0.593750
+		minibatch: 147	LOSS: 0.960915	ACCs: 0.562500
+		minibatch: 148	LOSS: 0.846843	ACCs: 0.625000
+		minibatch: 149	LOSS: 0.935812	ACCs: 0.593750
+		minibatch: 150	LOSS: 1.088100	ACCs: 0.500000
+		minibatch: 151	LOSS: 0.937769	ACCs: 0.531250
+		minibatch: 152	LOSS: 1.023193	ACCs: 0.593750
+		minibatch: 153	LOSS: 1.135921	ACCs: 0.531250
+		minibatch: 154	LOSS: 1.086366	ACCs: 0.531250
+		minibatch: 155	LOSS: 0.758675	ACCs: 0.656250
+		minibatch: 156	LOSS: 0.919720	ACCs: 0.718750
+		minibatch: 157	LOSS: 1.225744	ACCs: 0.531250
+		minibatch: 158	LOSS: 1.184604	ACCs: 0.531250
+		minibatch: 159	LOSS: 1.085521	ACCs: 0.656250
+		minibatch: 160	LOSS: 1.080321	ACCs: 0.593750
+		minibatch: 161	LOSS: 0.856643	ACCs: 0.718750
+		minibatch: 162	LOSS: 0.869033	ACCs: 0.593750
+		minibatch: 163	LOSS: 1.116338	ACCs: 0.375000
+		minibatch: 164	LOSS: 0.803887	ACCs: 0.593750
+		minibatch: 165	LOSS: 0.963916	ACCs: 0.562500
+		minibatch: 166	LOSS: 0.886596	ACCs: 0.531250
+		minibatch: 167	LOSS: 0.963610	ACCs: 0.625000
+		minibatch: 168	LOSS: 1.095830	ACCs: 0.562500
+		minibatch: 169	LOSS: 1.379603	ACCs: 0.500000
+		minibatch: 170	LOSS: 0.900854	ACCs: 0.593750
+		minibatch: 171	LOSS: 1.266053	ACCs: 0.406250
+		minibatch: 172	LOSS: 1.307338	ACCs: 0.468750
+		minibatch: 173	LOSS: 1.387703	ACCs: 0.406250
+		minibatch: 174	LOSS: 1.023108	ACCs: 0.656250
+		minibatch: 175	LOSS: 1.258379	ACCs: 0.500000
+		minibatch: 176	LOSS: 0.901964	ACCs: 0.593750
+		minibatch: 177	LOSS: 1.624693	ACCs: 0.406250
+		minibatch: 178	LOSS: 1.210624	ACCs: 0.500000
+		minibatch: 179	LOSS: 0.992718	ACCs: 0.656250
+		minibatch: 180	LOSS: 1.001885	ACCs: 0.531250
+		minibatch: 181	LOSS: 0.941841	ACCs: 0.687500
+		minibatch: 182	LOSS: 1.099653	ACCs: 0.562500
+		minibatch: 183	LOSS: 1.203517	ACCs: 0.375000
+		minibatch: 184	LOSS: 1.042912	ACCs: 0.531250
+		minibatch: 185	LOSS: 1.139873	ACCs: 0.437500
+		minibatch: 186	LOSS: 0.906264	ACCs: 0.562500
+		minibatch: 187	LOSS: 0.924621	ACCs: 0.562500
+		minibatch: 188	LOSS: 0.977906	ACCs: 0.562500
+		minibatch: 189	LOSS: 1.112950	ACCs: 0.562500
+		minibatch: 190	LOSS: 0.776750	ACCs: 0.656250
+		minibatch: 191	LOSS: 1.230208	ACCs: 0.500000
+		minibatch: 192	LOSS: 1.015444	ACCs: 0.593750
+		minibatch: 193	LOSS: 0.939868	ACCs: 0.562500
+		minibatch: 194	LOSS: 1.275067	ACCs: 0.562500
+		minibatch: 195	LOSS: 1.090952	ACCs: 0.625000
+		minibatch: 196	LOSS: 0.896016	ACCs: 0.593750
+		minibatch: 197	LOSS: 0.951142	ACCs: 0.625000
+		minibatch: 198	LOSS: 1.019607	ACCs: 0.656250
+		minibatch: 199	LOSS: 0.683817	ACCs: 0.812500
+		minibatch: 200	LOSS: 1.050799	ACCs: 0.562500
+		minibatch: 201	LOSS: 1.015788	ACCs: 0.562500
+		minibatch: 202	LOSS: 1.287592	ACCs: 0.375000
+		minibatch: 203	LOSS: 1.119839	ACCs: 0.468750
+		minibatch: 204	LOSS: 1.587482	ACCs: 0.281250
+		minibatch: 205	LOSS: 1.082614	ACCs: 0.562500
+		minibatch: 206	LOSS: 1.287147	ACCs: 0.531250
+		minibatch: 207	LOSS: 1.257842	ACCs: 0.406250
+		minibatch: 208	LOSS: 1.117152	ACCs: 0.468750
+		minibatch: 209	LOSS: 1.383493	ACCs: 0.312500
+		minibatch: 210	LOSS: 1.043900	ACCs: 0.531250
+		minibatch: 211	LOSS: 1.326319	ACCs: 0.468750
+		minibatch: 212	LOSS: 1.050801	ACCs: 0.625000
+		minibatch: 213	LOSS: 1.246886	ACCs: 0.406250
+		minibatch: 214	LOSS: 1.063595	ACCs: 0.500000
+		minibatch: 215	LOSS: 1.239034	ACCs: 0.500000
+		minibatch: 216	LOSS: 1.005217	ACCs: 0.656250
+		minibatch: 217	LOSS: 1.125950	ACCs: 0.562500
+		minibatch: 218	LOSS: 1.330681	ACCs: 0.562500
+		minibatch: 219	LOSS: 1.138139	ACCs: 0.406250
+		minibatch: 220	LOSS: 1.350444	ACCs: 0.468750
+		minibatch: 221	LOSS: 1.026895	ACCs: 0.500000
+		minibatch: 222	LOSS: 1.125788	ACCs: 0.562500
+		minibatch: 223	LOSS: 0.943666	ACCs: 0.531250
+		minibatch: 224	LOSS: 0.825503	ACCs: 0.687500
+		minibatch: 225	LOSS: 1.081741	ACCs: 0.593750
+		minibatch: 226	LOSS: 0.847102	ACCs: 0.656250
+		minibatch: 227	LOSS: 1.511870	ACCs: 0.406250
+		minibatch: 228	LOSS: 1.031520	ACCs: 0.531250
+		minibatch: 229	LOSS: 1.058307	ACCs: 0.562500
+		minibatch: 230	LOSS: 0.824606	ACCs: 0.656250
+		minibatch: 231	LOSS: 1.085906	ACCs: 0.500000
+		minibatch: 232	LOSS: 0.907404	ACCs: 0.625000
+		minibatch: 233	LOSS: 1.132530	ACCs: 0.531250
+		minibatch: 234	LOSS: 0.931338	ACCs: 0.625000
+		minibatch: 235	LOSS: 0.861054	ACCs: 0.718750
+		minibatch: 236	LOSS: 0.885393	ACCs: 0.531250
+		minibatch: 237	LOSS: 1.080369	ACCs: 0.437500
+		minibatch: 238	LOSS: 0.650607	ACCs: 0.781250
+		minibatch: 239	LOSS: 0.909391	ACCs: 0.625000
+		minibatch: 240	LOSS: 0.787480	ACCs: 0.656250
+		minibatch: 241	LOSS: 0.769440	ACCs: 0.750000
+		minibatch: 242	LOSS: 0.930153	ACCs: 0.625000
+		minibatch: 243	LOSS: 1.046374	ACCs: 0.593750
+		minibatch: 244	LOSS: 1.245189	ACCs: 0.531250
+		minibatch: 245	LOSS: 1.942803	ACCs: 0.312500
+		minibatch: 246	LOSS: 1.329184	ACCs: 0.468750
+		minibatch: 247	LOSS: 1.148401	ACCs: 0.500000
+		minibatch: 248	LOSS: 0.797001	ACCs: 0.718750
+		minibatch: 249	LOSS: 1.208339	ACCs: 0.625000
+		minibatch: 250	LOSS: 1.059713	ACCs: 0.593750
+		minibatch: 251	LOSS: 1.216755	ACCs: 0.531250
+		minibatch: 252	LOSS: 1.110206	ACCs: 0.468750
+		minibatch: 253	LOSS: 1.094455	ACCs: 0.656250
+		minibatch: 254	LOSS: 1.445739	ACCs: 0.312500
+		minibatch: 255	LOSS: 1.340575	ACCs: 0.500000
+		minibatch: 256	LOSS: 1.525562	ACCs: 0.343750
+		minibatch: 257	LOSS: 1.522920	ACCs: 0.375000
+		minibatch: 258	LOSS: 1.497226	ACCs: 0.531250
+		minibatch: 259	LOSS: 1.236907	ACCs: 0.437500
+		minibatch: 260	LOSS: 1.149139	ACCs: 0.562500
+		minibatch: 261	LOSS: 0.958712	ACCs: 0.562500
+		minibatch: 262	LOSS: 1.091373	ACCs: 0.531250
+		minibatch: 263	LOSS: 0.981829	ACCs: 0.687500
+		minibatch: 264	LOSS: 1.583151	ACCs: 0.468750
+		minibatch: 265	LOSS: 1.380451	ACCs: 0.437500
+		minibatch: 266	LOSS: 1.426073	ACCs: 0.437500
+		minibatch: 267	LOSS: 1.106913	ACCs: 0.562500
+		minibatch: 268	LOSS: 0.864013	ACCs: 0.656250
+		minibatch: 269	LOSS: 1.080966	ACCs: 0.562500
+		minibatch: 270	LOSS: 1.069030	ACCs: 0.531250
+		minibatch: 271	LOSS: 0.892525	ACCs: 0.625000
+		minibatch: 272	LOSS: 0.996000	ACCs: 0.593750
+		minibatch: 273	LOSS: 1.124775	ACCs: 0.531250
+		minibatch: 274	LOSS: 1.006017	ACCs: 0.562500
+		minibatch: 275	LOSS: 0.967922	ACCs: 0.625000
+		minibatch: 276	LOSS: 1.376294	ACCs: 0.406250
+		minibatch: 277	LOSS: 1.168445	ACCs: 0.562500
+		minibatch: 278	LOSS: 1.089142	ACCs: 0.593750
+		minibatch: 279	LOSS: 1.078448	ACCs: 0.593750
+		minibatch: 280	LOSS: 1.185242	ACCs: 0.468750
+		minibatch: 281	LOSS: 1.032845	ACCs: 0.531250
+		minibatch: 282	LOSS: 1.188730	ACCs: 0.593750
+		minibatch: 283	LOSS: 1.184119	ACCs: 0.312500
+		minibatch: 284	LOSS: 1.107716	ACCs: 0.593750
+		minibatch: 285	LOSS: 1.153873	ACCs: 0.437500
+		minibatch: 286	LOSS: 1.528016	ACCs: 0.406250
+		minibatch: 287	LOSS: 1.218472	ACCs: 0.500000
+		minibatch: 288	LOSS: 1.290449	ACCs: 0.468750
+		minibatch: 289	LOSS: 0.974142	ACCs: 0.718750
+		minibatch: 290	LOSS: 1.358701	ACCs: 0.468750
+		minibatch: 291	LOSS: 1.041920	ACCs: 0.593750
+		minibatch: 292	LOSS: 0.853802	ACCs: 0.593750
+		minibatch: 293	LOSS: 0.952735	ACCs: 0.656250
+		minibatch: 294	LOSS: 1.140210	ACCs: 0.531250
+		minibatch: 295	LOSS: 1.147210	ACCs: 0.468750
+		minibatch: 296	LOSS: 0.646171	ACCs: 0.812500
+		minibatch: 297	LOSS: 0.821165	ACCs: 0.687500
+		minibatch: 298	LOSS: 0.968560	ACCs: 0.531250
+		minibatch: 299	LOSS: 0.854437	ACCs: 0.625000
+		minibatch: 300	LOSS: 1.167326	ACCs: 0.468750
+		minibatch: 301	LOSS: 1.060065	ACCs: 0.531250
+		minibatch: 302	LOSS: 1.491556	ACCs: 0.343750
+		minibatch: 303	LOSS: 0.969391	ACCs: 0.593750
+		minibatch: 304	LOSS: 0.947943	ACCs: 0.625000
+		minibatch: 305	LOSS: 0.861863	ACCs: 0.625000
+		minibatch: 306	LOSS: 0.725438	ACCs: 0.750000
+		minibatch: 307	LOSS: 0.699723	ACCs: 0.812500
+		minibatch: 308	LOSS: 1.055317	ACCs: 0.562500
+		minibatch: 309	LOSS: 1.138555	ACCs: 0.625000
+		minibatch: 310	LOSS: 1.021877	ACCs: 0.656250
+		minibatch: 311	LOSS: 1.321423	ACCs: 0.437500
+		minibatch: 312	LOSS: 1.054307	ACCs: 0.625000
+		minibatch: 313	LOSS: 1.195323	ACCs: 0.500000
+		minibatch: 314	LOSS: 1.229334	ACCs: 0.406250
+		minibatch: 315	LOSS: 1.035816	ACCs: 0.500000
+		minibatch: 316	LOSS: 1.045596	ACCs: 0.593750
+		minibatch: 317	LOSS: 1.097143	ACCs: 0.531250
+		minibatch: 318	LOSS: 1.070046	ACCs: 0.562500
+		minibatch: 319	LOSS: 0.976166	ACCs: 0.593750
+		minibatch: 320	LOSS: 1.003344	ACCs: 0.593750
+		minibatch: 321	LOSS: 0.995199	ACCs: 0.562500
+		minibatch: 322	LOSS: 1.163052	ACCs: 0.500000
+		minibatch: 323	LOSS: 1.184039	ACCs: 0.468750
+		minibatch: 324	LOSS: 1.389377	ACCs: 0.468750
+		minibatch: 325	LOSS: 1.100520	ACCs: 0.562500
+		minibatch: 326	LOSS: 1.193886	ACCs: 0.656250
+		minibatch: 327	LOSS: 1.121363	ACCs: 0.531250
+		minibatch: 328	LOSS: 1.119975	ACCs: 0.531250
+		minibatch: 329	LOSS: 1.418179	ACCs: 0.406250
+		minibatch: 330	LOSS: 0.867234	ACCs: 0.625000
+		minibatch: 331	LOSS: 1.323472	ACCs: 0.468750
+		minibatch: 332	LOSS: 1.073531	ACCs: 0.500000
+		minibatch: 333	LOSS: 1.118973	ACCs: 0.468750
+		minibatch: 334	LOSS: 1.126722	ACCs: 0.593750
+		minibatch: 335	LOSS: 1.141552	ACCs: 0.531250
+		minibatch: 336	LOSS: 0.920581	ACCs: 0.593750
+		minibatch: 337	LOSS: 1.190267	ACCs: 0.531250
+		minibatch: 338	LOSS: 1.091595	ACCs: 0.500000
+		minibatch: 339	LOSS: 1.002205	ACCs: 0.531250
+		minibatch: 340	LOSS: 1.216139	ACCs: 0.468750
+
+
+	Evaluate validation performance
+		minibatch: 1	LOSS: 1.052419	ACCs: 0.562500		minibatch: 2	LOSS: 0.967703	ACCs: 0.593750		minibatch: 3	LOSS: 1.721939	ACCs: 0.250000		minibatch: 4	LOSS: 1.104908	ACCs: 0.500000		minibatch: 5	LOSS: 1.070850	ACCs: 0.500000		minibatch: 6	LOSS: 2.079623	ACCs: 0.343750		minibatch: 7	LOSS: 0.885245	ACCs: 0.625000		minibatch: 8	LOSS: 0.999915	ACCs: 0.593750		minibatch: 9	LOSS: 0.995690	ACCs: 0.750000		minibatch: 10	LOSS: 1.290928	ACCs: 0.343750		minibatch: 11	LOSS: 1.482060	ACCs: 0.468750		minibatch: 12	LOSS: 0.961683	ACCs: 0.625000		minibatch: 13	LOSS: 1.927641	ACCs: 0.250000		minibatch: 14	LOSS: 0.691721	ACCs: 0.875000		minibatch: 15	LOSS: 0.968196	ACCs: 0.593750		minibatch: 16	LOSS: 1.265074	ACCs: 0.281250		minibatch: 17	LOSS: 1.071864	ACCs: 0.406250		minibatch: 18	LOSS: 1.241523	ACCs: 0.531250		minibatch: 19	LOSS: 1.506420	ACCs: 0.375000		minibatch: 20	LOSS: 0.407682	ACCs: 0.968750		minibatch: 21	LOSS: 0.588917	ACCs: 0.906250		minibatch: 22	LOSS: 1.305522	ACCs: 0.562500		minibatch: 23	LOSS: 1.088214	ACCs: 0.593750		minibatch: 24	LOSS: 1.447258	ACCs: 0.468750		minibatch: 25	LOSS: 1.957252	ACCs: 0.187500		minibatch: 26	LOSS: 0.998326	ACCs: 0.500000		minibatch: 27	LOSS: 0.830049	ACCs: 0.656250		minibatch: 28	LOSS: 1.593429	ACCs: 0.343750		minibatch: 29	LOSS: 1.324389	ACCs: 0.250000		minibatch: 30	LOSS: 1.111195	ACCs: 0.406250		minibatch: 31	LOSS: 1.313347	ACCs: 0.468750		minibatch: 32	LOSS: 0.494180	ACCs: 0.937500		minibatch: 33	LOSS: 0.889824	ACCs: 0.562500		minibatch: 34	LOSS: 1.128561	ACCs: 0.437500		minibatch: 35	LOSS: 0.609662	ACCs: 0.812500		minibatch: 36	LOSS: 1.149186	ACCs: 0.468750		minibatch: 37	LOSS: 0.921798	ACCs: 0.687500		minibatch: 38	LOSS: 0.513021	ACCs: 0.843750		minibatch: 39	LOSS: 1.109510	ACCs: 0.406250		minibatch: 40	LOSS: 1.101998	ACCs: 0.406250		minibatch: 41	LOSS: 0.807849	ACCs: 0.656250		minibatch: 42	LOSS: 0.709641	ACCs: 0.625000		minibatch: 43	LOSS: 1.356514	ACCs: 0.437500		minibatch: 44	LOSS: 0.996373	ACCs: 0.718750		minibatch: 45	LOSS: 0.687123	ACCs: 0.750000		minibatch: 46	LOSS: 0.284486	ACCs: 1.000000		minibatch: 47	LOSS: 1.180506	ACCs: 0.468750		minibatch: 48	LOSS: 1.429191	ACCs: 0.375000		minibatch: 49	LOSS: 1.426856	ACCs: 0.375000		minibatch: 50	LOSS: 1.039888	ACCs: 0.468750		minibatch: 51	LOSS: 0.437549	ACCs: 0.906250		minibatch: 52	LOSS: 0.606187	ACCs: 0.750000		minibatch: 53	LOSS: 0.288317	ACCs: 1.000000		minibatch: 54	LOSS: 0.732220	ACCs: 0.781250		minibatch: 55	LOSS: 0.986728	ACCs: 0.500000		minibatch: 56	LOSS: 0.485169	ACCs: 0.875000		minibatch: 57	LOSS: 0.396400	ACCs: 0.937500		minibatch: 58	LOSS: 0.563083	ACCs: 0.812500		minibatch: 59	LOSS: 0.599543	ACCs: 0.875000		minibatch: 60	LOSS: 1.449745	ACCs: 0.500000		minibatch: 61	LOSS: 1.233837	ACCs: 0.437500		minibatch: 62	LOSS: 1.685038	ACCs: 0.218750		minibatch: 63	LOSS: 1.012335	ACCs: 0.656250		minibatch: 64	LOSS: 1.006894	ACCs: 0.562500		minibatch: 65	LOSS: 1.277919	ACCs: 0.562500		minibatch: 66	LOSS: 1.172079	ACCs: 0.468750		minibatch: 67	LOSS: 1.945834	ACCs: 0.218750		minibatch: 68	LOSS: 1.248380	ACCs: 0.500000		minibatch: 69	LOSS: 0.674407	ACCs: 0.812500		minibatch: 70	LOSS: 0.767949	ACCs: 0.781250		minibatch: 71	LOSS: 1.134171	ACCs: 0.562500		minibatch: 72	LOSS: 0.522907	ACCs: 0.875000		minibatch: 73	LOSS: 0.949197	ACCs: 0.718750		minibatch: 74	LOSS: 0.724086	ACCs: 0.781250		minibatch: 75	LOSS: 0.799035	ACCs: 0.687500		minibatch: 76	LOSS: 0.937242	ACCs: 0.625000		minibatch: 77	LOSS: 1.450065	ACCs: 0.468750		minibatch: 78	LOSS: 1.449783	ACCs: 0.312500		minibatch: 79	LOSS: 1.690462	ACCs: 0.312500		minibatch: 80	LOSS: 1.372750	ACCs: 0.218750		minibatch: 81	LOSS: 0.678737	ACCs: 0.750000		minibatch: 82	LOSS: 1.369450	ACCs: 0.312500		minibatch: 83	LOSS: 1.295151	ACCs: 0.500000		minibatch: 84	LOSS: 1.334080	ACCs: 0.406250		minibatch: 85	LOSS: 0.788374	ACCs: 0.625000		minibatch: 86	LOSS: 1.376739	ACCs: 0.312500		minibatch: 87	LOSS: 1.196020	ACCs: 0.406250		minibatch: 88	LOSS: 0.837776	ACCs: 0.718750		minibatch: 89	LOSS: 0.605012	ACCs: 0.781250		minibatch: 90	LOSS: 0.832726	ACCs: 0.718750		minibatch: 91	LOSS: 0.923929	ACCs: 0.625000		minibatch: 92	LOSS: 0.385396	ACCs: 0.937500		minibatch: 93	LOSS: 1.183264	ACCs: 0.437500		minibatch: 94	LOSS: 0.772240	ACCs: 0.687500		minibatch: 95	LOSS: 0.615397	ACCs: 0.750000		minibatch: 96	LOSS: 1.175984	ACCs: 0.468750		minibatch: 97	LOSS: 1.450968	ACCs: 0.156250		minibatch: 98	LOSS: 0.665399	ACCs: 0.687500		minibatch: 99	LOSS: 0.347576	ACCs: 0.906250		minibatch: 100	LOSS: 1.280673	ACCs: 0.312500		minibatch: 101	LOSS: 1.239076	ACCs: 0.375000		minibatch: 102	LOSS: 0.685231	ACCs: 0.843750		minibatch: 103	LOSS: 1.037984	ACCs: 0.531250		minibatch: 104	LOSS: 0.657414	ACCs: 0.812500		minibatch: 105	LOSS: 0.346205	ACCs: 0.968750		minibatch: 106	LOSS: 0.361163	ACCs: 0.937500		minibatch: 107	LOSS: 0.610561	ACCs: 0.781250		minibatch: 108	LOSS: 0.502655	ACCs: 0.843750		minibatch: 109	LOSS: 1.189011	ACCs: 0.500000		minibatch: 110	LOSS: 0.296973	ACCs: 1.000000		minibatch: 111	LOSS: 0.750625	ACCs: 0.625000		minibatch: 112	LOSS: 1.306829	ACCs: 0.406250		minibatch: 113	LOSS: 0.466675	ACCs: 0.906250		minibatch: 114	LOSS: 0.549144	ACCs: 0.906250		minibatch: 115	LOSS: 0.634397	ACCs: 0.843750		minibatch: 116	LOSS: 0.354930	ACCs: 0.968750
+[[ 359  283    3    2    1   46]
+ [  14  159   16    1    0  151]
+ [  22  147 1073   95   59  161]
+ [  10    2   50   86   92    1]
+ [  12    0   40   41   52    0]
+ [  28  176   24    5    0  501]]
+
+	Evaluate test performance
+		minibatch: 1	LOSS: 1.483942	ACCs: 0.218750		minibatch: 2	LOSS: 1.045247	ACCs: 0.500000		minibatch: 3	LOSS: 1.308049	ACCs: 0.343750		minibatch: 4	LOSS: 0.946255	ACCs: 0.656250		minibatch: 5	LOSS: 0.695554	ACCs: 0.781250		minibatch: 6	LOSS: 1.495386	ACCs: 0.250000		minibatch: 7	LOSS: 0.557178	ACCs: 0.812500		minibatch: 8	LOSS: 0.929983	ACCs: 0.656250		minibatch: 9	LOSS: 1.350383	ACCs: 0.281250		minibatch: 10	LOSS: 1.200633	ACCs: 0.312500		minibatch: 11	LOSS: 1.143716	ACCs: 0.562500		minibatch: 12	LOSS: 0.809579	ACCs: 0.781250		minibatch: 13	LOSS: 0.666587	ACCs: 0.781250		minibatch: 14	LOSS: 1.106389	ACCs: 0.406250		minibatch: 15	LOSS: 1.191291	ACCs: 0.531250		minibatch: 16	LOSS: 0.761951	ACCs: 0.750000		minibatch: 17	LOSS: 1.881205	ACCs: 0.281250		minibatch: 18	LOSS: 0.743000	ACCs: 0.718750		minibatch: 19	LOSS: 0.831940	ACCs: 0.656250		minibatch: 20	LOSS: 1.051591	ACCs: 0.625000		minibatch: 21	LOSS: 0.694811	ACCs: 0.781250		minibatch: 22	LOSS: 1.292241	ACCs: 0.531250		minibatch: 23	LOSS: 1.347779	ACCs: 0.593750		minibatch: 24	LOSS: 1.483685	ACCs: 0.312500		minibatch: 25	LOSS: 1.165138	ACCs: 0.406250		minibatch: 26	LOSS: 0.915358	ACCs: 0.625000		minibatch: 27	LOSS: 1.187774	ACCs: 0.281250		minibatch: 28	LOSS: 1.118201	ACCs: 0.437500		minibatch: 29	LOSS: 0.829430	ACCs: 0.625000		minibatch: 30	LOSS: 0.879345	ACCs: 0.562500		minibatch: 31	LOSS: 1.003568	ACCs: 0.500000		minibatch: 32	LOSS: 1.290804	ACCs: 0.312500		minibatch: 33	LOSS: 1.676853	ACCs: 0.312500		minibatch: 34	LOSS: 0.735445	ACCs: 0.625000		minibatch: 35	LOSS: 0.794596	ACCs: 0.593750		minibatch: 36	LOSS: 1.290203	ACCs: 0.531250		minibatch: 37	LOSS: 0.913926	ACCs: 0.562500		minibatch: 38	LOSS: 1.258224	ACCs: 0.312500		minibatch: 39	LOSS: 1.290635	ACCs: 0.468750		minibatch: 40	LOSS: 0.955926	ACCs: 0.562500		minibatch: 41	LOSS: 1.956074	ACCs: 0.250000		minibatch: 42	LOSS: 0.671875	ACCs: 0.812500		minibatch: 43	LOSS: 1.167191	ACCs: 0.375000		minibatch: 44	LOSS: 1.312775	ACCs: 0.375000		minibatch: 45	LOSS: 0.749366	ACCs: 0.625000		minibatch: 46	LOSS: 1.337345	ACCs: 0.312500		minibatch: 47	LOSS: 0.848222	ACCs: 0.625000		minibatch: 48	LOSS: 0.744721	ACCs: 0.812500		minibatch: 49	LOSS: 1.102759	ACCs: 0.468750		minibatch: 50	LOSS: 1.000041	ACCs: 0.500000		minibatch: 51	LOSS: 1.364346	ACCs: 0.343750		minibatch: 52	LOSS: 0.310884	ACCs: 1.000000		minibatch: 53	LOSS: 1.273727	ACCs: 0.531250		minibatch: 54	LOSS: 0.614937	ACCs: 0.843750		minibatch: 55	LOSS: 1.110426	ACCs: 0.562500/appl/tensorflow/1.4cpu-python362/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+		minibatch: 56	LOSS: 0.732077	ACCs: 0.750000
+[[ 76  69   2   0   1  47]
+ [ 14  37   8   2   0  56]
+ [  7  19 352 105  78  62]
+ [ 12   0  50  63  70   0]
+ [  8   0  58  88 168   0]
+ [  2  59  12   2   0 265]]
+Model saved in file: ./models/rnn/Version_4.0_Sun Dec  3 12:10:16 2017/fold_1.ckpt
+
+... end training loop
+started at: Sun Dec  3 12:10:16 2017
+ended at:   Sun Dec  3 13:49:03 2017
