@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # # sen_map notebook
@@ -6,6 +5,8 @@
 # In[36]:
 
 from __future__ import absolute_import, division, print_function 
+import matplotlib
+matplotlib.use('Agg')
 #import os
 #import re
 #import sys
