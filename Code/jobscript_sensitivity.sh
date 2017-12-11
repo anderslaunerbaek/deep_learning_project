@@ -26,6 +26,7 @@
 # Load
 module load python3/3.6.2
 module load scipy/0.19.1-python-3.6.2
+module load matplotlib/2.0.2-python-3.6.2
 source /appl/tensorflow/1.4cpu-python362/bin/activate
 
 cd ~/Documents/deep/Code/ 
