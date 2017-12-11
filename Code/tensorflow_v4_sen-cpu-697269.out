@@ -1,0 +1,23 @@
+Loaded module: python3/3.6.2
+Loaded dependency [numpy/1.13.1-python-3.6.2-openblas-0.2.20]: openblas/0.2.20
+Loaded dependency [scipy/0.19.1-python-3.6.2]: numpy/1.13.1-python-3.6.2-openblas-0.2.20
+Loaded module: scipy/0.19.1-python-3.6.2
+Loaded module: matplotlib/2.0.2-python-3.6.2
+/appl/tensorflow/1.4cpu-python362/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+Loading subject 1...
+Printing sleep stage 0...
+Traceback (most recent call last):
+  File "sensitivity.py", line 75, in <module>
+    sen_map_class='clean_' + str(subjects_list[1][i]))
+  File "/zhome/d4/8/112215/Documents/deep/Code/utils_s160159.py", line 71, in cal_sen_map
+    f = plt.figure()
+  File "/appl/matplotlib/2.0.2-python-3.6.2/lib/python3.6/site-packages/matplotlib-2.0.2-py3.6-linux-x86_64.egg/matplotlib/pyplot.py", line 535, in figure
+    **kwargs)
+  File "/appl/matplotlib/2.0.2-python-3.6.2/lib/python3.6/site-packages/matplotlib-2.0.2-py3.6-linux-x86_64.egg/matplotlib/backends/backend_tkagg.py", line 81, in new_figure_manager
+    return new_figure_manager_given_figure(num, figure)
+  File "/appl/matplotlib/2.0.2-python-3.6.2/lib/python3.6/site-packages/matplotlib-2.0.2-py3.6-linux-x86_64.egg/matplotlib/backends/backend_tkagg.py", line 89, in new_figure_manager_given_figure
+    window = Tk.Tk()
+  File "/appl/python/3.6.2/lib/python3.6/tkinter/__init__.py", line 2017, in __init__
+    self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+_tkinter.TclError: no display name and no $DISPLAY environment variable

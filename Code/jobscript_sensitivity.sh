@@ -19,13 +19,14 @@
 #BSUB -N
 ### -- Specify the output and error file. %J is the job-id --
 ### -- -o and -e mean append, -oo and -eo mean overwrite --
-#BSUB -o tensorflow_v4_master-cpu-%J.out
-##BSUB -e tensorflow_v4_master-cpu-%J.err
+#BSUB -o tensorflow_v4_sen-cpu-%J.out
+##BSUB -e tensorflow_v4_sen-cpu-%J.err
 # -- end of LSF options --
 
 # Load
 module load python3/3.6.2
 module load scipy/0.19.1-python-3.6.2
+module load matplotlib/2.0.2-python-3.6.2
 source /appl/tensorflow/1.4cpu-python362/bin/activate
 
 cd ~/Documents/deep/Code/ 
