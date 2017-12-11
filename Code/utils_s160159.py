@@ -78,7 +78,7 @@ def cal_sen_map(grad_accum, sen_map_class, IMAGE_SHAPE, save_dir = './pics/'):
     plt.ylabel('frequency (Hz)')
     f.savefig(save_dir + 'class_' + sen_map_class + '.pdf', bbox_inches='tight')
     #plt.show()
-    plt.close
+    plt.close(f)
 
 
 # eeg_vgg_sleep_age_5classes.py
