@@ -1,2 +1,43 @@
 \section{Introduction}
 \label{sec:intro}
+
+Sleep is most important part of the human health. it is possible to diagonitise serevel dieasie by analysis the sleeping pattern of a human. 
+The current approach of annotating sleep stages is done manually by highly trained professionals and based upon complex transition with high probability of a subjective interpretion.
+
+It is possible to find the abnormalities within the sleep and hereby recongize some dieasies, by analysis the annotatin transistions between the sleeping pattern. The annotated sleep patterns can be visualized by using a hypnogram (see figure \ref{fig_hyp}).
+
+The measurements which is used to classify the sleep stages, are collected during the whole night  of sleep. Severel of biological signles can be measured during the sleep and the interesting signals for this project is the brain activity. The brain activity can be aquried by using electroencephalography (EEG) method. 
+The main frequencies of the EEG signales are: $delta= 3 \left[ Hz \right]$ and below, 
+$theta= 3.5-7.5 \left[ Hz \right]$,
+$alpha= 7.5-13 \left[ Hz \right]$, 
+$beta= 13 \left[ Hz \right]$ and above.
+
+The above mentioned burst of rythmic components are represeneted in different degrees within each stage of sleep.   
+The American Academy of Sleep Medicine defines the different stages of sleep as follows \cite{AASM}: 
+\begin{itemize}
+\item W: wakefulness to drowsiness. 
+\item N1: Non-REM 1.
+\item N2: Non-REM 2.
+\item N3: Non-REM 3.
+\item \textit{N4: Non-REM 4}.
+\item R: REM.
+\end{itemize}
+\todo[inline]{Write some meaning full stuff here.}
+
+
+
+The data
+
+
+{0: 11.959906833110884,
+ 1: 7.2282850488079351,
+ 2: 45.999842977153179,
+ 3: 8.6624270498024121,
+ 4: 5.9694852267671612,
+ 5: 20.18005286435843}
+
+
+Developing an automated sleep stage classifier, which is able to learn the transition rules between the five (six) stages of sleep, is profitable for patients and doctors around the world. 
+The scope of this project is to re-create the implementation of their (\cite{main_ar}) chosen CCN in TensorFlow (TF) and extend the model with a RNN on top. 
+
+

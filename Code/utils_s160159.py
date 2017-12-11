@@ -68,20 +68,17 @@ def safe_div(x,y):
     return np.divide(x,y,where=y != 0)
 
 def cal_sen_map(grad_accum, sen_map_class, IMAGE_SHAPE, save_dir = './pics/'):
-    ## Calcualte Sensitivity maps       
-    sm = np.mean(np.abs(grad_accum), axis=0)
-    ## Scale between 0 and 1
-    sensitivity_map = safe_div((sm-np.min(sm)), (np.max(sm)-np.min(sm)))
     f = plt.figure()
-    plt.imshow(sensitivity_map, interpolation=None)
-    plt.yticks(np.linspace(start=0, stop=IMAGE_SHAPE[1]-1, num=7), 
+    plt.imshow(grad_accum, interpolation=None)
+    plt.yticks(np.linspace(start=0, stop=IMAGE_SHAPE[0]-1, num=7), 
                ('30','25','20','15','10','5','0'))
-    plt.xticks(np.linspace(start=0, stop=IMAGE_SHAPE[2]-1, num=5), 
+    plt.xticks(np.linspace(start=0, stop=IMAGE_SHAPE[1]-1, num=5), 
                ('t','t + 7.5','t + 15','t + 22.5','t + 30'))
     plt.xlabel('time (s)')
     plt.ylabel('frequency (Hz)')
     f.savefig(save_dir + 'class_' + sen_map_class + '.pdf', bbox_inches='tight')
-    plt.show()
+    #plt.show()
+    plt.close
 
 
 # eeg_vgg_sleep_age_5classes.py
