@@ -5,6 +5,9 @@
 *.gz
 Synopsis/synopsis.pdf
 
+.DS_Store
+._.DS_Store
+
 Data_dicts/*
 Data_1/*
 Data/*
