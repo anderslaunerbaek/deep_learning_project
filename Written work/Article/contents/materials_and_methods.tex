@@ -1,15 +1,43 @@
 \section{Materials and Methods}
 \label{sec:materials_and_methods}
 
-
-
-The code for preproducing those resultes are stored in \cite{github}.
-
+ As a requirements for this project, the professor and assistant teahters needs to have acces to the running code which produces the results within this paper. The two bullets below links to what you need in order to reproduce the presented results.
+ \begin{itemize}
+ 	\item Github: \href{https://github.com/anderslaunerbaek/Deep\_Learning\_Project.git}{Deep\_Learning\_Project.git}
+ 	\item DTU SharePoint: \href{https://dtudk-my.sharepoint.com/personal/s160159\_win\_dtu\_dk/\_layouts/15/guestaccess.aspx?docid=093aa4dcaee0b4e3aa18b0ee67061a678&authkey=AbdnyuYwQUWn0BDEPeDn1Mg&e=b79a063cd72d43a9b7db88f8b8fd1b06}{Data\_dicts\_and\_Code\_models.zip}
+ \end{itemize}
 
 \subsection{Image Creation}
+There have been applied multi-taper spectrum analysis in order to turn the EEG signals into images. A given image represents an epoch in seconds of the complete recorded EEG signal along the first axis. The second axis represents the spectrum for the rhythmic components of interest, mentioned above. The third axis (the color) represents the amplitudes of the rhythmic components to a given time. 
+
+The WFDB Toolbox (\cite{matlab}) for Matlab have been used to download, preprocess and transform the EEG signals into images. The applied script\footnote{Git repo: "Code/2. from\_edf\_to\_pic.m"} for this process has been provided by the supervisor. 
+The multi-taper spectrum analysis which estimates the images, is not within the scope of the project. The hyperparameters, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., within the image estimation process have been decided to remove from possible hyperparameter in this project. This ensures that the results of the baseline model, in this project, can be comparable with the main article \cite{main_ar} and keep the correct focus. 
+
+The Matlab toolbox are able to download the data set of interest and the data which have been used in this projects consists of PSG recordings for 20 Subjects. The Subjects have been monitored for two nights except Subject 20. There is $38211$ images after the preprocessing of the EEG signals. All images have labeled-values which employs a supervised learning approach. Table \ref{tab_class_balance} illustrates how the labels of $38211$ images are distributed for the sleeping stages.
+
+\begin{table}[th!]
+\begin{tabular}{l|llllll}
+Sleep Stage & W & N1 &  N2& N3 & N4 & R \\\hline
+Dist. (in \%) &12 &7&46&9&6&20
+\end{tabular}
+\caption{This table summerises the aggregates the distribution of the labels for all 20 Subjects. The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
+\label{tab_class_balance}
+\end{table}
+
+In order to create a state of the art sleep stage classifier, WE need to consider methods to balance the six classes prior to training of the models.
+
 \subsection{Neural Network Architectures}
 
+The selected baseline CNN from the article is.......
+
+
+
+
+
+
 \subsubsection{Convolutional Neural Network}
+
+Implementations found in...
 
 Describe the network
 
@@ -25,5 +53,22 @@ The problem of understanding the aspects of visuel appreaches
 
 
 artificial images which represent the class of interest by calculating the gradient w.r.t. its loss function. 
+
+
+
+In \cite{main_ar} they have create a function, which calculates the gradients at the loss w.r.t. an input images and its labels. The mathematically expression are given in equation \ref{eq_1}, \cite{main_ar}.
+\begin{equation}
+s^{\left(j\right)} = 
+\label{eq_1}
+\end{equation}
+
+
+By applying the function (\ref{eq_1}) for all images within each sleeping stage, it is possible to see how the network has been activated during for the given stage. Figure \ref{fig_1_21}-\ref{fig_1_36} illustatres the
+
+
+other examples could be to 
+
+
+
 
 \subsection{Hyperparameter}

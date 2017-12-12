@@ -12,8 +12,8 @@ Data_dicts/*
 Data_1/*
 Data/*
 */.texpadtmp/*
-
-Report/.texpadtmp/*
+Written work/Article/.texpadtmp/*
+*.texpadtmp/*
 Report/.*
 Report/.texpadtmp/report.synctex.gz
 Code/__pycache__/*
