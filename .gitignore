@@ -5,6 +5,12 @@
 *.gz
 Synopsis/synopsis.pdf
 
+
+DEMO/.ipynb_checkpoints/*
+DEMO/Model/*
+DEMO/subject_7_dict.npy
+DEMO/vgg_16.ckpt
+
 .DS_Store
 ._.DS_Store
 
