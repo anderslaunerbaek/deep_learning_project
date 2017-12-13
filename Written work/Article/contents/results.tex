@@ -4,13 +4,17 @@
 
 
 
+
+Why use pre trained models.
+
+
 I only use one picture epouch at the time.....
 
 
 \subsection{Results}
 \label{subsec:results}
 
-
+\subsubsection{Performance}
 
 
 \begin{table*}[th!]
@@ -37,12 +41,20 @@ I only use one picture epouch at the time.....
 \end{table*}
 
 
+\subsubsection{sensitivity}
+
+
 \begin{figure*}[th!]
 \centering
 \input{./contents/subfigs}
-\caption{This figure contains plots of each annotated sleeping stage for Subject 1. The plots are given columnwise from left to right according to the previous mentioned sequence of the sleeping stages. Fig. \ref{fig_1_11} to \ref{fig_1_16} illustrates the average multi-taper spectrum for each sleeping stage. It is clear to see a high similarity of sleeping stage N3 and N4 in fig. \ref{fig_1_14} to \ref{fig_1_15}. Second and third row, fig \ref{fig_1_21} to \ref{fig_1_36} shows the sensitivity map from the CNN and the RNN respectively.}
+\caption{This figure contains plots of each annotated sleeping stage for subject 1. The plots are given columnwise from left to right according to the previous mentioned sequence of the sleeping stages. Fig. \ref{fig_1_11} to \ref{fig_1_16} illustrates an random epoch of the multi-taper spectrum for each sleeping stage for subset 1. It is clear to see a high similarity of sleeping stage N3 and N4, fig. \ref{fig_1_14} and fig. \ref{fig_1_15}. Second and third row, fig \ref{fig_1_21} to \ref{fig_1_36} shows the sensitivity maps from the CNN and the RNN respectively.}
 \label{fig_1}
 \end{figure*}
+
+
+
+\subsubsection{Hypnograms}
+
 
 \begin{figure*}[th!]
 \centering
@@ -51,6 +63,7 @@ I only use one picture epouch at the time.....
 \label{fig_hyp}
 \end{figure*}
 
+give examples where it totally wrong?
 
 
 figure \ref{fig_hyp_3} around $t_{800}$... something wired is going on in the RNN
@@ -69,4 +82,3 @@ figure \ref{fig_hyp_3} around $t_{800}$... something wired is going on in the RN
 %\end{table}
 
 
-\textbf{ada}

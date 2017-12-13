@@ -5,6 +5,7 @@
  \begin{itemize}
  	\item Github: \href{https://github.com/anderslaunerbaek/Deep\_Learning\_Project.git}{Deep\_Learning\_Project.git}
  	\item DTU SharePoint: \href{https://dtudk-my.sharepoint.com/personal/s160159\_win\_dtu\_dk/\_layouts/15/guestaccess.aspx?docid=093aa4dcaee0b4e3aa18b0ee67061a678&authkey=AbdnyuYwQUWn0BDEPeDn1Mg&e=b79a063cd72d43a9b7db88f8b8fd1b06}{Data\_dicts\_and\_Code\_models.zip}
+ 	\item DEMO: \href{https://github.com/anderslaunerbaek/Deep\_Learning\_Project.git}{Deep\_Learning\_Project.git}
  \end{itemize}
 
 \subsection{Image Creation}
@@ -26,49 +27,112 @@ Dist. (in \%) &12 &7&46&9&6&20
 
 In order to create a state of the art sleep stage classifier, WE need to consider methods to balance the six classes prior to training of the models.
 
+
+
 \subsection{Neural Network Architectures}
 
-The selected baseline CNN from the article is.......
+The architecture for the base line model is the VGGNet 16 \cite{main_ar, VGGnet16} which is a 16-layer network composed of following operations.
 
-
-
-
+\begin{itemize}
+\item The convolutional operations uses a kernel of $3x3$, which is the smallest possible configuration to capture the notion of left/right, up/down and center. The kernel has a stride of $1$, which is the number of pixels the kernel slide at the time.
+The third hyperparameter within the convolutional operation is the padding. This operation uses padding so the spatial resolution is preserved. This layer performs several linear activations by the kernel, those activations goes through a selected non-linear, ReLU, activation function.
+\item The max pooling layer reports the maximum non-linear activation value within its rectangular neighborhood. The rectangular neighborhood for this network is $2x2$. The max pooling operation has a stride of $2$. The spatial max pooling "decreases the resolution of image" and helps make the representation invariant to small translations of the output from the previous convolution operation \cite[sec. 9]{dl_book}.
+	\item The last three layers of the VGGNet 16 network is fully connected. The first two have 4096 channels. The last fully connected layer performs a six-channel classification, due to the six classes in this project.
+	\item The final layer of the VGGNet 16 network is the Softmax activation. This activation function is used to calculates the probabilities associated for each class \cite[eq. 4.1]{dl_book}.  
+\end{itemize}
+The VGGNet 16 is an acknowledged deep convolution network suitable and well performing network for image recognition in several case studies \cite{VGGnet16, stand_cnn_notes}.  
+The standard input layer takes an $224x224$ RGB image.
 
 
 \subsubsection{Convolutional Neural Network}
 
-Implementations found in...
+The baseline model for this project is given in equation \ref{eq_vgg16_cnn}. 
+\begin{equation}
+\begin{aligned}
+net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m c_{7,f} d c_{1, f} dc_{1,o}	\\
+%&\downarrow\\
+logits &= tf.squeeze(net, [1, 2])\\
+probs &= tf.nn.softmax(logits)
+\end{aligned}
+\label{eq_vgg16_cnn}
+\end{equation}
+where $c_{k,l}$ is a convolutional layer, $k$ is the number of receptive layers and $l$ is the number of channels. $c_{1,f} = c_{1,4096}$ and $c_{1,o} = c_{1,6}$.
+$m$ is the max pooling. $d$ is a dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. 
 
-Describe the network
+The TF implementation of the VGGNet 16 is heavily inspired by \cite{git_vgg16}. There have been added few modifications to the compared to the initial VGGNet 16 \cite{VGGnet16} in this implementation. 
+The implementation of the VVG16net has transformed the fully connected layers into convolutional 2D layers. It works identically if you change size of the kernel. But then it is necessary to the squeeze the second last layer ($c_{1,o}$) into a 2D-tensor before applying the Softmax activation.
+Beside this, there have been included L2-regularization, with a weighted decay of $0.0005$, between the convolutional operations and included dropouts between the fully connected layers. The modifications are included in eq. \ref{eq_vgg16_cnn}.
+  
+ The L2-regularization and dropout operations prevents overfitting in this deep complex network. 
 
 \subsubsection{Recurrent Neural Network}
+
+
+It is possible to understand sleep as a sequence of different stages. By learning the transitions between those stages may improve the the Modelling the The pattern between 
+
+
+Why the RNN -> learn the trasistions rules... 
+
+
+\begin{equation}
+\begin{aligned}
+net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m \\%c_{7,f} d c_{1, f} dc_{1,o}	\\
+%&\downarrow\\
+logits &= tf.squeeze(net, [1, 2])\\
+probs &= tf.nn.softmax(logits)
+\end{aligned}
+\label{eq_vgg16_rnn}
+\end{equation}
 
 Describe the network
 
 RNN LSTM
 
+
+place the LSTM just after the CCN.. seen in... \cite{}. 
+
+
+\cite{git_lstm}
+
+
+\cite{git_rnn_cnn_1}
+
+
+
+To ways to interpretate the output from the CNN
+\begin{enumerate}
+\item The output of the CNN is a set of several channels (also known as feature maps). We can have separate GRUs acting on each channel (with or without weight sharing) as described in this picture:
+\item Another option is to interpret CNN’s output as a 3D-tensor and run a single GRU on 2D slices of that tensor:
+\end{enumerate}
+
+
+My solution.
+
+
+
 \subsection{Network Visualization}
 
-The problem of understanding the aspects of visuel appreaches
+There exits many of ways visualizing a neural network w.r.t. its input data in order to better understand how the network interprets different inputs.  A common approach in the literature is to visualizing the activations along its propagation through the network. The example from \cite{stand_cnn} gives a great intuition about how the different operations in each layer affect the input data along is propagation though the network. 
 
-
-artificial images which represent the class of interest by calculating the gradient w.r.t. its loss function. 
-
-
-
-In \cite{main_ar} they have create a function, which calculates the gradients at the loss w.r.t. an input images and its labels. The mathematically expression are given in equation \ref{eq_1}, \cite{main_ar}.
+Another approach using the main article (\cite{main_ar}) is to calculate sensitivity maps, which determines the relative importance to every input feature $j$. $j$ represents the third dimension in the image which is the values of the RGB color.
+The sensitivity maps is created by calculating the gradients w.r.t. the loss of an input image and its label. The mathematically expression are given in equation \ref{eq_1}.
 \begin{equation}
-s^{\left(j\right)} = 
+s^{\left(j\right)} = \frac { 1 }{ N  } \sum _{ n=1 }^{ N } \left| \frac { \partial L\left( f\left( x \right) ,t \right)  }{ \partial x^{ \left( j \right)  } }  \right| _{x=x_n}
+%s^{\left(j\right)} = \frac { 1 }{ N^{\left(j\right)}  } \sum _{ n=1 }^{ N^{\left(j\right)} } \left| \partial L\left( x_n^{\left( j \right)} ,y_n^{\left( j \right)} \right)   \right|
 \label{eq_1}
 \end{equation}
+where $L$ is the loss w.r.t. the input image $f\left(x\right)$ and its label $t$. 
 
-
-By applying the function (\ref{eq_1}) for all images within each sleeping stage, it is possible to see how the network has been activated during for the given stage. Figure \ref{fig_1_21}-\ref{fig_1_36} illustatres the
-
-
-other examples could be to 
-
+By applying the function $s^{\left(j\right)}$ for an image, it is possible to see the relative importance in determined by the network for each feature $j$. 
+Figure \ref{fig_1_21}-\ref{fig_1_36} illustrates the sensitivity maps for each sleep stage for the CNN and RNN respectively. The Sensitivity maps have been created for subject 1.
 
 
 
 \subsection{Hyperparameter}
+
+
+dropout 
+learning rate
+weights\_regularizer=slim.l2\_regularizer(weight\_decay),
+
+
