@@ -46,7 +46,7 @@ The standard input layer takes an $224x224$ RGB image.
 
 \subsubsection{Convolutional Neural Network}
 
-The baseline model for this project is given in equation \ref{eq_vgg16_cnn}. 
+The baseline model for this project is given in equation \ref{eq_vgg16_cnn}\footnote{See implementation in Git repo.: "./Code/master.py"}. 
 \begin{equation}
 \begin{aligned}
 net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m c_{7,f} d c_{1, f} dc_{1,o}	\\
@@ -66,58 +66,34 @@ Beside this, there have been included L2-regularization, with a weighted decay o
  The L2-regularization and dropout operations prevents overfitting in this deep complex network. 
 
 \subsubsection{Recurrent Neural Network}
-
-
 It is possible to understand sleep as a sequence of different stages. By learning the transitions between those stages may improve the classification of the sleep stages.
 Recurrent neural networks (RNN) is the approach to model sequences and the most effective RNNs is called gated RNNs \cite[sec. 10.10]{dl_book}. 
 The long short-term memory (LSTM) network is a model which comprehend the issues of vanishing or exploding gradients over time. The LSTM cell has a internal recurrence (self-loop), which produces paths where the gradient can flow for long durations.  
 
+The main reason for implementing a sequential network is to learn the transitions rules between the sleeping stages.
 
+The first approach to learn the transitions rules, is to modify the baseline model and use its extracted feature as input for the LSTM. A second approach could be to use several LSTM cells with regularization in between. A third approach could be to redefine the problem, discritize the EEG-signals and feed the LSTM with a 1D-tensor. 
 
-extract the rules from the transitions....
+Due to limited time only the first approach have been considered. The network which combines the CNN and LSTM cell will further on be mentioned as the RNN.
 
-
-the Modelling the The pattern between 
-
-
-Why the RNN -> learn the trasistions rules... 
-
+There are several approaches to feed the LSTM cell. The chosen approach has been inspired by \cite{git_rnn_cnn_1,43455}, where the the LSTM acting on each of the generated feature maps.
+Equation \ref{eq_vgg16_rnn}\footnote{See implementation in Git repo.: "./Code/rnn.py"}.  illustrates the implementation of the RNN. The first convolutional layers are similar to the VGGNet 16 model. The LSTM cell is feed by the final convolutional layer. The input shape to the LSTM cell is static, which can cause discarding of the final mini-batch.
 
 \begin{equation}
 \begin{aligned}
-net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m \\%c_{7,f} d c_{1, f} dc_{1,o}	\\
+net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m lstm_{7,512} d_p fc_0\\
 %&\downarrow\\
-logits &= tf.squeeze(net, [1, 2])\\
+logits &=  tf.reshape(net, [batch, -1])\\
+logits &= slim.layers.fully_connected(logits, 6) \\
 probs &= tf.nn.softmax(logits)
 \end{aligned}
 \label{eq_vgg16_rnn}
 \end{equation}
+where the notations from eq. \ref{eq_vgg16_cnn} are the same and the $lstm_{7,512}$ is the LSTM cell   which takes the tensor shape (batch x 7 x 7 x 512). $d_p$ is the dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. $fc_0$ is the final fully connected layer, which represents the highest order feature maps for the six classes.
 
-Describe the network
+The implementation of LSTM cell is heavily inspired by \cite{git_lstm}. This implementation takes the input tensor and returns the sate tensor. Both are 4D-tensors (batch x height x width x channels).
 
-RNN LSTM
-
-
-place the LSTM just after the CCN.. seen in... \cite{}. 
-
-
-\cite{git_lstm}
-
-
-\cite{git_rnn_cnn_1}
-
-
-
-To ways to interpretate the output from the CNN
-\begin{enumerate}
-\item The output of the CNN is a set of several channels (also known as feature maps). We can have separate GRUs acting on each channel (with or without weight sharing) as described in this picture:
-\item Another option is to interpret CNN’s output as a 3D-tensor and run a single GRU on 2D slices of that tensor:
-\end{enumerate}
-
-
-My solution.
-
-
+As illustrated in eq. \ref{eq_vgg16_rnn}, there have been apllied an dropout operation on the output tensor from the LSTM cell. Then reshaped in order to feed a fully connected layer, which produces easy separable higher-order feature representations for the six classes discriminate. The final fully connected layer is activated with the non-linear Softmax function.
 
 \subsection{Network Visualization}
 
@@ -138,6 +114,8 @@ Figure \ref{fig_1_21}-\ref{fig_1_36} illustrates the sensitivity maps for each s
 
 
 \subsection{Hyperparameter}
+
+
 
 
 dropout 
