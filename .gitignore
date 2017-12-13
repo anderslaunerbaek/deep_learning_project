@@ -4,7 +4,7 @@
 *.log
 *.gz
 Synopsis/synopsis.pdf
-
+Info/*
 
 DEMO/.ipynb_checkpoints/*
 DEMO/Model/*
