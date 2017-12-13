@@ -11,6 +11,21 @@ from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
+def performance_measure(cm):
+    TP = np.diag(cm)
+    FP = np.sum(cm, axis=0) - np.diag(cm)
+    FN = np.sum(cm,axis=1) - np.diag(cm)
+    TN = np.sum(cm) - (FP+FN+TP)
+    
+    precision = safe_div(TP, TP + FP)
+    recall = safe_div(TP, TP + FN)
+    F1 = np.multiply(2, safe_div(np.multiply(precision, recall), np.add(precision, recall)))
+    
+    acc = safe_div(TP+TN,TP+FP+FN+TN)
+    
+    #
+    return TP, FP, precision, recall, F1, acc
+
 def down_sample(inputs_, targets_, no_class, verbose = False):
     class_balance = np.sum(targets_,0)
     n = targets_.shape[0]
