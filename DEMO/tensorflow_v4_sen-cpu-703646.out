@@ -1,0 +1,94 @@
+Loaded module: python3/3.6.2
+Loaded dependency [numpy/1.13.1-python-3.6.2-openblas-0.2.20]: openblas/0.2.20
+Loaded dependency [scipy/0.19.1-python-3.6.2]: numpy/1.13.1-python-3.6.2-openblas-0.2.20
+Loaded module: scipy/0.19.1-python-3.6.2
+Loaded module: matplotlib/2.0.2-python-3.6.2
+2017-12-13 18:51:25.568420: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+You have to train the model
+Loading subject 7...
+Shape pics
+(1721, 224, 224, 3)
+Shape targets
+(1721, 6)
+Loading Initial model...
+Initial model loaded...
+Fold 1 of 2
+Begin training loop... 
+
+Loading Initial pretrained model...
+	Train model
+	Epoch: 1 of 20
+		minibatch: 1 ~ 8	LOSS: 8.726934	ACCs: 0.156250		minibatch: 2 ~ 8	LOSS: 4.621754	ACCs: 0.312500		minibatch: 3 ~ 8	LOSS: 3.328689	ACCs: 0.156250		minibatch: 4 ~ 8	LOSS: 2.081306	ACCs: 0.156250		minibatch: 5 ~ 8	LOSS: 1.907856	ACCs: 0.218750		minibatch: 6 ~ 8	LOSS: 2.033692	ACCs: 0.093750		minibatch: 7 ~ 8	LOSS: 1.651588	ACCs: 0.166667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 2 of 20
+		minibatch: 1 ~ 8	LOSS: 1.651044	ACCs: 0.312500		minibatch: 2 ~ 8	LOSS: 1.627773	ACCs: 0.312500		minibatch: 3 ~ 8	LOSS: 1.613642	ACCs: 0.250000		minibatch: 4 ~ 8	LOSS: 1.341182	ACCs: 0.343750		minibatch: 5 ~ 8	LOSS: 1.373967	ACCs: 0.406250		minibatch: 6 ~ 8	LOSS: 1.423890	ACCs: 0.250000		minibatch: 7 ~ 8	LOSS: 0.754243	ACCs: 0.833333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 3 of 20
+		minibatch: 1 ~ 8	LOSS: 4.434058	ACCs: 0.250000		minibatch: 2 ~ 8	LOSS: 1.957411	ACCs: 0.343750		minibatch: 3 ~ 8	LOSS: 1.380968	ACCs: 0.343750		minibatch: 4 ~ 8	LOSS: 1.396876	ACCs: 0.343750		minibatch: 5 ~ 8	LOSS: 1.950602	ACCs: 0.250000		minibatch: 6 ~ 8	LOSS: 1.575138	ACCs: 0.218750		minibatch: 7 ~ 8	LOSS: 1.703919	ACCs: 0.166667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 4 of 20
+		minibatch: 1 ~ 8	LOSS: 1.556583	ACCs: 0.218750		minibatch: 2 ~ 8	LOSS: 1.562968	ACCs: 0.250000		minibatch: 3 ~ 8	LOSS: 1.448623	ACCs: 0.468750		minibatch: 4 ~ 8	LOSS: 1.581359	ACCs: 0.343750		minibatch: 5 ~ 8	LOSS: 1.683807	ACCs: 0.437500		minibatch: 6 ~ 8	LOSS: 1.433795	ACCs: 0.343750		minibatch: 7 ~ 8	LOSS: 1.043923	ACCs: 0.666667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 5 of 20
+		minibatch: 1 ~ 8	LOSS: 1.838215	ACCs: 0.281250		minibatch: 2 ~ 8	LOSS: 1.356582	ACCs: 0.312500		minibatch: 3 ~ 8	LOSS: 1.296499	ACCs: 0.437500		minibatch: 4 ~ 8	LOSS: 1.289075	ACCs: 0.406250		minibatch: 5 ~ 8	LOSS: 1.393050	ACCs: 0.312500		minibatch: 6 ~ 8	LOSS: 1.420034	ACCs: 0.281250		minibatch: 7 ~ 8	LOSS: 1.446358	ACCs: 0.333333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 6 of 20
+		minibatch: 1 ~ 8	LOSS: 1.460164	ACCs: 0.468750		minibatch: 2 ~ 8	LOSS: 1.475757	ACCs: 0.312500		minibatch: 3 ~ 8	LOSS: 1.656001	ACCs: 0.156250		minibatch: 4 ~ 8	LOSS: 1.281015	ACCs: 0.406250		minibatch: 5 ~ 8	LOSS: 1.224881	ACCs: 0.468750		minibatch: 6 ~ 8	LOSS: 1.267412	ACCs: 0.343750		minibatch: 7 ~ 8	LOSS: 1.224442	ACCs: 0.333333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 7 of 20
+		minibatch: 1 ~ 8	LOSS: 0.894216	ACCs: 0.625000		minibatch: 2 ~ 8	LOSS: 1.025612	ACCs: 0.468750		minibatch: 3 ~ 8	LOSS: 0.838056	ACCs: 0.625000		minibatch: 4 ~ 8	LOSS: 1.186488	ACCs: 0.531250		minibatch: 5 ~ 8	LOSS: 1.297253	ACCs: 0.406250		minibatch: 6 ~ 8	LOSS: 1.141444	ACCs: 0.500000		minibatch: 7 ~ 8	LOSS: 1.347008	ACCs: 0.333333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 8 of 20
+		minibatch: 1 ~ 8	LOSS: 1.842527	ACCs: 0.500000		minibatch: 2 ~ 8	LOSS: 2.768312	ACCs: 0.312500		minibatch: 3 ~ 8	LOSS: 1.636209	ACCs: 0.406250		minibatch: 4 ~ 8	LOSS: 2.776408	ACCs: 0.218750		minibatch: 5 ~ 8	LOSS: 1.158203	ACCs: 0.500000		minibatch: 6 ~ 8	LOSS: 1.272670	ACCs: 0.375000		minibatch: 7 ~ 8	LOSS: 1.401116	ACCs: 0.500000		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 9 of 20
+		minibatch: 1 ~ 8	LOSS: 1.279765	ACCs: 0.437500		minibatch: 2 ~ 8	LOSS: 1.283228	ACCs: 0.406250		minibatch: 3 ~ 8	LOSS: 1.285370	ACCs: 0.312500		minibatch: 4 ~ 8	LOSS: 1.103142	ACCs: 0.375000		minibatch: 5 ~ 8	LOSS: 1.291025	ACCs: 0.406250		minibatch: 6 ~ 8	LOSS: 1.006181	ACCs: 0.468750		minibatch: 7 ~ 8	LOSS: 0.846006	ACCs: 0.500000		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 10 of 20
+		minibatch: 1 ~ 8	LOSS: 1.075637	ACCs: 0.531250		minibatch: 2 ~ 8	LOSS: 1.212284	ACCs: 0.531250		minibatch: 3 ~ 8	LOSS: 1.432324	ACCs: 0.343750		minibatch: 4 ~ 8	LOSS: 1.302484	ACCs: 0.375000		minibatch: 5 ~ 8	LOSS: 1.116272	ACCs: 0.468750		minibatch: 6 ~ 8	LOSS: 1.185577	ACCs: 0.562500		minibatch: 7 ~ 8	LOSS: 1.132004	ACCs: 0.666667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 11 of 20
+		minibatch: 1 ~ 8	LOSS: 3.722652	ACCs: 0.312500		minibatch: 2 ~ 8	LOSS: 0.673271	ACCs: 0.718750		minibatch: 3 ~ 8	LOSS: 1.162048	ACCs: 0.531250		minibatch: 4 ~ 8	LOSS: 1.112266	ACCs: 0.468750		minibatch: 5 ~ 8	LOSS: 1.050023	ACCs: 0.562500		minibatch: 6 ~ 8	LOSS: 1.302462	ACCs: 0.281250		minibatch: 7 ~ 8	LOSS: 0.973580	ACCs: 0.666667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 12 of 20
+		minibatch: 1 ~ 8	LOSS: 1.183423	ACCs: 0.406250		minibatch: 2 ~ 8	LOSS: 1.107249	ACCs: 0.531250		minibatch: 3 ~ 8	LOSS: 1.117340	ACCs: 0.531250		minibatch: 4 ~ 8	LOSS: 0.993953	ACCs: 0.593750		minibatch: 5 ~ 8	LOSS: 1.150649	ACCs: 0.500000		minibatch: 6 ~ 8	LOSS: 1.090975	ACCs: 0.500000		minibatch: 7 ~ 8	LOSS: 0.602928	ACCs: 0.833333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 13 of 20
+		minibatch: 1 ~ 8	LOSS: 0.993725	ACCs: 0.531250		minibatch: 2 ~ 8	LOSS: 0.971950	ACCs: 0.656250		minibatch: 3 ~ 8	LOSS: 0.865871	ACCs: 0.468750		minibatch: 4 ~ 8	LOSS: 1.330613	ACCs: 0.437500		minibatch: 5 ~ 8	LOSS: 0.765066	ACCs: 0.687500		minibatch: 6 ~ 8	LOSS: 1.567943	ACCs: 0.437500		minibatch: 7 ~ 8	LOSS: 0.443533	ACCs: 1.000000		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 14 of 20
+		minibatch: 1 ~ 8	LOSS: 1.300879	ACCs: 0.562500		minibatch: 2 ~ 8	LOSS: 1.139252	ACCs: 0.468750		minibatch: 3 ~ 8	LOSS: 0.722159	ACCs: 0.625000		minibatch: 4 ~ 8	LOSS: 1.093961	ACCs: 0.468750		minibatch: 5 ~ 8	LOSS: 0.995121	ACCs: 0.468750		minibatch: 6 ~ 8	LOSS: 0.897764	ACCs: 0.687500		minibatch: 7 ~ 8	LOSS: 1.248813	ACCs: 0.500000		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 15 of 20
+		minibatch: 1 ~ 8	LOSS: 0.807541	ACCs: 0.656250		minibatch: 2 ~ 8	LOSS: 0.744658	ACCs: 0.718750		minibatch: 3 ~ 8	LOSS: 0.956946	ACCs: 0.656250		minibatch: 4 ~ 8	LOSS: 0.564477	ACCs: 0.781250		minibatch: 5 ~ 8	LOSS: 0.568267	ACCs: 0.718750		minibatch: 6 ~ 8	LOSS: 0.776597	ACCs: 0.687500		minibatch: 7 ~ 8	LOSS: 0.784519	ACCs: 0.666667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 16 of 20
+		minibatch: 1 ~ 8	LOSS: 1.635913	ACCs: 0.468750		minibatch: 2 ~ 8	LOSS: 1.387340	ACCs: 0.468750		minibatch: 3 ~ 8	LOSS: 1.070478	ACCs: 0.468750		minibatch: 4 ~ 8	LOSS: 0.818450	ACCs: 0.656250		minibatch: 5 ~ 8	LOSS: 0.893444	ACCs: 0.593750		minibatch: 6 ~ 8	LOSS: 0.958285	ACCs: 0.500000		minibatch: 7 ~ 8	LOSS: 0.463915	ACCs: 1.000000		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 17 of 20
+		minibatch: 1 ~ 8	LOSS: 0.965733	ACCs: 0.656250		minibatch: 2 ~ 8	LOSS: 1.071232	ACCs: 0.781250		minibatch: 3 ~ 8	LOSS: 0.764615	ACCs: 0.687500		minibatch: 4 ~ 8	LOSS: 0.685907	ACCs: 0.750000		minibatch: 5 ~ 8	LOSS: 0.651374	ACCs: 0.687500		minibatch: 6 ~ 8	LOSS: 0.552983	ACCs: 0.718750		minibatch: 7 ~ 8	LOSS: 0.561280	ACCs: 0.666667		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 18 of 20
+		minibatch: 1 ~ 8	LOSS: 0.875218	ACCs: 0.656250		minibatch: 2 ~ 8	LOSS: 0.623372	ACCs: 0.656250		minibatch: 3 ~ 8	LOSS: 0.793754	ACCs: 0.750000		minibatch: 4 ~ 8	LOSS: 0.539273	ACCs: 0.750000		minibatch: 5 ~ 8	LOSS: 0.562218	ACCs: 0.718750		minibatch: 6 ~ 8	LOSS: 0.499168	ACCs: 0.750000		minibatch: 7 ~ 8	LOSS: 0.343815	ACCs: 0.833333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 19 of 20
+		minibatch: 1 ~ 8	LOSS: 0.920305	ACCs: 0.625000		minibatch: 2 ~ 8	LOSS: 0.780471	ACCs: 0.687500		minibatch: 3 ~ 8	LOSS: 0.594425	ACCs: 0.687500		minibatch: 4 ~ 8	LOSS: 0.901142	ACCs: 0.656250		minibatch: 5 ~ 8	LOSS: 0.661142	ACCs: 0.781250		minibatch: 6 ~ 8	LOSS: 0.694349	ACCs: 0.812500		minibatch: 7 ~ 8	LOSS: 0.584771	ACCs: 0.833333		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan
+	Epoch: 20 of 20
+		minibatch: 1 ~ 8	LOSS: 0.484935	ACCs: 0.875000		minibatch: 2 ~ 8	LOSS: 0.436878	ACCs: 0.812500		minibatch: 3 ~ 8	LOSS: 0.374598	ACCs: 0.843750		minibatch: 4 ~ 8	LOSS: 0.528778	ACCs: 0.812500		minibatch: 5 ~ 8	LOSS: 0.653197	ACCs: 0.750000		minibatch: 6 ~ 8	LOSS: 0.549597	ACCs: 0.750000		minibatch: 7 ~ 8	LOSS: 0.163205	ACCs: 1.000000		minibatch: 8 ~ 8	LOSS: nan	ACCs: nan/appl/tensorflow/1.4cpu-python362/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+
+
+	Test model
+		minibatch: 1 ~ 28		minibatch: 2 ~ 28		minibatch: 3 ~ 28		minibatch: 4 ~ 28		minibatch: 5 ~ 28		minibatch: 6 ~ 28		minibatch: 7 ~ 28		minibatch: 8 ~ 28		minibatch: 9 ~ 28		minibatch: 10 ~ 28		minibatch: 11 ~ 28		minibatch: 12 ~ 28		minibatch: 13 ~ 28		minibatch: 14 ~ 28		minibatch: 15 ~ 28		minibatch: 16 ~ 28		minibatch: 17 ~ 28		minibatch: 18 ~ 28		minibatch: 19 ~ 28		minibatch: 20 ~ 28		minibatch: 21 ~ 28		minibatch: 22 ~ 28		minibatch: 23 ~ 28		minibatch: 24 ~ 28		minibatch: 25 ~ 28		minibatch: 26 ~ 28		minibatch: 27 ~ 28		minibatch: 28 ~ 28
+Model saved in file: ./Model/
+
+	Re-create confusion matric from trained model...
+		minibatch: 1 ~ 28		minibatch: 2 ~ 28		minibatch: 3 ~ 28		minibatch: 4 ~ 28		minibatch: 5 ~ 28		minibatch: 6 ~ 28		minibatch: 7 ~ 28		minibatch: 8 ~ 28		minibatch: 9 ~ 28		minibatch: 10 ~ 28		minibatch: 11 ~ 28		minibatch: 12 ~ 28		minibatch: 13 ~ 28		minibatch: 14 ~ 28		minibatch: 15 ~ 28		minibatch: 16 ~ 28		minibatch: 17 ~ 28		minibatch: 18 ~ 28		minibatch: 19 ~ 28		minibatch: 20 ~ 28		minibatch: 21 ~ 28		minibatch: 22 ~ 28		minibatch: 23 ~ 28		minibatch: 24 ~ 28		minibatch: 25 ~ 28		minibatch: 26 ~ 28		minibatch: 27 ~ 28		minibatch: 28 ~ 28
+From traning session
+[[ 74   0   2   0   0  11]
+ [ 18  27   3   0   0  27]
+ [  2  11 305  15   0  49]
+ [  0   0   1  60  32   3]
+ [  0   0   0   1  32   0]
+ [  0   0   0   0   0 187]]
+--------------------------------------------
+Average for all classes
+Precision: 0.740505
+Recall:    0.767284
+F1:        0.723215
+Acc:       0.932171
+From reconstruction session
+[[ 74   2   1   0   0  10]
+ [ 17  29   4   0   0  25]
+ [  2  15 304  10   0  51]
+ [  1   0   1  51  37   6]
+ [  0   0   0   2  31   0]
+ [  0   0   0   0   0 187]]
+--------------------------------------------
+Average for all classes
+Precision: 0.722329
+Recall:    0.750616
+F1:        0.705596
+Acc:       0.928682
