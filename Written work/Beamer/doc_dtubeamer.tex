@@ -7,16 +7,16 @@
 \pgfplotsset{compat=newest}
 \usepackage{booktabs}
 \usepackage{siunitx}
-
-
+\usepackage{subcaption}
+\usepackage{multirow}
 \usepackage{lmodern}
 \usepackage{charter} % serif
 
 \usetheme[department=compute]{DTU}
 
-\title[DTU Templates]{DTU Beamer Template}
-\author{Remus M. Prunescu}
-\institute{\LaTeX\ Support Group, Technical University of Denmark (DTU)}
+\title[02456 Deep Learning]{Deep Convolutional and Recurrent Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring}
+\author{Anders Launer Baek}
+\institute{DTU Compute, Technical University of Denmark}
 \date{\today}
 	
 \newcommand{\tabitem}{{\color{dtured}$\bullet$} }
@@ -26,241 +26,257 @@
 	\maketitle
 }
 
-\frame{
-	\frametitle{Outline}
-	\tableofcontents
-}
+%\frame{
+%	\frametitle{Outline}
+%	\tableofcontents
+%}
 
-\section{User Guide}
-\subsection{Installation}
-\frame{
-	\frametitle{Installation}
-	
-	\begin{block}{Linux}
-		\begin{itemize}
-			\item Unzip the bundle to \texttt{\textasciitilde/texmf/}.
-		\end{itemize}
-	\end{block}
-	
-	\begin{block}{iOS (Mac)}
-		\begin{itemize}
-			\item Unzip the bundle to \texttt{\textasciitilde/Library/texmf/}.
-		\end{itemize}
-	\end{block}
-	
-	\begin{block}{Windows}
-		\begin{itemize}
-			\item Unzip the bundle to any location.
-			\item Open MiKTeX settings.
-			\item Add location to root folders.
-			\item Refresh FNDB.
-		\end{itemize}
-	\end{block}
-}
 
-\subsection{Package Options}
-\frame[allowframebreaks]{
-	\frametitle{Package Options}
-	\begin{block}{[department=]}
-		\begin{tabular}{ll}
-			\tabitem aqua & DTU Aqua\\ 
-			\tabitem byg & DTU Civil Engineering\\
-			\tabitem compute & DTU Compute\\
-			\tabitem elektro & DTU Electrical Engineering\\
-			\tabitem energikonvertering & DTU Energy Conversion\\
-			\tabitem fotonik & DTU Fotonik\\
-			\tabitem fysik & DTU Physics\\
-			\tabitem food & DTU Food\\
-			\tabitem kemi & DTU Chemistry\\
-			\tabitem kemiteknik & DTU Chemical Engineering
-		\end{tabular}
-	\end{block}
-	
-	\begin{block}{[department=]}
-		\begin{tabular}{ll}
-			\tabitem management & DTU Management Engineering\\
-			\tabitem mekanik & DTU Mechanical Engineering\\
-			\tabitem miljo & DTU Environment Engineering\\
-			\tabitem nanotek & DTU Nanotech\\
-			\tabitem space & DTU Space\\ 
-			\tabitem systembiologi & DTU Systems Biology\\
-			\tabitem transport & DTU Transport\\
-			\tabitem vaterinaerinstituttet & DTU Vet\\
-			\tabitem vindenergi & DTU Wind Energy
-		\end{tabular}
-	\end{block}
-	
-	\begin{block}{[showsection=]}
-		\begin{tabular}{ll}
-			\tabitem false & Remove section from above frame title\\
-			\tabitem true (default) & Display section above frame title
-		\end{tabular}
-	\end{block}
-}
-
-\subsection{Date Format}
+\section{The Challenge}
+\subsection{Sleeping Stages}
 \frame{
-	\frametitle{Date Format}
-	\begin{block}{Default Date Format}
-		\texttt{[Numeric]Day.[Numeric]Month.[Numeric]Year}
-	\end{block}
-	
-	\begin{block}{Customize Date Format}
-		Place the following code snippet in the preamble:
-		\texttt{\textbackslash newdateformat\{myDateFormat\}\{\textbackslash THEDAY-\textbackslash THEMONTH-\textbackslash THEYEAR\}}
-		\texttt{\textbackslash renewcommand\{\textbackslash DTUDateFormat\}\{\textbackslash myDateFormat\}}
-	\end{block}
+	\frametitle{Sleeping Stages}
+	\begin{figure}[th!]
+\centering
+\input{./content/subfigs_1}
+\caption{This figure illustrates a random epoch of the multi-taper spectrum for each sleeping stage. There is high similarity between sleeping stage N3 and N4.}
+\label{fig_1}
+\end{figure}
+
+
+\begin{table}[th!]
+\begin{tabular}{l|llllll}
+Sleep Stage & W & N1 &  N2& N3 & N4 & R \\\hline
+Dist. (in \%) &12 &7&46&9&6&20
+\end{tabular}
+\caption{This table summerises the aggregates the distribution of the labels for all 20 Subjects. The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
+\label{tab_class_balance}
+\end{table}
+
+
 }
 
 
 
-\section{Demonstration}
 
-\subsection{Lists}
+
+\section{Performance}
+
 \frame{
-	\frametitle{Lists}
-	\begin{itemize}
-		\item Notice
-		\item the
-		\item red
-		\item bullet
-	\end{itemize}
+	\frametitle{Confusion Matrices}
+\begin{table}[th!]
+\centering
+\begin{tabular}{ll | llllll | llllll }
+                     &    & \multicolumn{6}{c}{Predicted} & \multicolumn{6}{| c}{Normalized pred. (in \%)} \\
+                     &    & W  & N1  & N2  & N3  & N4 & R & W & N1 & N2 & N3 & N4 & R \\\hline
+\multirow{6}{*}{CNN} & W  &495 & 145 & 29 & 11 & 1 & 20 & 71 & 21 & 4 & 2 & 0 & 3  \\ 
+                     & N1 &    25 & 211 & 43 & 0 & 0 & 62 & 7 & 62 & 13 & 0 & 0 & 18  \\ 
+                     & N2 &    4 & 51 & 1313 & 104 & 17 & 68 & 0 & 3 & 84 & 7 & 1 & 4 \\ 
+                     & N3 &    0 & 2 & 11 & 164 & 64 & 0 & 0 & 1 & 5 & 68 & 27 & 0  \\ 
+                     & N4 &    0 & 0 & 0 & 54 & 91 & 0 & 0 & 0 & 0 & 37 & 63 & 0  \\ 
+                     & R  &    17 & 80 & 46 & 0 & 0 & 591 & 2 & 11 & 6 & 0 & 0 & 81 \\ \hline
+\multirow{6}{*}{RNN} & W  &    578 & 39 & 26 & 7 & 1 & 43 & 83 & 6 & 4 & 1 & 0 & 6 \\ 
+                     & N1 &    38 & 107 & 64 & 0 & 0 & 132 & 11 & 31 & 19 & 0 & 0 & 39 \\ 
+                     & N2 &    8 & 13 & 1314 & 102 & 28 & 92 & 1 & 1 & 84 & 7 & 2 & 6 \\ 
+                     & N3 &    3 & 0 & 18 & 125 & 95 & 0 & 1 & 0 & 7 & 52 & 39 & 0  \\ 
+                     & N4 &    0 & 0 & 1 & 60 & 84 & 0 & 0 & 0 & 1 & 41 & 58 & 0  \\ 
+                     & R  &    19 & 36 & 43 & 0 & 0 & 636 & 3 & 5 & 6 & 0 & 0 & 87
+\end{tabular}
+\caption{Confusion matrix and normalized confusion matrix for the CNN and RNN network.}
+\label{tab_res_1}
+\end{table}
 	
-	\begin{enumerate}
-		\item Wow
-		\item numbered
-		\item list
-	\end{enumerate}
-}
-
-\subsection{Blocks}
-\frame{
-	\frametitle{Blocks}
-	\begin{block}{Cool block}
-		Get nice visual effects by organizing content into \textbf{blocks}. Title background color matches the red from DTU logo.
-	\end{block}
-}
-
-\subsection{Tables}
-\frame{
-	\frametitle{Tables}
-	\begin{table}
-		\small
-		\caption{Not a regular table. Content is aligned with respect to the decimal symbol.}
-		\label{tab:S:standard}
-		\centering
-		\begin{tabular}{S}
-			\toprule
-			{Some Values} \\
-			\midrule
-			2.3456 \\
-			34.2345 \\
-			-6.7835 \\
-			90.473 \\
-			5642.5 \\
-			1.2e3 \\
-			e4 \\
-			\bottomrule
-		\end{tabular}
-	\end{table}
-}
-
-\subsection{Plots}
-\frame{
-	\frametitle{Plots}
-	Stunt your colleagues with amazing plots (pgfplots).
-	\begin{figure}[htbp]
-	\centering
-	\small
-	\begin{tikzpicture}
-		\begin{axis}[
-			width=0.4\textwidth,
-			grid=major,
-			title={Model Validation},
-			xlabel={X},
-			ylabel={Y}
-		]
-		
-		\addplot {-x^5 - 242};
-		\addlegendentry{model}
 	
-		\addplot coordinates {
-			(-4.77778,2027.60977)
-			(-3.55556,347.84069)
-			(-2.33333,22.58953)
-			(-1.11111,-493.50066)
-			(0.11111,46.66082)
-			(1.33333,-205.56286)
-			(2.55556,-341.40638)
-			(3.77778,-1169.24780)
-			(5.00000,-3269.56775)
-		};
-		\addlegendentry{estimate}
-		\end{axis}
-	\end{tikzpicture}
-	\end{figure}
 }
 
-\subsection{Frame Numbers}
+
 \frame{
-	\frametitle{Frame number instead of page number}
+	\frametitle{Bootstrapped Performances Metrics}
+	\begin{table}[th!]
+\centering
+\begin{tabular}{l | llll}
+Study & Precision & Sensitivity & F$_1$-score & Accuracy \\\hline
+%\cite{main_ar}               & 65.4-\textbf{67.9}-70.4 & 70.9-\textbf{71.3}-71.8 & 67.5-\textbf{68.8}-70.0 & 92.3-\textbf{92.3}-92.4\\
+CNN               & 65-\textbf{68}-70 & 71-\textbf{71}-72 & 67-\textbf{69}-70 & 92-\textbf{92}-92\\
+RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 92-\textbf{92}-92
+\end{tabular}
+\caption{\textbf{Mean} and corresponding $95\%$ confident values computed by 100.000 bootstrap iterations with replacement.}
+\label{tab_res_2}
+\end{table}
+}
+
+\frame{
+	\frametitle{Sensitivity Maps}
+	\begin{figure}[th!]
+\centering
+\input{./content/subfigs_2}
+\caption{This figure illustrates a random epoch of the multi-taper spectrum for each sleeping stage. There is high similarity between sleeping stage N3 and N4.}
+\label{fig_2}
+\end{figure}
+}
+
+
+
+
+% ads
+\section{Conclusion}
+\subsection{Conclusion}
+\frame{
+	\frametitle{Conclusion}
+	
 	\setbeamercovered{transparent}
 	\begin{itemize}
 		\item<1-> Watch the frame number.
 		\item<2-> It doesn't change!
 	\end{itemize}
+
+	
 }
+
+\subsection{Future Research}
+\frame{
+	\frametitle{Future Research}
+	\setbeamercovered{transparent}
+	\begin{itemize}
+		\item<1-> Watch the frame number.
+		\item<2-> It doesn't change!
+	\end{itemize}
+
+}
+
+
+
+
+
+
+
+%\section{Demonstration}
+%\subsection{Lists}
+%\frame{
+%	\frametitle{Lists}
+%	\begin{itemize}
+%		\item Notice
+%		\item the
+%		\item red
+%		\item bullet
+%	\end{itemize}
+%	
+%	\begin{enumerate}
+%		\item Wow
+%		\item numbered
+%		\item list
+%	\end{enumerate}
+%}
+%
+%\subsection{Blocks}
+%\frame{
+%	\frametitle{Blocks}
+%	\begin{block}{Cool block}
+%		Get nice visual effects by organizing content into \textbf{blocks}. Title background color matches the red from DTU logo.
+%	\end{block}
+%}
+%
+%\subsection{Tables}
+%\frame{
+%	\frametitle{Tables}
+%	\begin{table}
+%		\small
+%		\caption{Not a regular table. Content is aligned with respect to the decimal symbol.}
+%		\label{tab:S:standard}
+%		\centering
+%		\begin{tabular}{S}
+%			\toprule
+%			{Some Values} \\
+%			\midrule
+%			2.3456 \\
+%			34.2345 \\
+%			-6.7835 \\
+%			90.473 \\
+%			5642.5 \\
+%			1.2e3 \\
+%			e4 \\
+%			\bottomrule
+%		\end{tabular}
+%	\end{table}
+%}
+%
+%\subsection{Plots}
+%\frame{
+%	\frametitle{Plots}
+%	Stunt your colleagues with amazing plots (pgfplots).
+%	\begin{figure}[htbp]
+%	\centering
+%	\small
+%	\begin{tikzpicture}
+%		\begin{axis}[
+%			width=0.4\textwidth,
+%			grid=major,
+%			title={Model Validation},
+%			xlabel={X},
+%			ylabel={Y}
+%		]
+%		
+%		\addplot {-x^5 - 242};
+%		\addlegendentry{model}
+%	
+%		\addplot coordinates {
+%			(-4.77778,2027.60977)
+%			(-3.55556,347.84069)
+%			(-2.33333,22.58953)
+%			(-1.11111,-493.50066)
+%			(0.11111,46.66082)
+%			(1.33333,-205.56286)
+%			(2.55556,-341.40638)
+%			(3.77778,-1169.24780)
+%			(5.00000,-3269.56775)
+%		};
+%		\addlegendentry{estimate}
+%		\end{axis}
+%	\end{tikzpicture}
+%	\end{figure}
+%}
+
+%\subsection{Frame Numbers}
+%\frame{
+%	\frametitle{Frame number instead of page number}
+%	\setbeamercovered{transparent}
+%	\begin{itemize}
+%		\item<1-> Watch the frame number.
+%		\item<2-> It doesn't change!
+%	\end{itemize}
+%}
 
 {
-\setbeamercolor{background canvas}{bg=black} % Background color
-	\frame[dtuwhitelogo]{
-		\frametitle{Hello Blackness}
-		Here is another frame style!
-	}
-}
+%\setbeamercolor{background canvas}{bg=black} % Background color
+%	\frame[dtuwhitelogo]{
+%		\frametitle{Hello Blackness}
+%		Here is another frame style!
+%	}
+%}
 
-\section{Final Remarks}
-
-\subsection{Fonts}
-\frame{
-	\frametitle{Fonts}
-	\begin{itemize}
-		\item You can set whatever font you like in the preamble. E.g.:
-		\begin{itemize}
-			\item \texttt{\textbackslash usepackage\{lmodern\} \% Latin Modern}
-			\item \texttt{\textbackslash usepackage\{helvet\} \% Helvetica}
-			\item \texttt{\textbackslash usepackage\{verdana\} \% Verdana}
-			\item \texttt{\textbackslash usepackage\{newtx, newtxmath\} \% Times (text and math)}
-		\end{itemize}
-		
-		\item DTU recommends Verdana but this font type is not available by default on all operating systems:
-		\begin{itemize}
-			\item Windows: include the \texttt{verdana} package in the preamble and MiKTeX will do the rest;
-			\item Linux and OS X: before including the \texttt{verdana} package in your preamble, run the \texttt{install\_fonts.sh} script from our package.
-		\end{itemize}
-	\end{itemize}
-}
 
 %================================================
 %===  Define the contact details
 \newcommand\contactTable{ %
   \begin{tabular}{lr}
-    \multicolumn{2}{l}{Your Name} \\ 
-    \multicolumn{2}{l}{\LaTeX\ Support Group, Technical University of Denmark (DTU)} \\ \midrule
-    Building 308, Room 119    & latex-support@student.dtu.dk. \\
-    2800 Kgs. Lyngby, Denmark & +45 4525 phone \\
-    http://www.latex.dtu.dk   & +45 4525 fax
+    \multicolumn{2}{l}{Anders Launer Baek} \\ 
+    s160159@student.dtu.dk \\
+    \multicolumn{2}{l}{DTU Compute, Technical University of Denmark}
+    %\multicolumn{2}{l}{DTU Compute, Technical University of Denmark} \\ \midrule
+    %Building 308, Room 119    & latex-support@student.dtu.dk. \\
+    %2800 Kgs. Lyngby, Denmark & +45 4525 phone \\
+    %http://www.latex.dtu.dk   & +45 4525 fax
   \end{tabular}
 }%
 
-\frame[dtuwhitelogo, bgfilename=dtu_bg_fiber]{
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[fill=black, fill opacity=0.9, 
-          text=white, text opacity=1.0,
-          rounded corners=5pt, 
-          font=\scriptsize] at (current page.center) {\contactTable};
-  \end{tikzpicture}
-}
+%\frame[dtuwhitelogo, bgfilename=dtu_bg_fiber]{
+%  \begin{tikzpicture}[remember picture,overlay]
+%    \node[fill=black, fill opacity=0.9, 
+%          text=white, text opacity=1.0,
+%          rounded corners=5pt, 
+%          font=\scriptsize] at (current page.center) {\contactTable};
+%  \end{tikzpicture}
+%}
 
 \frame[dtuwhitelogo, bgfilename=dtu_bg_nano]{
   \begin{tikzpicture}[remember picture,overlay]
@@ -271,61 +287,13 @@
   \end{tikzpicture}
 }
 
-\frame[dtuwhitelogo, bgfilename=dtu_bg_pink]{
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[fill=white, fill opacity=0.8, 
-          text=black, text opacity=1.0,
-          rounded corners=5pt, 
-          font=\scriptsize] at (current page.center) {\contactTable};
-  \end{tikzpicture}
-}
+%\frame[dtuwhitelogo, bgfilename=dtu_bg_pink]{
+%  \begin{tikzpicture}[remember picture,overlay]
+%    \node[fill=white, fill opacity=0.8, 
+%          text=black, text opacity=1.0,
+%          rounded corners=5pt, 
+%          font=\scriptsize] at (current page.center) {\contactTable};
+%  \end{tikzpicture}
+%}
 
-\frame{
-	\frametitle{Contact}
-	
-	\begin{center}
-		File bugs and feature requests at \url{http://gitlab.gbar.dtu.dk/latex/dtutemplates/issues}
-	\end{center}
-}
-
-\frame[allowframebreaks]{
-	\frametitle{Release History}
-	\begin{block}{v1.12}
-		\begin{itemize}
-			\item Frame number instead of page number.
-		\end{itemize}
-	\end{block}
-	\begin{block}{v1.11}
-		\begin{itemize}
-			\item Long titles are displayed correctly in the footer;
-			\item Department logos have the correct RGB color;
-			\item The aspect ratio of the slides can be changed using beamer options.
-		\end{itemize}
-	\end{block}
-	\begin{block}{v1.1}
-		\begin{itemize}
-			\item Fonts options;
-			\item Poster template;
-			\item Frame backgrounds;
-			\item Black frames with white logo;
-			\item Address boxes.
-		\end{itemize}
-	\end{block}
-	\begin{block}{v1.03}
-		\begin{itemize}
-			\item New logos for \texttt{vindenergi} and \texttt{kemiteknik}.
-		\end{itemize}
-	\end{block}
-	\begin{block}{v1.02}
-		\begin{itemize}
-			\item Date format is now customizable.
-		\end{itemize}
-	\end{block}
-	\begin{block}{v1.01}
-		\begin{itemize}
-			\item \texttt{dtuletter} template included;
-			\item Package name changed to \texttt{dtutemplates}.
-		\end{itemize}
-	\end{block}
-}
 \end{document}
