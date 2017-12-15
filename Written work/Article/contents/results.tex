@@ -23,13 +23,12 @@ The subject have been divided into test, train and validation. The validation su
 \subsection{Results}
 \label{subsec:results}
 
-Table \ref{tab_res_1} summerieas the performance, evaluated for the two validation subjects , for both networks. First 
-
+Table \ref{tab_res_1} summerieas the performance, evaluated for the two validation subjects, for both networks. The first column block reports the confusion matrix for the validation subjects. The next block reports the normalized confusion matrix. The third block report the following per-class metrics: Precision, sensitivity, F$_1$-score and accuracy. The accuracy is not a reliable metric for the performance in this project, yield to misleading results of the imbalanced classes in the validation set \cite[sec. 11]{dl_book}.
 
 \begin{table*}[th!]
 \centering
 \begin{tabular}{ll | llllll | llllll | llll}
-                     &    & \multicolumn{6}{l}{Predicted} & \multicolumn{6}{| l}{Normalized pred. (in \%)}  & \multicolumn{4}{| l}{Per-class metric (in \%)} \\
+                     &    & \multicolumn{6}{c}{Predicted} & \multicolumn{6}{| c}{Normalized pred. (in \%)}  & \multicolumn{4}{| c}{Per-class metric (in \%)} \\
                      &    & W  & N1  & N2  & N3  & N4 & R & W & N1 & N2 & N3 & N4 & R & Pre.       & Sen.      & F$_1$      & Acc.      \\\hline
 \multirow{6}{*}{CNN} & W  &495 & 145 & 29 & 11 & 1 & 20 & 71 & 21 & 4 & 2 & 0 & 3 & 91 & 71 & 80 & 93 \\ 
                      & N1 &    25 & 211 & 43 & 0 & 0 & 62 & 7 & 62 & 13 & 0 & 0 & 18 & 43 & 62 & 51 & 89 \\ 
@@ -47,6 +46,10 @@ Table \ref{tab_res_1} summerieas the performance, evaluated for the two validati
 \caption{My caption}
 \label{tab_res_1}
 \end{table*}
+
+precision: fraction which were deteced correct.
+sensitivity: fraction of 
+
 
 
 \begin{table}[th!]
