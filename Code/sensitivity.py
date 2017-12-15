@@ -35,16 +35,16 @@ BATCH_SIZE = 32
 
 # In[ ]:
 
-
-print("Loading subject %d..." %(SUBJECT_NO[0]))
-subjects_list_1 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[0]) + '_dict.npy').item()
-print("Loading subject %d..." %(SUBJECT_NO[1]))
-subjects_list_2 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[1]) + '_dict.npy').item()
-# to dict
-subjects_list={}
-subjects_list[0] = np.concatenate((subjects_list_1[0], subjects_list_2[0]),axis=0)
-subjects_list[1] = np.concatenate((subjects_list_1[1], subjects_list_2[1]),axis=0)
-
+#print("Loading subject %d..." %(SUBJECT_NO[0]))
+#subjects_list_1 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[0]) + '_dict.npy').item()
+#print("Loading subject %d..." %(SUBJECT_NO[1]))
+#subjects_list_2 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[1]) + '_dict.npy').item()
+## to dict
+#subjects_list={}
+#subjects_list[0] = np.concatenate((subjects_list_1[0], subjects_list_2[0]),axis=0)
+#subjects_list[1] = np.concatenate((subjects_list_1[1], subjects_list_2[1]),axis=0)
+#np.save(data_dir + '_dicts/subject_val_dict', subjects_list)
+subjects_list = np.load(data_dir + '_dicts/subject_val_dict.npy').item()
 
 IMAGE_SHAPE = subjects_list[0][0].shape
 
