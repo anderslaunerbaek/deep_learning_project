@@ -1,0 +1,21 @@
+Loaded module: python3/3.6.2
+Loaded dependency [numpy/1.13.1-python-3.6.2-openblas-0.2.20]: openblas/0.2.20
+Loaded dependency [scipy/0.19.1-python-3.6.2]: numpy/1.13.1-python-3.6.2-openblas-0.2.20
+Loaded module: scipy/0.19.1-python-3.6.2
+Loaded module: matplotlib/2.0.2-python-3.6.2
+/appl/tensorflow/1.4cpu-python362/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+Loading subject 18...
+Traceback (most recent call last):
+  File "/appl/numpy/1.13.1-python-3.6.2-openblas-0.2.20/lib/python3.6/site-packages/numpy-1.13.1-py3.6-linux-x86_64.egg/numpy/lib/npyio.py", line 426, in load
+    return pickle.load(fid, **pickle_kwargs)
+_pickle.UnpicklingError: invalid load key, 'v'.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "sensitivity.py", line 40, in <module>
+    subjects_list_1 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[0]) + '_dict.npy').item()
+  File "/appl/numpy/1.13.1-python-3.6.2-openblas-0.2.20/lib/python3.6/site-packages/numpy-1.13.1-py3.6-linux-x86_64.egg/numpy/lib/npyio.py", line 429, in load
+    "Failed to interpret file %s as a pickle" % repr(file))
+OSError: Failed to interpret file './../Data_dicts/subject_18_dict.npy' as a pickle
