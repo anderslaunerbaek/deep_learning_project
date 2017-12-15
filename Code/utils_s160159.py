@@ -11,6 +11,47 @@ from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
+
+# http://www.dummies.com/education/science/biology/the-bootstrap-method-for-standard-errors-and-confidence-intervals/
+def bootstrap_CI(values, n_sim = 100000, p = 0.05):
+    x_hat_list = []
+    # create X simulations
+    for i in range(n_sim):
+        # draw numbers from distribution
+        x_hat = np.random.choice(values, 
+                                 size=values.shape[0], 
+                                 replace=True)
+        # append mean value to list
+        x_hat_list.append(np.mean(x_hat))
+    # calculate the SD
+    sd_hat = np.std(x_hat_list)
+    mean_hat = np.mean(x_hat_list)
+    # sort list
+    x_hat_list = np.sort(x_hat_list)
+    # remove lower and upper p/2 quantiles
+    x_hat_list = x_hat_list[int(p/2*n_sim):int(n_sim-p/2*n_sim)]
+    
+    # calculate CI
+    ci_l = mean_hat-sd_hat*(np.max(x_hat_list)-np.min(x_hat_list))
+    ci_u = mean_hat+sd_hat*(np.max(x_hat_list)-np.min(x_hat_list))
+    return(ci_l, mean_hat, ci_u)
+
+
+def array_to_latex(tbl):
+    for ii in range(tbl.shape[0]):
+        tmp_str = ''
+        for jj in range(tbl.shape[1]):
+            if jj != 0:
+                tmp_str += ' & ' + "{:.0f}".format(tbl[ii,jj])  
+            else:
+                tmp_str += "{:.0f}".format(tbl[ii,jj]) 
+
+        tmp_str += ' \\\\ '
+        print(tmp_str)
+
+        
+# https://machinelearningmastery.com/classification-accuracy-is-not-enough-more-performance-measures-you-can-use/
+# https://stats.stackexchange.com/questions/51296/how-do-you-calculate-precision-and-recall-for-multiclass-classification-using-co
 def performance_measure(cm):
     TP = np.diag(cm)
     FP = np.sum(cm, axis=0) - np.diag(cm)

@@ -3,28 +3,31 @@
 \subsection{Setup}
 
 
+The setup from training the baseline model and the RNN model is identically. Both model are based upon layers from the VGGNet 16 model. This model have already been trained on ILSVRC data set for several weeks and it is beneficial to applied those archived weights and using the principle of transfer learning instead of the learning all the weights from scratch. 
 
+According to the literature \cite{stand_cnn_notes_1}, there are following approaches to do transfer-learning: Remove the final fully connected layer of the network. Use the pre-trained CNN as an feature extractor for the new fully connected layer, which fits the data set according to number of classes. The second strategy is carry out the first strategy and fine-tune some of the weights in the pre-trained CNN.
+The chosen strategy in this setup was to remove and create a new final fully connected layer, which fits the data set for both networks. Instead of fine-tuning the weights in the other fully connected layers, it has been chosen to train the dropout operations between those layers. This will prevent overfitting. 
+The weights in the LSTM cell have been trained from scratch. The weights in the forget bias gate have been initialized to $1$, which causes the LSTM cell does not have any prior knowledge.
 
-Why use pre trained models.
+This strategy is different compared to the setup in \cite{main_ar}. They re-train the all the weights in the last three fully connected layers.
 
+During the training process, the networks have only access to the current epoch. This is different from the setup in \cite{main_ar}, where the network uses two prior epochs and two posterior epochs in order to learn the current epoch. The reason for this choice was, real time considerations. If the classifier should work in real time, then it does not have any posterior epochs to work with. It is possible to use prior epochs in real time classifications, and may be considered as future research.
 
-I only use one picture epouch at the time.....
+Both networks have been optimized in order to minimize their categorical cross-entropy. Their loss function is handled by the AdamOptimizer provided by TF iteration over mini-batches of 32. The training process have been repeated for 20 training epochs. The learning rate and its decay rate are given in table \ref{tab_hyper}.
 
+Due the characteristic of the sleep stages, the classes (table \ref{tab_class_balance}) are not equally distributed. The selected choice for fixing this issue was to randomly downsample the majority classes to fit the minority class in each training epoch, as they did in \cite{main_ar}. 
 
-initilize the forget basis to 1 in order to learn from the beginning...
-
-
-
+The setup is capable of performing leave-one-out cross-validation due to the relative small number of subjects and few professionel skilled sleep stage experts.
+The subject have been divided into test, train and validation. The validation subjects have been fixed to subject 19-20. The test subject for first fold i subject one and train data includes subjects two-18. Due to time was only chosen to perform the first fold.
 
 \subsection{Results}
 \label{subsec:results}
 
-\subsubsection{Performance}
+Table \ref{tab_res_1} summerieas the performance, evaluated for the two validation subjects , for both networks. First 
 
 
 \begin{table*}[th!]
 \centering
-
 \begin{tabular}{ll | llllll | llllll | llll}
                      &    & \multicolumn{6}{l}{Predicted} & \multicolumn{6}{| l}{Normalized pred. (in \%)}  & \multicolumn{4}{| l}{Per-class metric (in \%)} \\
                      &    & W  & N1  & N2  & N3  & N4 & R & W & N1 & N2 & N3 & N4 & R & Pre.       & Sen.      & F$_1$      & Acc.      \\\hline
@@ -42,8 +45,23 @@ initilize the forget basis to 1 in order to learn from the beginning...
                      & R  &    19 & 36 & 43 & 0 & 0 & 636 & 3 & 5 & 6 & 0 & 0 & 87 & 70 & 87 & 78 & 90
 \end{tabular}
 \caption{My caption}
-\label{tb_res_1}
+\label{tab_res_1}
 \end{table*}
+
+
+\begin{table}[th!]
+\centering
+\begin{tabular}{l | llll}
+Study & Precision & Sensitivity & F$_1$-score & Accuracy \\\hline
+%\cite{main_ar}               & 65.4-\textbf{67.9}-70.4 & 70.9-\textbf{71.3}-71.8 & 67.5-\textbf{68.8}-70.0 & 92.3-\textbf{92.3}-92.4\\
+CNN               & 65.4-\textbf{67.9}-70.4 & 70.9-\textbf{71.3}-71.8 & 67.5-\textbf{68.8}-70.0 & 92.3-\textbf{92.3}-92.4\\
+RNN               & 61.9-\textbf{64.6}-67.2 & 63.2-\textbf{65.9}-68.6 & 61.8-\textbf{64.2}-66.6 & 92.2-\textbf{92.2}-92.2
+\end{tabular}
+\caption{My caption}
+\label{tb_res_2}
+\end{table}
+
+
 
 
 \subsubsection{sensitivity}
@@ -74,16 +92,5 @@ give examples where it totally wrong?
 figure \ref{fig_hyp_3} around $t_{800}$... something wired is going on in the RNN
 
 
-
-%\begin{table}[th!]
-%\centering
-%\begin{tabular}{l | llll}
-%NN & Precision & Sensitivity & F$_1$-score & Accuracy \\\hline
-%CNN               & 65.4-\textbf{67.9}-70.4 & 70.9-\textbf{71.3}-71.8 & 67.5-\textbf{68.8}-70.0 & 92.3-\textbf{92.3}-92.4\\
-%RNN               & 61.9-\textbf{64.6}-67.2 & 63.2-\textbf{65.9}-68.6 & 61.8-\textbf{64.2}-66.6 & 92.2-\textbf{92.2}-92.2
-%\end{tabular}
-%\caption{My caption}
-%\label{tb_res_2}
-%\end{table}
 
 

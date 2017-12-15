@@ -36,3 +36,14 @@ bat size... low -> fewer discarding images in the final batch
 
 
 The CNN reducing spectral variance, this can be an issue for the LSTM...
+
+
+Issues with the current approach--- video and spech are very different
+
+Although using similar architecture, the type of input data we use and the ones in video prediction are quite different. Basically, if you compare one video frame with the next one, it is very likely that you have almost the same image with few changes (displacements) in it. In our case, though, two consecutive epochs can be quite different (in terms of the position of “objects”), and I guess that the approach proposed for video frames will not work. Notice that videos have 2 spatial dimension and 1 temporal. In our case, we have 1 spatial (frequency) and 1 temporal. If you want to use video frame like approach, it might be more useful to work with EEG scalp maps, when using multi-sensors, but that is a different problem.
+
+
+
+We overfitting to one doctor openions.
+
+Personal 

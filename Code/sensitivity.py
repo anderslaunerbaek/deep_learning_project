@@ -1,12 +1,11 @@
+
 # coding: utf-8
 
 # # sen_map notebook
 
-# In[36]:
+# In[ ]:
 
 from __future__ import absolute_import, division, print_function 
-import matplotlib
-matplotlib.use('Agg')
 #import os
 #import re
 #import sys
@@ -24,34 +23,43 @@ import tensorflow as tf
 
 # ## Load data
 
-# In[37]:
+# In[ ]:
 
 data_dir = './../Data'
 logs_path = './logs'
 save_dir = './../Written work/Article/pics/'
-SUBJECT_NO = 1
+SUBJECT_NO = [18,19]
 NUM_CLASSES = 6
 BATCH_SIZE = 32
 
 
-# In[38]:
+# In[ ]:
 
-print("Loading subject %d..." %(SUBJECT_NO))
-subjects_list = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO) + '_dict.npy').item()
+
+print("Loading subject %d..." %(SUBJECT_NO[0]))
+subjects_list_1 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[0]) + '_dict.npy').item()
+print("Loading subject %d..." %(SUBJECT_NO[1]))
+subjects_list_2 = np.load(data_dir + '_dicts' + '/subject_' + str(SUBJECT_NO[1]) + '_dict.npy').item()
+# to dict
+subjects_list={}
+subjects_list[0] = np.concatenate((subjects_list_1[0], subjects_list_2[0]),axis=0)
+subjects_list[1] = np.concatenate((subjects_list_1[1], subjects_list_2[1]),axis=0)
+
+
 IMAGE_SHAPE = subjects_list[0][0].shape
 
 
-# In[39]:
+# In[ ]:
 
 # select first element which forefills this..
-state_W = np.where(subjects_list[1] == 0)[0]
-state_N1 = np.where(subjects_list[1] == 1)[0]
-state_N2 = np.where(subjects_list[1] == 2)[0]
-state_N3 = np.where(subjects_list[1] == 3)[0]
-state_N4 = np.where(subjects_list[1] == 4)[0]
-state_R = np.where(subjects_list[1] == 5)[0]
+state_W = np.where(subjects_list[1] == 0)[0][0]
+state_N1 = np.where(subjects_list[1] == 1)[0][0]
+state_N2 = np.where(subjects_list[1] == 2)[0][0]
+state_N3 = np.where(subjects_list[1] == 3)[0][0]
+state_N4 = np.where(subjects_list[1] == 4)[0][0]
+state_R = np.where(subjects_list[1] == 5)[0][0]
 
-idx = [state_W,state_N1,state_N2,state_N3,state_N4,state_R]
+idx = [[state_W],[state_N1],[state_N2],[state_N3],[state_N4],[state_R]]
 
 
 # In[ ]:
@@ -78,7 +86,20 @@ for j in range(len(idx)):
 
 # ## Restoring the master model and  create per class sensitivity map
 
-# In[35]:
+# In[ ]:
+
+# select first element which forefills this..
+state_W = np.where(subjects_list[1] == 0)[0]
+state_N1 = np.where(subjects_list[1] == 1)[0]
+state_N2 = np.where(subjects_list[1] == 2)[0]
+state_N3 = np.where(subjects_list[1] == 3)[0]
+state_N4 = np.where(subjects_list[1] == 4)[0]
+state_R = np.where(subjects_list[1] == 5)[0]
+
+idx = [state_W,state_N1,state_N2,state_N3,state_N4,state_R]
+
+
+# In[ ]:
 
 tf.reset_default_graph()
 model_path = './models/master/Version_4.0/'
@@ -131,7 +152,7 @@ with tf.Session() as sess:
         pass
 
 
-# In[63]:
+# In[ ]:
 
 tf.reset_default_graph()
 model_path = './models/rnn/Version_4.0/'
