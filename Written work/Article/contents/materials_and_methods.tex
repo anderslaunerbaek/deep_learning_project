@@ -1,7 +1,8 @@
 \section{Materials and Methods}
 \label{sec:materials_and_methods}
 
- As a requirements for this project, the professor and assistant teahters needs to have acces to the running code which produces the results within this paper. The two bullets below links to what you need in order to reproduce the presented results.
+ As a requirement for this project the professor and assistant teachers need to have acces to the running code in order to reproduce the results in this project. 
+ The three bullets below show links to what you need in order to reproduce the presented results and a direct link to the demonstration notebook.
  \begin{itemize}
  	\item Github: \href{https://github.com/anderslaunerbaek/Deep\_Learning\_Project.git}{Deep\_Learning\_Project.git}
  	\item DTU SharePoint: \href{https://dtudk-my.sharepoint.com/personal/s160159\_win\_dtu\_dk/\_layouts/15/guestaccess.aspx?docid=093aa4dcaee0b4e3aa18b0ee67061a678&authkey=AbdnyuYwQUWn0BDEPeDn1Mg&e=b79a063cd72d43a9b7db88f8b8fd1b06}{Data\_dicts\_and\_Code\_models.zip}
@@ -9,44 +10,43 @@
  \end{itemize}
 
 \subsection{Image Creation}
-There have been applied multi-taper spectrum analysis in order to turn the EEG signals into images. A given image represents an epoch in seconds of the complete recorded EEG signal along the first axis. The second axis represents the spectrum for the rhythmic components of interest, mentioned above. The third axis (the color) represents the amplitudes of the rhythmic components to a given time. 
+There has been applied multi-taper spectrum analysis in order to turn the EEG-signals into images. An image represents an epoch of $30\left[s \right]$ of the recorded EEG-signal along its temporal axis. The second axis represents the spectrum of the rhythmic components of interest as mentioned above. The color of the image represents the amplitude of the rhythmic components.
 
-The WFDB Toolbox (\cite{matlab}) for Matlab have been used to download, preprocess and transform the EEG signals into images. The applied script\footnote{Git repo: "Code/2. from\_edf\_to\_pic.m"} for this process has been provided by the supervisor. 
-The multi-taper spectrum analysis which estimates the images, is not within the scope of the project. The hyperparameters, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., within the image estimation process have been decided to remove from possible hyperparameter in this project. This ensures that the results of the baseline model, in this project, can be comparable with the main article \cite{main_ar} and keep the correct focus. 
+The WFDB Toolbox \cite{matlab} for Matlab has been used to download, preprocess and transform the EEG-signals into images. The applied script\footnote{Git repo: "Code/2. from\_edf\_to\_pic.m"} for this process has been provided by the supervisor. 
+The concepts of multi-taper spectrum analysis, which estimate the images, is not in the scope of this project. The hyperparameters in the preprocessing task, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., used for the estimation of the images, is identical to \cite{main_ar} and is not possible hyperparameter in this project. This ensures that the results of the baseline in this project are comparable with the main article \cite{main_ar}. 
 
-The Matlab toolbox are able to download the data set of interest and the data which have been used in this projects consists of PSG recordings for 20 Subjects. The Subjects have been monitored for two nights except Subject 20. There is $38211$ images after the preprocessing of the EEG signals. All images have labeled-values which employs a supervised learning approach. Table \ref{tab_class_balance} illustrates how the labels of $38211$ images are distributed for the sleeping stages.
+The Matlab toolbox is able to download the data set of interest. The data set used in this projects consists of PSG recordings for 20 subjects. Ten healthy females and ten healthy males between 25 to 34 years of age were included. The subjects have been monitored for two nights except subject 20. There are $38211$ images after the preprocessing of the EEG-signals. All images have labeled values which entail a supervised learning approach. The annotated labels follows the old definition where sleeping stage N3 and N4 are divided into two. Table \ref{tab_class_balance} illustrates how the labels of the $38211$ images are distributed for each of the sleeping stages.
 
 \begin{table}[th!]
 \begin{tabular}{l|llllll}
 Sleep Stage & W & N1 &  N2& N3 & N4 & R \\\hline
 Dist. (in \%) &12 &7&46&9&6&20
 \end{tabular}
-\caption{This table summerises the aggregates the distribution of the labels for all 20 Subjects. The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
+\caption{This table summerises the aggregated distribution of the labels for all 20 Subjects. The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
 \label{tab_class_balance}
 \end{table}
 
-In order to create a state of the art sleep stage classifier, WE need to consider methods to balance the six classes prior to training of the models.
+Prior to training of the networks is it considered to use methods to balance the six stages in order to create a state of the art sleep stage classifier.
 
+\todo[inline]{here}
 
 
 \subsection{Neural Network Architectures}
-
-The architecture for the base line model is the VGGNet 16 \cite{main_ar, VGGnet16} which is a 16-layer network composed of following operations.
+VGGNet 16 \cite{main_ar, VGGnet16} is the architecture of the baseline network. It is composed of a 16-layer network with following operations:
 
 \begin{itemize}
-\item The convolutional operations uses a kernel of $3x3$, which is the smallest possible configuration to capture the notion of left/right, up/down and center. The kernel has a stride of $1$, which is the number of pixels the kernel slide at the time.
-The third hyperparameter within the convolutional operation is the padding. This operation uses padding so the spatial resolution is preserved. This layer performs several linear activations by the kernel, those activations goes through a selected non-linear, ReLU, activation function.
-\item The max pooling layer reports the maximum non-linear activation value within its rectangular neighborhood. The rectangular neighborhood for this network is $2x2$. The max pooling operation has a stride of $2$. The spatial max pooling "decreases the resolution of image" and helps make the representation invariant to small translations of the output from the previous convolution operation \cite[sec. 9]{dl_book}.
-	\item The last three layers of the VGGNet 16 network is fully connected. The first two have 4096 channels. The last fully connected layer performs a six-channel classification, due to the six classes in this project.
-	\item The final layer of the VGGNet 16 network is the Softmax activation. This activation function is used to calculates the probabilities associated for each class \cite[eq. 4.1]{dl_book}.  
+\item The convolutional operations use a kernel of $3x3$ pixels, which is the smallest possible configuration to capture the notion of left/right, up/down and center. The kernel has a stride of $1$ pixel, which is the number of pixels the kernel slides at the time.
+The third hyperparameter in the convolutional operation is the padding. This operation use same-padding so the spatial resolution is preserved. This layer performs several linear activations by the kernel. These activations goes through a selected non-linear, e.g. a ReLU activation function.
+\item The max pooling layer reports the maximum non-linear activation value within its rectangular neighborhood. The rectangular neighborhood for this network is $2x2$ pixels. The max pooling operation has a stride of $2$ pixels. The spatial max pooling "decreases the resolution of image" and helps make the representation invariant to small translations of the output from the previous convolution operations \cite[sec. 9]{dl_book}.
+	\item The last three layers of the VGGNet network is fully connected. The first two have 4096 channels. The final fully connected layer performs a six-channel classification due to the six stages in this project and is activated by the Softmax function. This activation function is used to calculate the probabilities associated to each class \cite[eq. 4.1]{dl_book}.  
 \end{itemize}
-The VGGNet 16 is an acknowledged deep convolution network suitable and well performing network for image recognition in several case studies \cite{VGGnet16, stand_cnn_notes}.  
-The standard input layer takes an $224x224$ RGB image.
+The VGGNet is an acknowledged deep CNN. It is a suitable and well performing network for image recognition in several case studies \cite{VGGnet16, stand_cnn_notes}.  
+The standard input layer takes a RGB image of $224x224$ pixels.
 
 
 \subsubsection{Convolutional Neural Network}
 
-The baseline model for this project is given in equation \ref{eq_vgg16_cnn}\footnote{See implementation in Git repo.: "./Code/master.py"}. 
+The baseline network is given in equation \ref{eq_vgg16_cnn}\footnote{See implementation in Git repo.: "./Code/master.py"}. 
 \begin{equation}
 \begin{aligned}
 net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m c_{7,f} d c_{1, f} dc_{1,o}	\\
@@ -57,27 +57,31 @@ probs &= tf.nn.softmax(logits)
 \label{eq_vgg16_cnn}
 \end{equation}
 where $c_{k,l}$ is a convolutional layer, $k$ is the number of receptive layers and $l$ is the number of channels. $c_{1,f} = c_{1,4096}$ and $c_{1,o} = c_{1,6}$.
-$m$ is the max pooling. $d$ is a dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. 
+$m$ is the max pooling layer. $d$ is a dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. 
 
-The TF implementation of the VGGNet 16 is heavily inspired by \cite{git_vgg16}. There have been added few modifications to the compared to the initial VGGNet 16 \cite{VGGnet16} in this implementation. 
-The implementation of the VVG16net has transformed the fully connected layers into convolutional 2D layers. It works identically if you change size of the kernel. But then it is necessary to the squeeze the second last layer ($c_{1,o}$) into a 2D-tensor before applying the Softmax activation.
-Beside this, there have been included L2-regularization, with a weighted decay of $0.0005$, between the convolutional operations and included dropouts between the fully connected layers. The modifications are included in eq. \ref{eq_vgg16_cnn}.
+The TF implementation of the VGGNet is heavily inspired by the work of \todo{insert name of author}\cite{git_vgg16}. 
+%There has been added few modifications to the compared to the initial VGGNet 16 \cite{VGGnet16} in this implementation. 
+The current implementation of the VVGNet has transformed the fully connected layers into convolutional 2D layers. By changing the size of the kernel it achieves the same performance. However it is still necessary to squeeze the final layer ($c_{1,o}$) into a 2D-tensor before applying the Softmax activation function.
+
+L2-regularization with a weighted decay of $0.0005$ has been included between the convolutional operations. Dropout operations between the fully connected layers have been included.
+The L2-regularization and dropout operations prevent overfitting in this deep complex network. The modifications are included in eq. \ref{eq_vgg16_cnn}.
   
- The L2-regularization and dropout operations prevents overfitting in this deep complex network. 
+
 
 \subsubsection{Recurrent Neural Network}
-It is possible to understand sleep as a sequence of different stages. By learning the transitions between those stages may improve the classification of the sleep stages.
-Recurrent neural networks (RNN) is the approach to model sequences and the most effective RNNs is called gated RNNs \cite[sec. 10.10]{dl_book}. 
-The long short-term memory (LSTM) network is a model which comprehend the issues of vanishing or exploding gradients over time. The LSTM cell has a internal recurrence (self-loop), which produces paths where the gradient can flow for long durations.  
+It is possible to interpret sleep as a sequence entering different stages during the night. By learning these transition rules between the stages can improve the classification.
 
-The main reason for implementing a sequential network is to learn the transitions rules between the sleeping stages.
+The most effective RNNs for modelling sequences are called gated RNNs \cite[sec. 10.10]{dl_book}. 
 
-The first approach to learn the transitions rules, is to modify the baseline model and use its extracted feature as input for the LSTM. A second approach could be to use several LSTM cells with regularization in between. A third approach could be to redefine the problem, discritize the EEG-signals and feed the LSTM with a 1D-tensor. 
+The long short-term memory (LSTM) cell is a network which comprehend the issues of vanishing or exploding gradients. The LSTM cell has an internal recurrence (self-loop) which produce paths where the gradient can flow for long durations and hereby capture long term dependencies.  
 
-Due to limited time only the first approach have been considered. The network which combines the CNN and LSTM cell will further on be mentioned as the RNN.
+The main reason for implementing a sequential network is to learn the transition rules between the sleeping stages.
+The first approach to learn the transition rules is to modify the baseline network and use its extracted feature maps as input to the LSTM cell. A second approach could be to use several LSTM cells with regularization in between. A third approach could be to redefine the problem, discretize the EEG-signals and feed the signals into a sequence of LSTM cells.
 
-There are several approaches to feed the LSTM cell. The chosen approach has been inspired by \cite{git_rnn_cnn_1,43455}, where the the LSTM acting on each of the generated feature maps.
-Equation \ref{eq_vgg16_rnn}\footnote{See implementation in Git repo.: "./Code/rnn.py"}.  illustrates the implementation of the RNN. The first convolutional layers are similar to the VGGNet 16 model. The LSTM cell is feed by the final convolutional layer. The input shape to the LSTM cell is static, which can cause discarding of the final mini-batch.
+Due to limited time only the first approach has been considered. The network combining the CNN and LSTM cell will further on be mentioned as the RNN.
+
+There are several approaches to feed the LSTM cell. The chosen approach has been inspired by the work of \todo{insert author} \cite{git_rnn_cnn_1,43455}, where the LSTM cell is acting on each of the generated feature maps.
+Equation \ref{eq_vgg16_rnn}\footnote{See implementation in Git repo.: "./Code/rnn.py".}  illustrates the implementation of the RNN. The first convolutional layers are similar to the VGGNet. The LSTM cell is feed by the final max pooling layer. The input shape to the LSTM cell is static, which can cause discarding of the images in the final mini-batch.
 
 \begin{equation}
 \begin{aligned}
@@ -89,18 +93,22 @@ probs &= tf.nn.softmax(logits)
 \end{aligned}
 \label{eq_vgg16_rnn}
 \end{equation}
-where the notations from eq. \ref{eq_vgg16_cnn} are the same and the $lstm_{7,512}$ is the LSTM cell   which takes the tensor shape (batch x 7 x 7 x 512). $d_p$ is the dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. $fc_0$ is the final fully connected layer, which represents the highest order feature maps for the six classes.
+where the notations from eq. \ref{eq_vgg16_cnn} are the same and the $lstm_{7,512}$ is the LSTM cell   which takes the tensor shape (batch x 7 x 7 x 512). $d_p$ is the dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. $fc_0$ is the final fully connected layer, which represents the highest order feature maps for the six stages.
 
-The implementation of LSTM cell is heavily inspired by \cite{git_lstm}. This implementation takes the input tensor and returns the sate tensor. Both are 4D-tensors (batch x height x width x channels).
+The implementation of LSTM cell is heavily inspired by the work of \todo{insert aotuehr names}\cite{git_lstm}. This implementation takes the input tensor from the final max pooling layer in the VGGNet and returns the state tensor. Both are 4D-tensors (batch x height x width x channels).
 
-As illustrated in eq. \ref{eq_vgg16_rnn}, there have been apllied an dropout operation on the output tensor from the LSTM cell. Then reshaped in order to feed a fully connected layer, which produces easy separable higher-order feature representations for the six classes discriminate. The final fully connected layer is activated with the non-linear Softmax function.
+As illustrated in eq. \ref{eq_vgg16_rnn}, 
+
+There has been applied dropout operations on the output tensor from the LSTM cell. The tensor is then reshaped in order to fit a fully connected layer, which produce easy separable higher-order feature maps of the six stages. The fully connected layer is activated with the non-linear Softmax function.
 
 \subsection{Network Visualization}
 
-There exits many of ways visualizing a neural network w.r.t. its input data in order to better understand how the network interprets different inputs.  A common approach in the literature is to visualizing the activations along its propagation through the network. The example from \cite{stand_cnn} gives a great intuition about how the different operations in each layer affect the input data along is propagation though the network. 
+There exists many ways of visualizing a neural network in order to better understand how the network interprets different inputs.  
+A common approach in the literature is to visualize the activations of the input along its propagation through the network. 
+The example from \cite{stand_cnn} gives a solid intuition about how the different operations in each layer is affected by the input data.
 
-Another approach using the main article (\cite{main_ar}) is to calculate sensitivity maps, which determines the relative importance to every input feature $j$. $j$ represents the third dimension in the image which is the values of the RGB color.
-The sensitivity maps is created by calculating the gradients w.r.t. the loss of an input image and its label. The mathematically expression are given in equation \ref{eq_1}.
+Another approach is to calculate sensitivity maps which determines the relative importance to every input feature $j$ \cite{main_ar}. $j$ represents the third dimension in the image which is the values of the RGB color.
+The sensitivity maps is created by calculating the gradients w.r.t. the loss of the input image and its label. The mathematical expression is given in eq. \ref{eq_1}.
 \begin{equation}
 s^{\left(j\right)} = \frac { 1 }{ N  } \sum _{ n=1 }^{ N } \left| \frac { \partial L\left( f\left( x \right) ,t \right)  }{ \partial x^{ \left( j \right)  } }  \right| _{x=x_n}
 %s^{\left(j\right)} = \frac { 1 }{ N^{\left(j\right)}  } \sum _{ n=1 }^{ N^{\left(j\right)} } \left| \partial L\left( x_n^{\left( j \right)} ,y_n^{\left( j \right)} \right)   \right|
@@ -108,27 +116,24 @@ s^{\left(j\right)} = \frac { 1 }{ N  } \sum _{ n=1 }^{ N } \left| \frac { \parti
 \end{equation}
 where $L$ is the loss w.r.t. the input image $f\left(x\right)$ and its label $t$. 
 
-By applying the function $s^{\left(j\right)}$ for an image, it is possible to see the relative importance in determined by the network for each feature $j$. 
-Figure \ref{fig_1_21}-\ref{fig_1_36} illustrates the sensitivity maps for each sleep stage for the CNN and RNN respectively. The Sensitivity maps have been created for subject 1.
+By applying the function $s^{\left(j\right)}$ for an image it is possible to see the relative importance determined by the network for each feature $j$. 
+Figures \ref{fig_1_21}-\ref{fig_1_36} illustrate the sensitivity maps for each sleep stage for the CNN and RNN respectively. The sensitivity maps have been created for subject 19 and subject 20.
 
-
-
-\subsection{Hyperparameter}
-
-
-\begin{table}[th!]
-\centering
-\begin{tabular}{l | l}
-Parameter &  Value\\\hline
- &  \\
- &  \\
- & 
-\end{tabular}
-\caption{adas}
-\label{tab_hyper}
-\end{table}
-dropout 
-learning rate
-weights\_regularizer=slim.l2\_regularizer(weight\_decay),
-
-Grid searh
+%\subsection{Hyperparameter}
+%
+%\begin{table}[th!]
+%\centering
+%\begin{tabular}{l | l}
+%Parameter &  Value\\\hline
+% &  \\
+% &  \\
+% & 
+%\end{tabular}
+%\caption{List of hyperparameters}
+%\label{tab_hyper}
+%\end{table}
+%dropout 
+%learning rate
+%weights\_regularizer=slim.l2\_regularizer(weight\_decay),
+%
+%Grid searh

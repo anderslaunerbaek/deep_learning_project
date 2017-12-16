@@ -1,54 +1,13 @@
 \section{Discussion}
 \label{sec:discussion}
 
+The chosen approach to handle the imbalanced classes was to randomly down-sample to fit the minority class. By during so, it is possible to discard value information, e.g. the spatial variation within each class. Although, during down-sampling randomly for several training epochs, the different permutation of variations for each class will be captured.  
+An alternate approach to fix the imbalanced classes is to penalize the loss function w.r.t. to the class distribution in each mini-batch.
 
+In \cite{	main_ar,VGGnet16} they subtract the mean image. The normalization of the images have not been implemented in this current state of the project, which is a candidate for the low average performance.
 
-data targets have not been cross checked by the skill professionals..
+The size of the mini-batch was chosen to be 32. This hyperparameter variates within the literature but due to the static implementation of the LSTM cell, the discarded images in the final mini-batch needs to as few as possible. A lower batch size will entail an faster converging of the weights. 
 
+Although the CNN reduces spatial variance, the temporal variance of the images can be huge. Two consecutive images, illustrating the sleep epochs, can have many displacements in the objects. The implementation of the LSTM cell is inspired by video frame prediction \cite{git_lstm}, which has fewer displacements in the objects for two consecutive frames. 
 
-how to encounter imblanced data classe:
-
--  random down sample in each epoch.. It can remove useful imformation
-- use weigthingPenalized Models the the loss function
-- learn the distribution of the miniorty classes and up sample those
-his change is called sampling your dataset and there are two main methods that you can use to even-up the classes:
-
-
-
-under sampling .. smide information væk... måske kan det give en bedre predectering???
-
-
-
-
-You can add copies of instances from the under-represented class called over-sampling (or more formally sampling with replacement), or
-You can delete instances from the over-represented class, called under-sampling.
-
-
-
-i did not subtract the mean picture in traning... not normalize -> failure
-
-
-batch normalization,
-
-
-bat size... low -> fewer discarding images in the final batch
-
-
-
-The CNN reducing spectral variance, this can be an issue for the LSTM...
-
-
-Issues with the current approach--- video and spech are very different
-
-Although using similar architecture, the type of input data we use and the ones in video prediction are quite different. Basically, if you compare one video frame with the next one, it is very likely that you have almost the same image with few changes (displacements) in it. In our case, though, two consecutive epochs can be quite different (in terms of the position of “objects”), and I guess that the approach proposed for video frames will not work. Notice that videos have 2 spatial dimension and 1 temporal. In our case, we have 1 spatial (frequency) and 1 temporal. If you want to use video frame like approach, it might be more useful to work with EEG scalp maps, when using multi-sensors, but that is a different problem.
-
-
-
-We overfitting to one doctor openions.
-
-
-BATCH norm should be used if there is trubles in the optimization.
-
-
-
-Personal 
+One of the challenge issues with the used data is, that the annotation of the sleeping stages requires expert skilled personal. There has been applied several experts, where each was responsible of the annotation for a subgroup of the subjects. This entail that the networks are fitting to each experts subjective experiences. The quality of the annotations could be enhanced by introduce more experts to each of the subjects.

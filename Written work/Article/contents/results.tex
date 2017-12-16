@@ -1,29 +1,34 @@
-
 \section{Experimental Evaluation}
 \subsection{Setup}
 
+The setup used in training the baseline and the RNN is identical. Both networks are based upon layers from the VGGNet and the weights of the layers are pre-trained on ILSVRC data set for several weeks. It is beneficial to apply the pre-trained weights and use the principle of transfer learning instead of learning the weights from scratch. 
 
-The setup from training the baseline model and the RNN model is identically. Both model are based upon layers from the VGGNet 16 model. This model have already been trained on ILSVRC data set for several weeks and it is beneficial to applied those archived weights and using the principle of transfer learning instead of the learning all the weights from scratch. 
+According to the literature \cite{stand_cnn_notes_1}, there are several approaches to perform transfer-learning. Among these is a strategy to remove the final fully connected layer of the network. Then the pre-trained CNN is applied as a feature extractor for a new fully connected layer which fits the number of classes in the data set.
+A second strategy is carry out the first strategy and fine-tune a selected set of weights in the pre-trained CNN.
 
-According to the literature \cite{stand_cnn_notes_1}, there are following approaches to do transfer-learning: Remove the final fully connected layer of the network. Use the pre-trained CNN as an feature extractor for the new fully connected layer, which fits the data set according to number of classes. The second strategy is carry out the first strategy and fine-tune some of the weights in the pre-trained CNN.
-The chosen strategy in this setup was to remove and create a new final fully connected layer, which fits the data set for both networks. Instead of fine-tuning the weights in the other fully connected layers, it has been chosen to train the dropout operations between those layers. This will prevent overfitting. 
-The weights in the LSTM cell have been trained from scratch. The weights in the forget bias gate have been initialized to $1$, which causes the LSTM cell does not have any prior knowledge.
+The chosen strategy in this setup was to remove and create a new final fully connected layer which fit the number of sleeping stages in both networks. Instead of fine-tuning the weights in the other fully connected layers, it has been chosen to train the dropout operations between those layers in order to prevent overfitting. 
 
-This strategy is different compared to the setup in \cite{main_ar}. They re-train the all the weights in the last three fully connected layers.
+The weights in the LSTM cell have been trained from scratch. The weights in the forget bias have been initialized to $1$ which entails the LSTM cell to have no prior knowledge.
+%This strategy is different compared to the setup in \cite{main_ar}. They re-train all the weights in the fully connected layers.
 
-During the training process, the networks have only access to the current epoch. This is different from the setup in \cite{main_ar}, where the network uses two prior epochs and two posterior epochs in order to learn the current epoch. The reason for this choice was, real time considerations. If the classifier should work in real time, then it does not have any posterior epochs to work with. It is possible to use prior epochs in real time classifications, and may be considered as future research.
+During the training process the networks only have access to the current epoch. This is different from the setup in \cite{main_ar} where the network use two prior epochs and two posterior epochs in order to learn the current epoch. The reason for this choice was due to real time considerations. If the classifier should work in real time then it does not have any posterior epochs to work with. 
+It is possible to use prior epochs in real time classifications and it can be considered as future research.
 
-Both networks have been optimized in order to minimize their categorical cross-entropy. Their loss function is handled by the AdamOptimizer provided by TF iteration over mini-batches of 32. The training process have been repeated for 20 training epochs. The learning rate and its decay rate are given in table \ref{tab_hyper}.
+Both the CNN and the RNN networks have been optimized in order to minimize their categorical cross-entropy. Their loss function is handled by the AdamOptimizer, provided by TF, which iterates over a mini-batch with a size of 32. 
+The training process has been repeated for 20 training epochs. The learning rate and its decay rate are given in table \ref{tab_hyper}. \todo{fix}
 
-Due the characteristic of the sleep stages, the classes (table \ref{tab_class_balance}) are not equally distributed. The selected choice for fixing this issue was to randomly downsample the majority classes to fit the minority class in each training epoch, as they did in \cite{main_ar}. 
+Due to the characteristic of the sleep stages, the classes shown in table \ref{tab_class_balance} are not equally distributed. The selected choice for fixing the issue is to randomly down-sample the majority classes to fit the minority class in each training epoch. A similar approach has been applied in \cite{main_ar}. 
 
-The setup is capable of performing leave-one-out cross-validation due to the relative small number of subjects and few professionel skilled sleep stage experts.
-The subject have been divided into test, train and validation. The validation subjects have been fixed to subject 19-20. The test subject for first fold i subject one and train data includes subjects two-18. Due to time was only chosen to perform the first fold.
+The setup is capable of performing leave-one-out cross-validation due to the relative small number of subjects and a few professionel skilled sleep stage experts.
+The subjects have been divided into test, train and validation. Subject 19 and subject 20 have been fixed to the validation set in order to get the $10\%$ of the total amount. 
+
+The test subject for the first fold is subject one. The train data includes subject 2 to subject 18. Due to time considerations it was chosen only to perform the first fold.
 
 \subsection{Results}
 \label{subsec:results}
 
-Table \ref{tab_res_1} summerieas the performance, evaluated for the two validation subjects, for both networks. The first column block reports the confusion matrix for the validation subjects. The next block reports the normalized confusion matrix. The third block report the following per-class metrics: Precision, sensitivity, F$_1$-score and accuracy. The accuracy is not a reliable metric for the performance in this project, yield to misleading results of the imbalanced classes in the validation set \cite[sec. 11]{dl_book}.
+Table \ref{tab_res_1} summarizes the performances evaluated for the two validation subjects in both networks. 
+The first column block reports the confusion matrix. The next block reports the normalized confusion matrix. The third block reports the following per-class metrics: Precision, sensitivity, F$_1$-score and accuracy. The accuracy is not a reliable metric of the performance in this project, yield to misleading results of the imbalanced sleeping stages in the validation set \cite[sec. 11]{dl_book}.
 
 \begin{table*}[th!]
 \centering
@@ -47,9 +52,12 @@ Table \ref{tab_res_1} summerieas the performance, evaluated for the two validati
 \label{tab_res_1}
 \end{table*}
 
-The baseline model, reported in table \ref{tab_res_1}, classify the sleeping stage N2 ($84\%$) with the sensitivity. Then followed by R, W, N3, N4 and N1 ($62\%$) as the most difficult sleeping stage to classify. The highest misclassification error is archived in N4 ($27\%$).
-The RNN model classifies sleeping stage R ($87\%$) with the highest sensitivity. The followed by N2, W, N4, N3 and N1 ($31\%$) as the most difficult sleeping stage to classify. 
+The baseline, reported in table \ref{tab_res_1}, classifies the sleeping stage N2 with a sensitivity of $84\%$. Then followed by R, W, N3, N4 and N1. N1 with a sensitivity of $62\%$ as the most difficult sleeping stage to classify. The highest misclassification error is achieved in N3 with a sensitivity of $37\%$.
 
+The RNN classifies the sleep stage R with the highest sensitivity ($87\%$). The followed by N2, W, N4, N3 and N1. N1 with a sensitivity of $31\%$ as the most difficult sleeping stage to classify.
+
+\todo{lav om eller tilføj precision.... sig noget omkring N3 og N4..}
+\todo[inline]{hertil}
 
 
 %precision: fraction which were deteced correct.
@@ -96,8 +104,4 @@ The two last rows in figure \ref{fig_1} illustrates the average representation o
 \label{fig_1}
 \end{figure*}
 
-Baseline in figure \ref{fig_1_24} and figure \ref{fig_1_25} more less same pattern.. identiticate high similarity between those pictures. - > merge into same class..
-
-
-
-\todo[inline]{write some stuff}
+The sensitivity maps given in figure \ref{fig_1_24} - \ref{fig_1_25} and figure \ref{fig_1_34} - \ref{fig_1_35} for the CNN and RNN respectively have more less the same pattern. Combining the information from the two sets of sensitivity maps provides a valid explanation from the high misclassification error in the sleeping stage N3 and N4 in both networks.

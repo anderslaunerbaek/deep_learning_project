@@ -1,26 +1,27 @@
 \section{Introduction}
 \label{sec:intro}
 
-Sleep is most important part of the human health. it is possible to diagonitise serevel dieasie by analysis the sleeping pattern of a human. 
-The current approach of annotating sleep stages is done manually by highly trained professionals and based upon complex transition with high probability of a subjective interpretion.
+Sleep is the most important part of the human health. It is possible to diagnose several sleep disorders by analyzing the sleeping patterns.
+The current approach of annotating sleep stages is done manually by highly trained professionals and based upon complex transition rules with high probability of a subjective interpretation.
+%It is possible to find the abnormal patterns within the sleep and hereby recognize the sleeping disorders, by analysis the annotated transitions between the sleeping pattern. 
+%The annotated sleep patterns can be visualized by using a hypnogram (see figure \ref{fig_hyp}).
 
-It is possible to find the abnormalities within the sleep and hereby recognize some dieasies, by analysis the annotated transitions between the sleeping pattern. The annotated sleep patterns can be visualized by using a hypnogram (see figure \ref{fig_hyp}).
-
-The measurements which is used to classify the sleep stages, are collected during the whole night  of sleep. Several of biological signals can be measured during the sleep and the interesting signals for this project is the brain activity. The brain activity can be aquried by using electroencephalography (EEG) method. 
-The main frequencies of the EEG signales are: $delta= 3 \left[ Hz \right]$ and below, 
+The signals which are used to classify the sleep stages, are collected during an entire night of sleep. Several biological signals can be measured during sleep and the interesting signals for this project is the brain activity. The brain activity can be measured by using an electroencephalographic (EEG) method. 
+The main frequencies of the EEG-signales are: $delta \le 3 \left[ Hz \right]$, 
 $theta= 3.5-7.5 \left[ Hz \right]$,
 $alpha= 7.5-13 \left[ Hz \right]$, 
-$beta= 13 \left[ Hz \right]$ and above.
+$beta \ge 13 \left[ Hz \right]$.
 
-The above mentioned burst of rhythmic components are represented in different degrees within each stage of sleep.   
-The newest definition of sleep stages are defined by the American Academy of Sleep Medicine. They defines the sleep stages into five (six) as followed \cite{main_ar,AASM}: 
+The above mentioned bursts of rhythmic components are represented in different degrees within each stage of sleep.   
+The newest definition of sleep stages are defined by the American Academy of Sleep Medicine. They divide the different stages of sleep into five categories \cite{main_ar, AASM}: 
 \begin{itemize}
-\item W: wakefulness to drowsiness. The alpha and delta waves are present. The low frequency delta waves is affected by small eye movements, when the eyes switching from open to closed. See the multi-taper frequency spectrum in figure \ref{fig_1_11}.
-\item N1: Non-REM 1. This is the first sleep stage after the transition from W. There are slow eye movements, See the multi-taper frequency spectrum in figure \ref{fig_1_12}.
-\item N2: Non-REM 2. One or more K-complexes present. See the multi-taper frequency spectrum in figure \ref{fig_1_13}.
-\item N3-N4: Non-REM 3-4. Slow delta wave activity. The dreaming starts here. This is the stage between been fully awake and fully asleep. The newest definition combines the sleep stage N3 and N4. See the multi-taper frequency spectrum in figure \ref{fig_1_14}-\ref{fig_1_15}.
-\item R: REM is short for rapidly eye movements. Mixed rhythmic components are present in the EEG and the brain activity is similar to W. See the multi-taper  frequency spectrum in figure \ref{fig_1_16}.
+\item W: wakefulness to drowsiness. The alpha and delta frequencies are present. The low delta frequency is affected by small eye movements when the eyes switch from open to closed. See the multi-taper frequency spectrum in figure \ref{fig_1_11}.
+\item N1: Non-REM 1. This is the first sleep stage after the transition from W. There are slow eye movements. See figure \ref{fig_1_12}.
+\item N2: Non-REM 2. One or more K-complexes present. See figure \ref{fig_1_13}.
+\item N3-N4: Non-REM 3-4. Slow delta wave activity. Dreaming stage starts here. This is the stage between being fully awake and being fully asleep. The newest definition combines the sleep stages N3 and N4 into one stage. See figure \ref{fig_1_14} and \ref{fig_1_15}.
+\item R: During the rapid eye movements (REM) stage there are a mix of rhythmic components present in the EEG. The brain activity is similar to W stage. See figure \ref{fig_1_16}.
 \end{itemize} 
 
-The scope of this project is to create a re-implementation of the chosen CNN (\cite{main_ar}) in TensorFlow (TF), in order to get the base line. When the base line has been archived, the task is to implement a recurrent neural network and hereby learn the transitions rule between each of the sleeping stages. 
-This research will hopefully give improve the sleep stage classifier, and be more profitable for patients and doctors around the world. 
+The scope of this project is to create a re-implementation of the CNN \cite{main_ar} in TensorFlow (TF) and use this network as the baseline.  
+The task is to implement and include a RNN when the baseline has been achieved, and hereby learn the transition rules between each of the sleeping stages. 
+This research will hopefully provide an improved sleep stage classifier and knowledge about the transition patterns, which is valuable for patients and doctors around the world. 
