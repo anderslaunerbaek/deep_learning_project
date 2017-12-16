@@ -1,10 +1,12 @@
 # Deep Learning Project
 
 ## How to Run the Demo
-* Clone the repo.
-* Navigate to: `cd DEMO/`
+* Clone the repo: `git clone git@github.com:anderslaunerbaek/Deep_Learning_Project.git`
+* Navigate to: `cd Deep_Learning_Project/DEMO/`
 * Open Jupyter Notebook and execute `CNN DEMO.ipynb`.
 
+
+### If something goes wrong??
 
 ## Trained Checkpoints for Models and Input Data
 In order to reproduce the archived results you can download the input data and saved model checkpoints.
