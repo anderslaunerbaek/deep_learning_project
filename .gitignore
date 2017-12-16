@@ -3,6 +3,9 @@
 *.blg
 *.log
 *.gz
+
+*.out
+
 Synopsis/synopsis.pdf
 Info/*
 
