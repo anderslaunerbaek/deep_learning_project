@@ -11,11 +11,12 @@
 \usepackage{multirow}
 \usepackage{lmodern}
 \usepackage{charter} % serif
+\usepackage{hyperref}
 
 \usetheme[department=compute]{DTU}
 
-\title[02456 Deep Learning]{Deep Convolutional and Recurrent Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring}
-\author{Anders Launer Baek}
+\title[Anders Launer Baek]{Deep Convolutional and Recurrent Neural Networks for Interpretable Analysis of EEG Sleep Stage Scoring}
+\author{Anders Launer Baek \{s160159\}\\ Github: \href{https://github.com/anderslaunerbaek/Deep_Learning_Project.git}{anderslaunerbaek/Deep\_Learning\_Project}}
 \institute{DTU Compute, Technical University of Denmark}
 \date{\today}
 	
@@ -32,7 +33,7 @@
 %}
 
 
-\section{The Challenge}
+\section{Data}
 \subsection{Sleeping Stages}
 \frame{
 	\frametitle{Sleeping Stages}
@@ -82,7 +83,7 @@ Dist. (in \%) &12 &7&46&9&6&20
                      & N4 &    0 & 0 & 1 & 60 & 84 & 0 & 0 & 0 & 1 & 41 & 58 & 0  \\ 
                      & R  &    19 & 36 & 43 & 0 & 0 & 636 & 3 & 5 & 6 & 0 & 0 & 87
 \end{tabular}
-\caption{Confusion matrix and normalized confusion matrix for the CNN and RNN network.}
+\caption{Confusion matrices and normalized confusion matrices for the CNN and RNN network.}
 \label{tab_res_1}
 \end{table}
 	
@@ -91,7 +92,7 @@ Dist. (in \%) &12 &7&46&9&6&20
 
 
 \frame{
-	\frametitle{Bootstrapped Performances Metrics}
+	\frametitle{Bootstrapped Performance Metrics}
 	\begin{table}[th!]
 \centering
 \begin{tabular}{l | llll}
@@ -110,7 +111,7 @@ RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 
 	\begin{figure}[th!]
 \centering
 \input{./content/subfigs_2}
-\caption{This figure illustrates a random epoch of the multi-taper spectrum for each sleeping stage. There is high similarity between sleeping stage N3 and N4.}
+\caption{Illustration of the average sensitivity maps from the CNN (top) and the RNN (bottom) for the two validation subjects.}
 \label{fig_2}
 \end{figure}
 }
@@ -122,27 +123,47 @@ RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 
 \section{Conclusion}
 \subsection{Conclusion}
 \frame{
-	\frametitle{Conclusion}
-	
+	\frametitle{Future Study}
 	\setbeamercovered{transparent}
 	\begin{itemize}
-		\item<1-> Watch the frame number.
-		\item<2-> It doesn't change!
+		\item<1-1> Successfully re-produced \cite{main_ar} in TF which was one of the objectives, despite using few different approaches.
+		\item<1-1> Added a LSTM cell to the of the VGGNet 16 network.  The of the RNN does out-perform the baseline on average (table \ref{tab_res_2}), despite the RNN does archive better classification sensitivity in the following sleeping stages W and R.
+		\item<2-2> Improvements in this projects can be archived by merging sleeping stage N3 and N4, then follow the newest regulations.
+		\item<2-2> Study the effect of stacking multiple LSTM cells and applied the LSTM cells from layers with a lower-level feature representation higher and spectral variance.
 	\end{itemize}
 
 	
 }
 
-\subsection{Future Research}
+\section{References}
 \frame{
-	\frametitle{Future Research}
-	\setbeamercovered{transparent}
-	\begin{itemize}
-		\item<1-> Watch the frame number.
-		\item<2-> It doesn't change!
-	\end{itemize}
-
+\frametitle{References}
+\bibliographystyle{./../Article/IEEEbib}
+\bibliography{./../Article/refs}	
 }
+
+
+%\subsection{Future Research}
+%\frame{
+%	\frametitle{Future Research}
+%	
+%	\begin{itemize}
+%		\item Watch the frame number.
+%		\item It doesn't change!
+%	\end{itemize}
+%
+%}
+
+%\subsection{Future Research}
+%\frame{
+%	\frametitle{Future Research}
+%	\setbeamercovered{transparent}
+%	\begin{itemize}
+%		\item<1-> Watch the frame number.
+%		\item<2-> It doesn't change!
+%	\end{itemize}
+%
+%}
 
 
 

@@ -22,6 +22,7 @@ Data_1/*
 Data/*
 */.texpadtmp/*
 Written work/Article/.texpadtmp/*
+Written work/Beamer/.texpadtmp/*
 *.texpadtmp/*
 Report/.*
 Report/.texpadtmp/report.synctex.gz
