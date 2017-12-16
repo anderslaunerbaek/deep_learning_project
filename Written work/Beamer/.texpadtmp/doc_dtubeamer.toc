@@ -1,8 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\select@language {english}
-\beamer@sectionintoc {1}{The Challenge}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{Sleeping Stages}{2}{0}{1}
-\beamer@sectionintoc {2}{Performance}{3}{0}{2}
-\beamer@sectionintoc {3}{Conclusion}{6}{0}{3}
-\beamer@subsectionintoc {3}{1}{Conclusion}{6}{0}{3}
-\beamer@subsectionintoc {3}{2}{Future Research}{8}{0}{3}
