@@ -4,17 +4,17 @@
 The chosen approach to handle the imbalanced classes was to randomly down-sample to fit the minority class. By during so, it is possible to discard value information, e.g. the spatial variation within each class. Although, during down-sampling randomly for several training epochs, the different permutation of variations for each class will be captured.  
 An alternate approach to fix the imbalanced classes is to penalize the loss function w.r.t. to the class distribution in each mini-batch.
 
-In \cite{	main_ar,VGGnet16} they subtract the mean image. The normalization of the images have not been implemented in this current state of the project, which is a candidate for the low average performance.
+In \cite{	main_ar,VGGnet16} they subtract the mean image of the input image. The normalization of the images have not been implemented in this current state of the project, which can be a candidate for the relative low average performance.
 
-The size of the mini-batch was chosen to be 32. This hyperparameter variates within the literature but due to the static implementation of the LSTM cell, the discarded images in the final mini-batch needs to as few as possible. A lower batch size will entail an faster converging of the weights. 
+The size of the mini-batch was chosen to be 32. This hyperparameter variates within the literature but due to the static implementation of the LSTM cell, the discarded images in the final mini-batch needs to be as few as possible. A lower batch size will entail an faster converging in the weights by often applying back-propagation. The tradeoff of using a too small mini-batch size is a less accurate estimate of the gradient. 
 
-Although the CNN reduces spatial variance, the temporal variance of the images can be huge. Two consecutive images, illustrating the sleep epochs, can have many displacements in the objects. The implementation of the LSTM cell is inspired by video frame prediction \cite{git_lstm}, which has fewer displacements in the objects for two consecutive frames. 
+The CNN reduces spatial variance in the image but the temporal variance in the images can be huge. Two consecutive images, illustrating the sleep epochs, can have many displacements in the objects. The implementation of the LSTM cell is inspired by video frame prediction \cite{git_lstm}, which has fewer displacements in the objects for two consecutive frames. Although when it is required to learn the long term dependencies in transition from the sleep stages, the vanishing or exploding gradient issue is only fixed by the gated RNNs such as the LSTM cell.
+There has only been applied one LSTM cell in the RNN. The LSTM can easily be stacked in multiple layers which will add many more learnable parameters to the network but maybe better capture the long term dependencies.
 
-One of the challenge issues with the used data is, that the annotation of the sleep stages requires expert skilled personal. There has been applied several experts, where each was responsible of the annotation for a subgroup of the subjects. This entail that the networks are fitting to each experts subjective experiences. The quality of the annotations could be enhanced by introduce more experts to each of the subjects.
+It is possible to gain information regrading the training process by visualizing the loss as a function of training iterations. Hereby it is possible to achieve knowledge about the hyperparameters such as the learning rate, the effect of the dropout operations and how accurate the estimate of the gradient is. The current setup uses a relative low learning rate ($10^{-5}$) in the AdamOptimizer. It could have improved the training process to be able to check if the learning rate was too low in respect of learning the weights of the LSTM cell from scratch.
 
+Another advantage of an analysis of the learning curve is to get an idea of how much the performance metrics changes as function of the amount of training. 
 
-Learning rate in the LSTM celll is maybe to low.. Therefore an analysis of the learning curve can contribute to the more knowlede....
+One of the challenging issues with the applied data set is the annotation of the sleep stages. The annotation of a sleep stages for each of the subjects has been done only one expert. This mean that the classifier is trained to the subjective differences of each of the experts. The quality of the annotation can be enhanced by introducing more experts to each of the subjects.
 
-
-Analysis the learning curve.... How much does the performance measures change as a function of the amount of training? Bacicallly how much better will the classifier be, if we doubled the number of training epochs.
-
+It was chosen to follow and train a classifier according to the old definition of the sleep stages because the annotations in the data set was created based upon the old definition. Sticking to the old definition of the sleep stages has been experienced to be less appropriate. The confusion matrices and the sensitivity maps for both the CNN and the RNN reports troubles in the seperation of sleep stage N3 and sleep stage N4. 

@@ -2,7 +2,7 @@
 \label{sec:materials_and_methods}
 
  As a requirement for this project the professor and assistant teachers need to have acces to the running code in order to reproduce the results in this project. 
- The three bullets below show links to what you need in order to reproduce the presented results and a direct link to the demonstration notebook.
+ The bullets below show links to what you need in order to reproduce the presented results and a link to the demo notebook.
  \begin{itemize}
  	\item Github: \href{https://github.com/anderslaunerbaek/Deep\_Learning\_Project.git}{Deep\_Learning\_Project.git}
  	\item DTU SharePoint: \href{https://dtudk-my.sharepoint.com/personal/s160159\_win\_dtu\_dk/\_layouts/15/guestaccess.aspx?docid=093aa4dcaee0b4e3aa18b0ee67061a678&authkey=AbdnyuYwQUWn0BDEPeDn1Mg&e=b79a063cd72d43a9b7db88f8b8fd1b06}{Data\_dicts\_and\_Code\_models.zip}
@@ -13,7 +13,7 @@
 There has been applied multi-taper spectrum analysis in order to turn the EEG-signals into images. An image represents an epoch of $30\left[s \right]$ of the recorded EEG-signal along its temporal axis. The second axis represents the spectrum of the rhythmic components of interest as mentioned above. The color of the image represents the amplitude of the rhythmic components.
 
 The WFDB Toolbox \cite{matlab} for Matlab has been used to download, preprocess and transform the EEG-signals into images. The applied script\footnote{Git repo: "Code/2. from\_edf\_to\_pic.m"} for this process has been provided by the supervisor. 
-The concepts of multi-taper spectrum analysis, which estimate the images, is not in the scope of this project. The hyperparameters in the preprocessing task, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., used for the estimation of the images, is identical to \cite{main_ar} and is not possible hyperparameter in this project. This ensures that the results of the baseline in this project are comparable with the main article \cite{main_ar}. 
+The concepts of multi-taper spectrum analysis, which estimate the images, is not in the scope of this project. The hyperparameters in the preprocessing task, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., used for the estimation of the images, is identical to \cite{main_ar} and is not possible hyperparameter in this project. This ensures that the results of the baseline in this project are comparable with the article \cite{main_ar}. 
 
 The Matlab toolbox is able to download the data set of interest. The data set used in this projects consists of PSG recordings for 20 subjects. Ten healthy females and ten healthy males between 25 to 34 years of age were included. The subjects have been monitored for two nights except subject 20. There are $38211$ images after the preprocessing of the EEG-signals. All images have labeled values which entail a supervised learning approach. The annotated labels follows the old definition where sleep stage N3 and N4 are divided into two. Table \ref{tab_class_balance} illustrates how the labels of the $38211$ images are distributed for each of the sleep stages.
 
@@ -43,7 +43,7 @@ The standard input layer takes a RGB image of $224x224$ pixels.
 
 \subsubsection{Convolutional Neural Network}
 
-The baseline network is given in equation \ref{eq_vgg16_cnn}\footnote{See implementation in Git repo.: "./Code/master.py"}. 
+The baseline network is given in eq. \ref{eq_vgg16_cnn}\footnote{See implementation in Git repo.: "./Code/master.py"}. 
 \begin{equation}
 \begin{aligned}
 net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m c_{7,f} d c_{1, f} dc_{1,o}	\\
@@ -58,7 +58,7 @@ $m$ is the max pooling layer. $d$ is a dropout operation, which keeps  $p = 50\%
 
 The TF implementation of the VGGNet is heavily inspired by the work of The TensorFlow Authors (2017) \cite{git_vgg16}. 
 %There has been added few modifications to the compared to the initial VGGNet 16 \cite{VGGnet16} in this implementation. 
-The current implementation of the VVGNet has transformed the fully connected layers into convolutional 2D layers. By changing the size of the kernel it achieves the same performance. However it is still necessary to squeeze the final layer ($c_{1,o}$) into a 2D-tensor before applying the Softmax activation function.
+The current implementation of the VVGNet has transformed the fully connected layers into convolutional 2D layers. By changing the size of the kernel it achieves the same performance. However it is still necessary to squeeze the final layer ($c_{1,o}$) into a 2D-tensor before applying the Softmax function.
 
 L2-regularization with a weighted decay of $5 \cdot 10^{-4}$ has been included between the convolutional operations. Dropout operations between the fully connected layers have been included.
 The L2-regularization and dropout operations prevent overfitting in this deep complex network. The modifications are included in eq. \ref{eq_vgg16_cnn}.
@@ -69,12 +69,10 @@ The L2-regularization and dropout operations prevent overfitting in this deep co
 It is possible to interpret sleep as a sequence entering different stages during the night. By learning these transition rules between the stages can improve the classification.
 
 The most effective RNNs for modelling sequences are called gated RNNs \cite[sec. 10.10]{dl_book}. 
-
 The long short-term memory (LSTM) cell is a network which comprehend the issues of vanishing or exploding gradients. The LSTM cell has an internal recurrence (self-loop) which produce paths where the gradient can flow for long durations and hereby capture long term dependencies.  
 
 The main reason for implementing a sequential network is to learn the transition rules between the sleep stages.
 The first approach to learn the transition rules is to modify the baseline network and use its extracted feature maps as input to the LSTM cell. A second approach could be to use several LSTM cells with regularization in between. A third approach could be to redefine the problem, discretize the EEG-signals and feed the signals into a sequence of LSTM cells.
-
 Due to limited time only the first approach has been considered. The network combining the CNN and LSTM cell will further on be mentioned as the RNN.
 
 There are several approaches to feed the LSTM cell. The chosen approach has been inspired by the work of \cite{git_rnn_cnn_1,43455}, where the LSTM cell is acting on each of the generated feature maps.
@@ -94,9 +92,7 @@ where the notations from eq. \ref{eq_vgg16_cnn} are the same and the $lstm_{7,51
 
 The implementation of LSTM cell is heavily inspired by the work of The TensorFlow Authors (2017) \cite{git_lstm}. This implementation takes the input tensor from the final max pooling layer in the VGGNet and returns the state tensor. Both are 4D-tensors (batch x height x width x channels).
 
-As illustrated in eq. \ref{eq_vgg16_rnn}, 
-
-There has been applied dropout operations on the output tensor from the LSTM cell. The tensor is then reshaped in order to fit a fully connected layer, which produce easy separable higher-order feature maps of the six stages. The fully connected layer is activated with the non-linear Softmax function.
+There has been applied dropout operations on the output tensor from the LSTM cell as illustrated in eq. \ref{eq_vgg16_rnn}. The tensor is then reshaped in order to fit a fully connected layer, which produce easy separable higher-order feature maps of the six stages. The fully connected layer is activated with the non-linear Softmax function.
 
 \subsection{Network Visualization}
 
@@ -114,7 +110,7 @@ s^{\left(j\right)} = \frac { 1 }{ N  } \sum _{ n=1 }^{ N } \left| \frac { \parti
 where $L$ is the loss w.r.t. the input image $f\left(x\right)$ and its label $t$. 
 
 By applying the function $s^{\left(j\right)}$ for an image it is possible to see the relative importance determined by the network for each feature $j$. 
-Figures \ref{fig_1_21}-\ref{fig_1_36} illustrate the sensitivity maps for each sleep stage for the CNN and RNN respectively. The sensitivity maps have been created for subject 19 and subject 20.
+Figures \ref{fig_1_21}-\ref{fig_1_36} illustrate the sensitivity maps for each sleep stage for the CNN and RNN respectively. The sensitivity maps have been created for subject 19 and 20.
 
 %\subsection{Hyperparameter}
 %
