@@ -66,7 +66,7 @@ Dist. (in \%) &12 &7&46&9&6&20
 \frame{
 \frametitle{Networks}
 \begin{itemize}
-\item Article by Albert Vilamala, Kristoffer H. Madsen and Lars K. Hansen (2017) \cite{main_ar}
+\item Main article by Albert Vilamala, Kristoffer H. Madsen and Lars K. Hansen (2017) \cite{main_ar}
 \item CNN: VGGNet 16
 \item RNN: VGGNet 16 + LSTM cell
 \end{itemize}	
@@ -136,9 +136,9 @@ RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 
 	\frametitle{Conclusions}
 	\setbeamercovered{transparent}
 	\begin{itemize}
-		\item<1-1> Successfully reproduced \cite{main_ar} in TF which was one of the objectives, despite using few different approaches.
-		\item<1-1> Added a LSTM cell to the of the VGGNet. The of the RNN does outperform the baseline network on the average performance metrics, despite the RNN does achieve a better sensitivity in the W sleep stage and in the R sleep stage.
-		\item<2-2> Improvements in this projects can be archived by merging sleeping stage N3 and N4, then follow the newest regulations.
+		\item<1-1> Successfully implemented the VGGNet 16 in TF which was one of the objectives, despite using a few different approaches compared to \cite{main_ar}.
+		\item<1-1> Added a LSTM cell to the VGGNet. The RNN does \underline{not} outperform the baseline network on the average performance metrics, despite the RNN does achieve a better sensitivity in the W sleep stage and in the R sleep stage.
+		\item<2-2> Improvements in this project can be achieved by merging the sleep stages N3 and N4 by following the newest regulations.
 		\item<2-2> Study the effect of stacking multiple LSTM cells. 
 		\item<2-2> Apply the LSTM cells from layers with a lower-level feature representation and a higher spatial variance.
 	\end{itemize}
