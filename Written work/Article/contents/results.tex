@@ -54,10 +54,10 @@ The first column block reports the confusion matrix. The next block reports the 
 
 The baseline, reported in table \ref{tab_res_1}, classifies the sleep stage N2 with a sensitivity of $84\%$. Then followed by R, W, N3, N4 and N1. N1 with a sensitivity of $62\%$ as the most difficult sleep stage to classify. The highest misclassification error is achieved in N3 with a sensitivity of $37\%$.
 
-The RNN classifies the sleep stage R with the highest sensitivity ($87\%$). The followed by N2, W, N4, N3 and N1. N1 with a sensitivity of $31\%$ as the most difficult sleep stage to classify.
+The RNN classifies the sleep stage R with the highest sensitivity ($87\%$). Then followed by N2, W, N4, N3 and N1. N1 with a sensitivity of $31\%$ as the most difficult sleep stage to classify.
 
-\todo[inline]{hertil}
-The precision metrics for the CNN and the RNN are relative low for sleep stage N3 and sleep stage N4 compared to the other sleep stages. The misclassification rates for N3 and N4 are relative close to its classification rates. This mean that the visual illustrations of the stages are similar, which can be the logical explanation for merging N3 and N4 together into one sleep stage as in the newest definition in \cite{AASM}.
+The precision metrics for the CNN and the RNN are relatively low for sleep stage N3 and sleep stage N4 compared to the other sleep stages. The misclassification rates for N3 and N4 are relatively close to its classification rates. 
+The visual illustrations of the stages are similar, which can be a logical explanation for merging N3 and N4 together into one sleep stage as in the newest definition \cite{AASM}.
 
 %precision: fraction which were deteced correct. 
 %sensitivity: fraction of ture events that was detected correct.. percentage of sick people who are correctly identified as having the condition.. the probability of a correct detection...
@@ -68,7 +68,6 @@ The precision metrics for the CNN and the RNN are relative low for sleep stage N
 %\todo[inlin]{F1: A combination between precision and sensitivity.}
 
 Table \ref{tab_res_2} reports the mean values and its corresponding $95\%$ confident values computed by bootstrapping. There has been applied $100.000$ bootstrap iterations with replacement in order to compute the average performance metrics for the two networks.
-
 \begin{table}[th!]
 \centering
 \begin{tabular}{l | llll}
@@ -80,7 +79,6 @@ RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 
 \caption{\textbf{Mean} and corresponding $95\%$ confident values computed by 100.000 bootstrap iterations with replacement.}
 \label{tab_res_2}
 \end{table}
-
 According to table \ref{tab_res_2} it can be concluded that the RNN does not outperform the baseline network w.r.t. the selected performance metrics.
 
 %\subsubsection{Hypnograms}
@@ -95,7 +93,7 @@ According to table \ref{tab_res_2} it can be concluded that the RNN does not out
 
 \subsubsection{Sensitivity}
 
-The two last rows in fig. \ref{fig_1} illustrate the average representations of the six sleep stages for the two validation subjects. The sensitivity maps have been computed using eq. \ref{eq_1}.
+The two last rows in fig. \ref{fig_1} illustrate the average representations of the six sleep stages for the two validation subjects. The sensitivity maps have been computed by eq. \ref{eq_1}.
 
 \begin{figure*}[th!]
 \centering
@@ -106,6 +104,7 @@ The second and the third row, fig \ref{fig_1_21} to \ref{fig_1_36} illustrates t
 \label{fig_1}
 \end{figure*}
 
-The sensitivity maps which are given in fig. \ref{fig_1_24} - \ref{fig_1_25} and fig. \ref{fig_1_34} - \ref{fig_1_35} for the CNN and RNN respectively have more less the same pattern. 
-The summarized information from the sensitivity maps for sleep stage N3 and N4 provide a valid explanation of the high misclassification error in these stages for both networks, see the normalized confusion matrices in table \ref{tab_res_1}.
+The sensitivity maps given in fig. \ref{fig_1_24} - \ref{fig_1_25} and fig. \ref{fig_1_34} - \ref{fig_1_35} for the CNN and the RNN respectively have more less the same pattern. 
+
+The summarized information from the sensitivity maps for sleep stage N3 and N4 provides a valid explanation of the high misclassification error in both networks (see the normalized confusion matrices in table \ref{tab_res_1}).
 
