@@ -15,7 +15,7 @@ There has been applied multi-taper spectrum analysis in order to turn the EEG-si
 The WFDB Toolbox \cite{matlab} for Matlab has been used to download, preprocess and transform the EEG-signals into images. The applied script\footnote{Git repo: "Code/2. from\_edf\_to\_pic.m"} for this process has been provided by the supervisor. 
 The concepts of multi-taper spectrum analysis, which estimate the images, is not in the scope of this project. The hyperparameters in the preprocessing task, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., used for the estimation of the images, is identical to \cite{main_ar} and is not possible hyperparameter in this project. This ensures that the results of the baseline in this project are comparable with the main article \cite{main_ar}. 
 
-The Matlab toolbox is able to download the data set of interest. The data set used in this projects consists of PSG recordings for 20 subjects. Ten healthy females and ten healthy males between 25 to 34 years of age were included. The subjects have been monitored for two nights except subject 20. There are $38211$ images after the preprocessing of the EEG-signals. All images have labeled values which entail a supervised learning approach. The annotated labels follows the old definition where sleeping stage N3 and N4 are divided into two. Table \ref{tab_class_balance} illustrates how the labels of the $38211$ images are distributed for each of the sleeping stages.
+The Matlab toolbox is able to download the data set of interest. The data set used in this projects consists of PSG recordings for 20 subjects. Ten healthy females and ten healthy males between 25 to 34 years of age were included. The subjects have been monitored for two nights except subject 20. There are $38211$ images after the preprocessing of the EEG-signals. All images have labeled values which entail a supervised learning approach. The annotated labels follows the old definition where sleep stage N3 and N4 are divided into two. Table \ref{tab_class_balance} illustrates how the labels of the $38211$ images are distributed for each of the sleep stages.
 
 \begin{table}[th!]
 \begin{tabular}{l|llllll}
@@ -27,9 +27,6 @@ Dist. (in \%) &12 &7&46&9&6&20
 \end{table}
 
 Prior to training of the networks is it considered to use methods to balance the six stages in order to create a state of the art sleep stage classifier.
-
-\todo[inline]{here}
-
 
 \subsection{Neural Network Architectures}
 VGGNet 16 \cite{main_ar, VGGnet16} is the architecture of the baseline network. It is composed of a 16-layer network with following operations:
@@ -59,11 +56,11 @@ probs &= tf.nn.softmax(logits)
 where $c_{k,l}$ is a convolutional layer, $k$ is the number of receptive layers and $l$ is the number of channels. $c_{1,f} = c_{1,4096}$ and $c_{1,o} = c_{1,6}$.
 $m$ is the max pooling layer. $d$ is a dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. 
 
-The TF implementation of the VGGNet is heavily inspired by the work of \todo{insert name of author}\cite{git_vgg16}. 
+The TF implementation of the VGGNet is heavily inspired by the work of The TensorFlow Authors (2017) \cite{git_vgg16}. 
 %There has been added few modifications to the compared to the initial VGGNet 16 \cite{VGGnet16} in this implementation. 
 The current implementation of the VVGNet has transformed the fully connected layers into convolutional 2D layers. By changing the size of the kernel it achieves the same performance. However it is still necessary to squeeze the final layer ($c_{1,o}$) into a 2D-tensor before applying the Softmax activation function.
 
-L2-regularization with a weighted decay of $0.0005$ has been included between the convolutional operations. Dropout operations between the fully connected layers have been included.
+L2-regularization with a weighted decay of $5 \cdot 10^{-4}$ has been included between the convolutional operations. Dropout operations between the fully connected layers have been included.
 The L2-regularization and dropout operations prevent overfitting in this deep complex network. The modifications are included in eq. \ref{eq_vgg16_cnn}.
   
 
@@ -75,12 +72,12 @@ The most effective RNNs for modelling sequences are called gated RNNs \cite[sec.
 
 The long short-term memory (LSTM) cell is a network which comprehend the issues of vanishing or exploding gradients. The LSTM cell has an internal recurrence (self-loop) which produce paths where the gradient can flow for long durations and hereby capture long term dependencies.  
 
-The main reason for implementing a sequential network is to learn the transition rules between the sleeping stages.
+The main reason for implementing a sequential network is to learn the transition rules between the sleep stages.
 The first approach to learn the transition rules is to modify the baseline network and use its extracted feature maps as input to the LSTM cell. A second approach could be to use several LSTM cells with regularization in between. A third approach could be to redefine the problem, discretize the EEG-signals and feed the signals into a sequence of LSTM cells.
 
 Due to limited time only the first approach has been considered. The network combining the CNN and LSTM cell will further on be mentioned as the RNN.
 
-There are several approaches to feed the LSTM cell. The chosen approach has been inspired by the work of \todo{insert author} \cite{git_rnn_cnn_1,43455}, where the LSTM cell is acting on each of the generated feature maps.
+There are several approaches to feed the LSTM cell. The chosen approach has been inspired by the work of \cite{git_rnn_cnn_1,43455}, where the LSTM cell is acting on each of the generated feature maps.
 Equation \ref{eq_vgg16_rnn}\footnote{See implementation in Git repo.: "./Code/rnn.py".}  illustrates the implementation of the RNN. The first convolutional layers are similar to the VGGNet. The LSTM cell is feed by the final max pooling layer. The input shape to the LSTM cell is static, which can cause discarding of the images in the final mini-batch.
 
 \begin{equation}
@@ -95,7 +92,7 @@ probs &= tf.nn.softmax(logits)
 \end{equation}
 where the notations from eq. \ref{eq_vgg16_cnn} are the same and the $lstm_{7,512}$ is the LSTM cell   which takes the tensor shape (batch x 7 x 7 x 512). $d_p$ is the dropout operation, which keeps  $p = 50\%$ of the total connection between the previous and next layer. $fc_0$ is the final fully connected layer, which represents the highest order feature maps for the six stages.
 
-The implementation of LSTM cell is heavily inspired by the work of \todo{insert aotuehr names}\cite{git_lstm}. This implementation takes the input tensor from the final max pooling layer in the VGGNet and returns the state tensor. Both are 4D-tensors (batch x height x width x channels).
+The implementation of LSTM cell is heavily inspired by the work of The TensorFlow Authors (2017) \cite{git_lstm}. This implementation takes the input tensor from the final max pooling layer in the VGGNet and returns the state tensor. Both are 4D-tensors (batch x height x width x channels).
 
 As illustrated in eq. \ref{eq_vgg16_rnn}, 
 

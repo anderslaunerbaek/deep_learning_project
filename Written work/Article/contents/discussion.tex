@@ -10,4 +10,11 @@ The size of the mini-batch was chosen to be 32. This hyperparameter variates wit
 
 Although the CNN reduces spatial variance, the temporal variance of the images can be huge. Two consecutive images, illustrating the sleep epochs, can have many displacements in the objects. The implementation of the LSTM cell is inspired by video frame prediction \cite{git_lstm}, which has fewer displacements in the objects for two consecutive frames. 
 
-One of the challenge issues with the used data is, that the annotation of the sleeping stages requires expert skilled personal. There has been applied several experts, where each was responsible of the annotation for a subgroup of the subjects. This entail that the networks are fitting to each experts subjective experiences. The quality of the annotations could be enhanced by introduce more experts to each of the subjects.
+One of the challenge issues with the used data is, that the annotation of the sleep stages requires expert skilled personal. There has been applied several experts, where each was responsible of the annotation for a subgroup of the subjects. This entail that the networks are fitting to each experts subjective experiences. The quality of the annotations could be enhanced by introduce more experts to each of the subjects.
+
+
+Learning rate in the LSTM celll is maybe to low.. Therefore an analysis of the learning curve can contribute to the more knowlede....
+
+
+Analysis the learning curve.... How much does the performance measures change as a function of the amount of training? Bacicallly how much better will the classifier be, if we doubled the number of training epochs.
+
