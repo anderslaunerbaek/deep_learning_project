@@ -72,11 +72,12 @@ Table \ref{tab_res_2} reports the mean values and its corresponding $95\%$ confi
 \centering
 \begin{tabular}{l | llll}
 Study & Precision & Sensitivity & F$_1$-score & Accuracy \\\hline
-%\cite{main_ar}               & 65.4-\textbf{67.9}-70.4 & 70.9-\textbf{71.3}-71.8 & 67.5-\textbf{68.8}-70.0 & 92.3-\textbf{92.3}-92.4\\
+FE \cite{main_ar} & 90-\textbf{91}-93 & 70-\textbf{73}-77 & 78-\textbf{81}-83 & 81-\textbf{83}-85\\
+FT \cite{main_ar} & 92-\textbf{93}-94 & 75-\textbf{78}-81 & 82-\textbf{84}-86 & 84-\textbf{86}-88\\\hline
 CNN               & 65-\textbf{68}-70 & 71-\textbf{71}-72 & 67-\textbf{69}-70 & 92-\textbf{92}-92\\
 RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 92-\textbf{92}-92
 \end{tabular}
-\caption{\textbf{Mean} and corresponding $95\%$ confident values computed by 100.000 bootstrap iterations with replacement.}
+\caption{\textbf{Mean} and corresponding $95\%$ confident values computed by 100.000 bootstrap iterations with replacement. The two first rows are metrics from \cite{main_ar}.}
 \label{tab_res_2}
 \end{table}
 According to table \ref{tab_res_2} it can be concluded that the RNN does not outperform the baseline network w.r.t. the selected performance metrics.
