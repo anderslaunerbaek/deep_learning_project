@@ -22,7 +22,8 @@ The Matlab toolbox is able to download the data set of interest. The data set us
 Sleep Stage & W & N1 &  N2& N3 & N4 & R \\\hline
 Dist. (in \%) &12 &7&46&9&6&20
 \end{tabular}
-\caption{This table summerises the aggregated distribution of the labels for all 20 Subjects. The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
+\caption{This table summerises the aggregated distribution of the labels for all 20 Subjects. }
+%The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
 \label{tab_class_balance}
 \end{table}
 
@@ -82,8 +83,8 @@ Equation \ref{eq_vgg16_rnn}\footnote{See implementation in Git repo.: "./Code/rn
 \begin{aligned}
 net &= c_{2,64}mc_{2,128}mc_{3,256}mc_{3,512}mc_{3,512}m lstm_{7,512} d_p fc_0\\
 %&\downarrow\\
-logits &=  tf.reshape(net, [batch, -1])\\
-logits &= slim.layers.fully_connected(logits, 6) \\
+net &=  tf.reshape(net, [batch, -1])\\
+logits &= slim.layers.fully_connected(net, 6) \\
 probs &= tf.nn.softmax(logits)
 \end{aligned}
 \label{eq_vgg16_rnn}

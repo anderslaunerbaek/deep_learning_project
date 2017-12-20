@@ -1,7 +1,10 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-This project has successfully reproduced the VGGNet in \cite{main_ar} in TF which was one of the objectives. The network has successfully fine-tuned the dropout operations and the weights in its final fully connected layer. 
-The VGGNet network have been used as the baseline. The chosen implementation of the RNN does note outperform the baseline in average performance metrics (see table \ref{tab_res_2}), despite the RNN does achieve better classification sensitivity in the sleep stage W and in the sleep stage R (see table \ref{tab_res_1}). 
+%This project has successfully reproduced the VGGNet in \cite{main_ar} in TF which was one of the objectives. 
+%The network has successfully fine-tuned the dropout operations and the weights in its final fully connected layer. 
 
-Further improvements in this projects can be achieved by merging sleep stage N3 and sleep stage N4 together. Study the affect of stacking multiple LSTM cells and apply the LSTM cell from layers with a lower-level feature representation and a higher spatial variance.
+The VGGNet have been implemented and used as the baseline. The chosen implementation of the RNN does not outperform the baseline in the average performance metrics, however the RNN does achieve better classification sensitivity in the sleep stages W and R. Equally the RNN has learned the transition between the sleep stages W and N1.
+
+Further improvements in this projects can be achieved by merging sleep stages N3 and N4. 
+%The affect of stacking multiple LSTM cells and apply the LSTM cell from layers with a lower-level feature representation and a higher spatial variance.
