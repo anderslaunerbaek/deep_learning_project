@@ -19,3 +19,6 @@ In order to reproduce the archived results you can download the input data and s
   * Input data: The > Data_dict < folder must be placed within the root of the cloned git repository. 
   * Saved checkpoints: The Code/models, the > models < folder must be placed within the Code/ of the cloned git repository. 
 
+### Download data (removed from personal folder)
+* Data: [DTU SharePoint: Data](https://dtudk-my.sharepoint.com/personal/s160159_win_dtu_dk/_layouts/15/guestaccess.aspx?folderid=09e2e9fc5400b4c519717f1504e18397f&authkey=AYxnDDowkJjQrgoG0wrX4W0&e=61ea64f974de492c849afe3ce78d6c75)
+* Data_dicts: [DTU SharePoint: Data_dicts](https://dtudk-my.sharepoint.com/personal/s160159_win_dtu_dk/_layouts/15/guestaccess.aspx?folderid=04fa5e2ff648f406790da91ed304c8d16&authkey=AfhnHrdt2iyZRzEL7iJ7_n8&e=0853dd5bede242b6a7dead0006d97704)
