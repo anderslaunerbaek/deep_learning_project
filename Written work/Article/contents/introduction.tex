@@ -15,12 +15,13 @@ $beta \ge 13 \left[ Hz \right]$.
 The above mentioned bursts of rhythmic components are represented in different degrees within each stage of sleep.   
 The newest definition of sleep stages are defined by the American Academy of Sleep Medicine. They divide the different stages of sleep into five categories \cite{main_ar, AASM}: 
 \begin{itemize}
-\item W: wakefulness to drowsiness. The alpha and delta frequencies are present. The low delta frequency is affected by small eye movements when the eyes switch from open to closed. See the multi-taper frequency spectrum in fig. \ref{fig_1_11}.
-\item N1: Non-REM 1. This is the first sleep stage after the transition from W. There are slow eye movements. See fig. \ref{fig_1_12}.
-\item N2: Non-REM 2. One or more K-complexes present. See fig. \ref{fig_1_13}.
-\item N3-N4: Non-REM 3-4. Slow delta wave activity. Dreaming stage starts here. This is the stage between being fully awake and being fully asleep. The newest definition combines the sleep stages N3 and N4 into one stage. See fig. \ref{fig_1_14} and \ref{fig_1_15}.
-\item R: During the rapid eye movements (REM) stage there are a mix of rhythmic components present in the EEG. The brain activity is similar to W stage. See fig. \ref{fig_1_16}.
+\item W: wakefulness to drowsiness. The alpha and delta frequencies are present. The low delta frequency is affected by small eye movements when the eyes switch from open to closed. %See the multi-taper frequency spectrum in fig. \ref{fig_1_11}.
+\item N1: Non-REM 1. This is the first sleep stage after the transition from W. There are slow eye movements. %See fig. \ref{fig_1_12}.
+\item N2: Non-REM 2. One or more K-complexes present. %See fig. \ref{fig_1_13}.
+\item N3-N4: Non-REM 3-4. Slow delta wave activity. Dreaming stage starts here. This is the stage between being fully awake and being fully asleep. The newest definition has merged sleep stages N3 and N4. %See fig. \ref{fig_1_14} and \ref{fig_1_15}.
+\item R: During the rapid eye movements (REM) stage there are a mix of rhythmic components present in the EEG. The brain activity is similar to W stage. %See fig. \ref{fig_1_16}.
 \end{itemize} 
+See the multi-taper frequency spectrum in fig. \ref{fig_1_11} to fig. \ref{fig_1_16}.
 
 The scope of this project is to create a re-implementation of the CNN \cite{main_ar} in TensorFlow (TF) and use this network as the baseline.  
 The task is to implement and include a RNN when the baseline has been achieved, and hereby learn the transition rules between each of the sleep stages. 

@@ -15,18 +15,18 @@ There has been applied multi-taper spectrum analysis in order to turn the EEG-si
 The WFDB Toolbox \cite{matlab} for Matlab has been used to download, preprocess and transform the EEG-signals into images. The applied script\footnote{Git repo: "Code/2. from\_edf\_to\_pic.m"} for this process has been provided by the supervisor. 
 The concepts of multi-taper spectrum analysis, which estimate the images, is not in the scope of this project. The hyperparameters in the preprocessing task, such as the duration (in $\left[s \right]$) of an epoch, number of multi-tapers, frequency resolution (in $\left[Hz \right]$), etc., used for the estimation of the images, is identical to \cite{main_ar} and is not possible hyperparameter in this project. This ensures that the results of the baseline in this project are comparable with the article \cite{main_ar}. 
 
-The Matlab toolbox is able to download the data set of interest. The data set used in this projects consists of PSG recordings for 20 subjects. Ten healthy females and ten healthy males between 25 to 34 years of age were included. The subjects have been monitored for two nights except subject 20. There are $38211$ images after the preprocessing of the EEG-signals. All images have labeled values which entail a supervised learning approach. The annotated labels follows the old definition where sleep stage N3 and N4 are divided into two. Table \ref{tab_class_balance} illustrates how the labels of the $38211$ images are distributed for each of the sleep stages.
+The Matlab toolbox is able to download the data set of interest. The data set used in this projects consists of PSG recordings for 20 subjects. Ten healthy females and ten healthy males between 25 to 34 years of age were included. The subjects have been monitored for two nights except subject 20. There are $38211$ images after the preprocessing of the EEG-signals. All images have labeled values which entail a supervised learning approach. The annotated labels follows the old definition where sleep stage N3 and N4 are separate. 
 
+Table \ref{tab_class_balance} illustrates how the labels of the $38211$ images are distributed for each of the sleep stages.
 \begin{table}[th!]
 \begin{tabular}{l|llllll}
 Sleep Stage & W & N1 &  N2& N3 & N4 & R \\\hline
 Dist. (in \%) &12 &7&46&9&6&20
 \end{tabular}
-\caption{This table summerises the aggregated distribution of the labels for all 20 Subjects. }
+\caption{This table summerises the aggregated distribution of the labels for all 20 subjects. }
 %The distribution of the labels illustrates the sleep stages of subjects during the recordings.}
 \label{tab_class_balance}
 \end{table}
-
 Prior to training of the networks is it considered to use methods to balance the six stages in order to create a state of the art sleep stage classifier.
 
 \subsection{Neural Network Architectures}
@@ -39,7 +39,7 @@ The third hyperparameter in the convolutional operation is the padding. This ope
 	\item The last three layers of the VGGNet network is fully connected. The first two have 4096 channels. The final fully connected layer performs a six-channel classification due to the six stages in this project and is activated by the Softmax function. This activation function is used to calculate the probabilities associated to each class \cite[eq. 4.1]{dl_book}.  
 \end{itemize}
 The VGGNet is an acknowledged deep CNN. It is a suitable and well performing network for image recognition in several case studies \cite{VGGnet16, stand_cnn_notes}.  
-The standard input layer takes a RGB image of $224x224$ pixels.
+The standard input layer takes a image of $224x224x3$ pixels.
 
 
 \subsubsection{Convolutional Neural Network}

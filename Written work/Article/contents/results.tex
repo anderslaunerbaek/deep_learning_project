@@ -12,17 +12,17 @@ The weights in the LSTM cell have been trained from scratch. The weights in the 
 %This strategy is different compared to the setup in \cite{main_ar}. They re-train all the weights in the fully connected layers.
 
 During the training process the networks only have access to the current epoch. This is different from the setup in \cite{main_ar} where the network use two prior epochs and two posterior epochs in order to learn the current epoch. The reason for this choice was due to real time considerations. If the classifier should work in real time then it does not have any posterior epochs to work with. 
-It is possible to use prior epochs in real time classifications and it can be considered as future research.
+It is possible to use prior epochs in real time classifications and it is considered as future research.
 
 Both the CNN and the RNN networks have been optimized in order to minimize their categorical cross-entropy. Their loss function is handled by the AdamOptimizer, provided by TF, which iterates over a mini-batch with a size of 32. 
 The training process has been repeated for 20 training epochs. The learning rate has been initialized to $10^{-5}$ and its decay rate, first and second order moment have not been changed from default.
 
-Due to the characteristic of the sleep stages, the classes shown in table \ref{tab_class_balance} are not equally distributed. The selected choice for fixing the issue is to randomly down-sample the majority classes to fit the minority class in each training epoch. A similar approach has been applied in \cite{main_ar}. 
+Due to the characteristic of the sleep stages, the sleep stages shown in table \ref{tab_class_balance} are not equally distributed. The selected choice for fixing the issue is to randomly down-sample the majority stages to fit the minority stage in each training epoch. A similar approach has been applied in \cite{main_ar}. 
 
 The setup is capable of performing leave-one-out cross-validation due to the relative small number of subjects and a few professionel skilled sleep stage experts.
-The subjects have been divided into test, train and validation. Subject 19 and subject 20 have been fixed to the validation set in order to get the $10\%$ of the total amount. 
+The subjects have been divided into test, train and validation. Subject 19 and 20 have been fixed to the validation set in order to get the $\approx10\%$ of the total amount. 
 
-The test subject for the first fold is subject one. The train data includes subject 2 to subject 18. Due to time considerations it was chosen only to perform the first fold.
+The test subject for the first fold is subject one. The train data includes subject 2 to 18. Due to time considerations it was chosen only to perform the first fold.
 
 \subsection{Results}
 \label{subsec:results}
@@ -57,7 +57,7 @@ The baseline, reported in table \ref{tab_res_1}, classifies the sleep stage N2 w
 The RNN classifies the sleep stage R with the highest sensitivity ($87\%$). Then followed by N2, W, N4, N3 and N1. N1 with a sensitivity of $31\%$ as the most difficult sleep stage to classify.
 
 The precision metrics for the CNN and the RNN are relatively low for sleep stage N3 and sleep stage N4 compared to the other sleep stages. The misclassification rates for N3 and N4 are relatively close to its classification rates. 
-The visual illustrations of the stages are similar, which can be a logical explanation for merging N3 and N4 together into one sleep stage as in the newest definition \cite{AASM}.
+The visual illustrations of the stages are similar, which can be a logical explanation for merging stage N3 and N4 together into one sleep stage as in the newest definition \cite{AASM}.
 
 %precision: fraction which were deteced correct. 
 %sensitivity: fraction of ture events that was detected correct.. percentage of sick people who are correctly identified as having the condition.. the probability of a correct detection...
@@ -67,7 +67,7 @@ The visual illustrations of the stages are similar, which can be a logical expla
 %\todo[inlin]{Sensitivity: tries to hard reduce FN and increase TP}
 %\todo[inlin]{F1: A combination between precision and sensitivity.}
 
-Table \ref{tab_res_2} reports the mean values and its corresponding $95\%$ confident values computed by bootstrapping. There has been applied $100.000$ bootstrap iterations with replacement in order to compute the average performance metrics for the two networks.
+Table \ref{tab_res_2} reports the mean values and its corresponding $95\%$ confident values computed by bootstrapping. There has been applied $100.000$ bootstrap iterations with replacement in order to compute the average performance metrics of the two networks.
 \begin{table}[th!]
 \centering
 \begin{tabular}{l | llll}
@@ -80,7 +80,7 @@ RNN               & 62-\textbf{65}-67 & 63-\textbf{66}-69 & 62-\textbf{64}-67 & 
 \caption{\textbf{Mean} and corresponding $95\%$ confident values computed by 100.000 bootstrap iterations with replacement. The two first rows are metrics from \cite{main_ar}.}
 \label{tab_res_2}
 \end{table}
-According to table \ref{tab_res_2} it can be concluded that the RNN does not outperform the baseline network w.r.t. the selected performance metrics.
+According to table \ref{tab_res_2} it can be concluded that the RNN does not outperform the baseline network w.r.t. the selected performance metrics. However the RNN captures the transition between stage W and N1 more efficient.
 
 %\subsubsection{Hypnograms}
 %\begin{figure*}[th!]
@@ -106,6 +106,5 @@ The second and the third row, fig \ref{fig_1_21} to \ref{fig_1_36} illustrates t
 \end{figure*}
 
 The sensitivity maps given in fig. \ref{fig_1_24} - \ref{fig_1_25} and fig. \ref{fig_1_34} - \ref{fig_1_35} for the CNN and the RNN respectively have more less the same pattern. 
-
 The summarized information from the sensitivity maps for sleep stage N3 and N4 provides a valid explanation of the high misclassification error in both networks (see the normalized confusion matrices in table \ref{tab_res_1}).
 

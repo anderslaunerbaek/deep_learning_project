@@ -1,21 +1,22 @@
 \section{Discussion}
 \label{sec:discussion}
+The annotation of the sleep stages for each of the subjects has been done only by one expert. The classifier is hereby trained to the subjective differences of each expert. The quality of the annotation can be enhanced by introducing more experts to each of the subjects.
 
 The chosen approach to handle the imbalanced stages, randomly down-sampled the training data to fit the minority stage.
-By during so, it is possible to discard information, e.g. the spatial variation within each class. 
+By during so, it is possible to discard information, e.g. the spatial variation within each stage. 
 Although, the discarded information can be captured by repeating several training epochs and train the classifier with different balanced permutations of the sleep stages.
 An alternate approach to solve the imbalanced stages is to penalize the loss function w.r.t. to the sleep stage distribution in each mini-batch.
 
 The relative low average performance can be caused by a lack of normalization of the input images. A possible solution to this could be to subtract the mean image of the entire dataset from the input image \cite{	main_ar,VGGnet16}.
 
-The size of the mini-batch was set to 32 images. This hyperparameter variates within the literature. Due to the static implementation of the LSTM cell, the discarded images in the final mini-batch need to be as few as possible. A lower mini-batch size will entail a faster converging in the weights by frequently applying back-propagation. However by using too small a mini-batch size the estimation of the gradient is less accurate.
+The size of the mini-batch was set to 32 images. This hyperparameter variates within the literature. Due to the static implementation of the LSTM cell, the discarded images in the final mini-batch need to be as few as possible. A lower mini-batch size will entail a faster updating of the weights by frequently applying back-propagation. However by using too small a mini-batch size the estimation of the gradient is less accurate.
 
 Learning long term dependencies between the sleep stages, the vanishing or exploding gradient issue is only solved by the gated RNNs such as the LSTM cell. The implementation of the LSTM cell is inspired by a video frame prediction method \cite{git_lstm}. In this method there are few displacements for two consecutive frames. The CNN reduces the spatial variance in the image despite the temporal variance can be huge. This challenge can be studied into further details.
 
 The implementation only includes one LSTM cell. The LSTM cells can easily be stacked in multiple layers which possibly can capture the long term dependencies more efficiently however it will add a significant amount of learnable parameters.
 
 It is possible to gain information regarding the training process by visualizing the loss as a function of training iterations. 
-Hereby it is possible to achieve knowledge about the hyperparameters such as the learning rate, the effect of the dropout operations and how accurate the estimate of the gradient is. The current setup uses a relative low learning rate ($10^{-5}$). 
+Hereby it is possible to achieve knowledge about the hyperparameters such as the learning rate, the effect of the dropout operations and how accurate the estimate of the gradient is. %The current setup uses a relative low learning rate ($10^{-5}$). 
 
 The training process should be analyzed in order to check whether the learning rate is efficient for learning the weights of the new LSTM cell.
 Another advantage of the analysis is to provide an idea of how much the performance changes as a function of the amount of training. This has not been done in this project due to time constraints.
@@ -26,5 +27,3 @@ The most important difference is, that \cite{main_ar} have merged sleep stage N3
 It was chosen to follow and train the classifiers according to the old definition of the sleep stages because the annotations in the data set was created based upon the old definition. Sticking to the old definition of the sleep stages has been experienced to be less appropriate.
 In this project the misclassification rates in N3 and N4 contribute with a high error in the overall performance of the networks (see table \ref{tab_res_1}).
 In further development of this project the merging of N3 and N4 is a vital improvement of the classification rate.
-
-The annotation of the sleep stages for each of the subjects has been done only by one expert. The classifier is hereby trained to the subjective differences of each expert. The quality of the annotation can be enhanced by introducing more experts to each of the subjects.
